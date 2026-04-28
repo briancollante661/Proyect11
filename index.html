@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CEDM Santa Teresa de Ávila</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root { --dorado: #f0c040; --morado-oscuro: #000000; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--morado-oscuro); min-height:100vh; overflow-x:hidden; }
+  body::before {
+    content:''; position:fixed; inset:0; z-index:0; animation:bgPulse 8s ease-in-out infinite alternate;
+    background: radial-gradient(ellipse 80% 60% at 20% 10%,#6a2fbf55 0%,transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 80%,#1a0a4488 0%,transparent 60%);
+  }
+  @keyframes bgPulse { from{opacity:.7} to{opacity:1} }
+  nav {
+    position:relative; z-index:10; background:rgba(30,10,80,.85); backdrop-filter:blur(12px);
+    padding:16px 32px; display:flex; justify-content:space-between; align-items:center;
+    border-bottom:1px solid rgba(240,192,64,.25);
+  }
+  .nav-logo { font-family:'Playfair Display',serif; font-size:1rem; color:var(--dorado); }
+  .nav-links a { color:rgba(255,255,255,.75); margin-left:24px; text-decoration:none; font-size:.85rem; letter-spacing:.08em; text-transform:uppercase; transition:color .2s; }
+  .nav-links a:hover { color:var(--dorado); }
+  .hero { position:relative; z-index:1; text-align:center; padding:80px 20px 40px; }
+  .hero-badge {
+    display:inline-block; background:rgba(240,192,64,.15); border:1px solid rgba(240,192,64,.4);
+    color:var(--dorado); font-size:.72rem; letter-spacing:.2em; text-transform:uppercase;
+    padding:6px 18px; border-radius:50px; margin-bottom:24px; animation:fadeDown .6s ease both;
+  }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.8rem,7vw,5.5rem); font-weight:900; color:#fff; line-height:1.05; margin-bottom:16px; animation:fadeDown .7s .1s ease both; }
+  .hero h1 span { color:var(--dorado); }
+  .hero p { color:rgba(255,255,255,.55); font-size:1.05rem; font-weight:300; animation:fadeDown .7s .2s ease both; }
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-18px)} to{opacity:1;transform:translateY(0)} }
+  .divider { position:relative; z-index:1; text-align:center; margin:48px 0 36px; font-size:.7rem; letter-spacing:.25em; text-transform:uppercase; color:rgba(255,255,255,.3); }
+  .divider::before,.divider::after { content:''; display:inline-block; width:80px; height:1px; background:rgba(255,255,255,.15); vertical-align:middle; margin:0 14px; }
+  .cursos-grid { position:relative; z-index:1; display:flex; justify-content:center; gap:28px; flex-wrap:wrap; padding:0 24px 80px; }
+  .curso-card {
+    width:280px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1);
+    border-radius:20px; padding:40px 28px 32px; text-align:center; text-decoration:none;
+    transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .3s,border-color .3s,box-shadow .3s;
+    animation:cardIn .7s ease both; backdrop-filter:blur(6px); display:block;
+  }
+  .curso-card:nth-child(1){animation-delay:.3s} .curso-card:nth-child(2){animation-delay:.45s} .curso-card:nth-child(3){animation-delay:.6s}
+  @keyframes cardIn { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+  .curso-card:hover { transform:translateY(-10px) scale(1.03); background:rgba(240,192,64,.1); border-color:rgba(240,192,64,.5); box-shadow:0 20px 60px rgba(69,24,152,.5); }
+  .curso-numero { font-family:'Playfair Display',serif; font-size:4.5rem; font-weight:900; color:var(--dorado); line-height:1; margin-bottom:8px; }
+  .curso-label { font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:16px; }
+  .curso-titulo { font-family:'Playfair Display',serif; font-size:1.5rem; color:#fff; margin-bottom:20px; }
+  .curso-tags { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+  .tag { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); color:rgba(255,255,255,.6); font-size:.7rem; padding:4px 10px; border-radius:50px; }
+  .curso-arrow { display:inline-block; margin-top:22px; background:rgba(240,192,64,.15); border:1px solid rgba(240,192,64,.35); color:var(--dorado); font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; padding:8px 20px; border-radius:50px; transition:background .2s; }
+  .curso-card:hover .curso-arrow { background:rgba(240,192,64,.3); }
+  footer { position:relative; z-index:1; text-align:center; padding:20px; border-top:1px solid rgba(255,255,255,.07); color:rgba(255,255,255,.2); font-size:.75rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">CEDM · Santa Teresa de Ávila</div>
+  <div class="nav-links">
+    <a href="index.html">Inicio</a>
+    <a href="paginas/primero.html">1° Curso</a>
+    <a href="paginas/segundo.html">2° Curso</a>
+    <a href="paginas/tercero.html">3° Curso</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">Centro de Información Escolar</div>
+  <h1>Bienvenido a<br><span>Santa Teresa</span></h1>
+  <p>Consulta tareas, avisos y horarios de cada curso</p>
+</div>
+
+<div class="divider">Selecciona tu curso</div>
+
+<div class="cursos-grid">
+  <a class="curso-card" href="paginas/primero.html">
+    <div class="curso-numero">1°</div>
+    <div class="curso-label">Primer Curso</div>
+    <div class="curso-titulo">Primero</div>
+    <div class="curso-tags">
+      <span class="tag">📢 Avisos</span><span class="tag">📚 Tareas</span><span class="tag">🕒 Horarios</span>
+    </div>
+    <div class="curso-arrow">Ver curso →</div>
+  </a>
+
+  <a class="curso-card" href="paginas/segundo.html">
+    <div class="curso-numero">2°</div>
+    <div class="curso-label">Segundo Curso</div>
+    <div class="curso-titulo">Segundo</div>
+    <div class="curso-tags">
+      <span class="tag">📢 Avisos</span><span class="tag">📚 Tareas</span><span class="tag">🕒 Horarios</span>
+    </div>
+    <div class="curso-arrow">Ver curso →</div>
+  </a>
+
+  <a class="curso-card" href="paginas/tercero.html">
+    <div class="curso-numero">3°</div>
+    <div class="curso-label">Tercer Curso</div>
+    <div class="curso-titulo">Tercero</div>
+    <div class="curso-tags">
+      <span class="tag">📢 Avisos</span><span class="tag">📚 Tareas</span><span class="tag">🕒 Horarios</span>
+    </div>
+    <div class="curso-arrow">Ver curso →</div>
+  </a>
+</div>
+
+<footer>© 2026 CEDM Santa Teresa de Ávila</footer>
+</body>
+</html>
