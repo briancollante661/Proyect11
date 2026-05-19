@@ -3,112 +3,868 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CEDM Santa Teresa de Ávila</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>CEDM Santa Teresa de Avila</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root { --dorado: #8e06b0; --morado-oscuro: #000000; }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:'DM Sans',sans-serif; background:var(--morado-oscuro); min-height:100vh; overflow-x:hidden; }
-  body::before {
-    content:''; position:fixed; inset:0; z-index:0; animation:bgPulse 8s ease-in-out infinite alternate;
-    background: radial-gradient(ellipse 80% 60% at 20% 10%,#8b49e655 0%,transparent 60%),
-                radial-gradient(ellipse 60% 50% at 80% 80%,#2c1b5a88 0%,transparent 60%);
-  }
-  @keyframes bgPulse { from{opacity:.7} to{opacity:1} }
-  nav {
-    position:relative; z-index:10; background:rgba(30,10,80,.85); backdrop-filter:blur(12px);
-    padding:16px 32px; display:flex; justify-content:space-between; align-items:center;
-    border-bottom:1px solid rgba(146, 29, 185, 0.25);
-  }
-  .nav-logo { font-family:'Playfair Display',serif; font-size:1rem; color:var(--dorado); }
-  .nav-links a { color:rgba(255,255,255,.75); margin-left:24px; text-decoration:none; font-size:.85rem; letter-spacing:.08em; text-transform:uppercase; transition:color .2s; }
-  .nav-links a:hover { color:var(--dorado); }
-  .hero { position:relative; z-index:1; text-align:center; padding:80px 20px 40px; }
-  .hero-badge {
-    display:inline-block; background:rgba(238, 85, 255, 0.15); border:1px solid rgba(119, 19, 135, 0.4);
-    color:var(--dorado); font-size:.72rem; letter-spacing:.2em; text-transform:uppercase;
-    padding:6px 18px; border-radius:50px; margin-bottom:24px; animation:fadeDown .6s ease both;
-  }
-  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(2.8rem,7vw,5.5rem); font-weight:900; color:#fff; line-height:1.05; margin-bottom:16px; animation:fadeDown .7s .1s ease both; }
-  .hero h1 span { color:var(--dorado); }
-  .hero p { color:rgba(255,255,255,.55); font-size:1.05rem; font-weight:300; animation:fadeDown .7s .2s ease both; }
-  @keyframes fadeDown { from{opacity:0;transform:translateY(-18px)} to{opacity:1;transform:translateY(0)} }
-  .divider { position:relative; z-index:1; text-align:center; margin:48px 0 36px; font-size:.7rem; letter-spacing:.25em; text-transform:uppercase; color:rgba(255,255,255,.3); }
-  .divider::before,.divider::after { content:''; display:inline-block; width:80px; height:1px; background:rgba(255,255,255,.15); vertical-align:middle; margin:0 14px; }
-  .cursos-grid { position:relative; z-index:1; display:flex; justify-content:center; gap:28px; flex-wrap:wrap; padding:0 24px 80px; }
-  .curso-card {
-    width:280px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1);
-    border-radius:20px; padding:40px 28px 32px; text-align:center; text-decoration:none;
-    transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .3s,border-color .3s,box-shadow .3s;
-    animation:cardIn .7s ease both; backdrop-filter:blur(6px); display:block;
-  }
-  .curso-card:nth-child(1){animation-delay:.3s} .curso-card:nth-child(2){animation-delay:.45s} .curso-card:nth-child(3){animation-delay:.6s}
-  @keyframes cardIn { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
-  .curso-card:hover { transform:translateY(-10px) scale(1.03); background:rgba(240, 64, 240, 0.1); border-color:rgba(122, 9, 148, 0.5); box-shadow:0 20px 60px rgba(69,24,152,.5); }
-  .curso-numero { font-family:'Playfair Display',serif; font-size:4.5rem; font-weight:900; color:var(--dorado); line-height:1; margin-bottom:8px; }
-  .curso-label { font-size:.7rem; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:16px; }
-  .curso-titulo { font-family:'Playfair Display',serif; font-size:1.5rem; color:#fff; margin-bottom:20px; }
-  .curso-tags { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
-  .tag { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); color:rgba(255,255,255,.6); font-size:.7rem; padding:4px 10px; border-radius:50px; }
-  .curso-arrow { display:inline-block; margin-top:22px; background:rgba(240, 64, 228, 0.15); border:1px solid rgba(108, 64, 240, 0.35); color:var(--dorado); font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; padding:8px 20px; border-radius:50px; transition:background .2s; }
-  .curso-card:hover .curso-arrow { background:rgba(132, 34, 168, 0.3); }
-  footer { position:relative; z-index:1; text-align:center; padding:20px; border-top:1px solid rgba(255,255,255,.07); color:rgba(255,255,255,.2); font-size:.75rem; }
+:root {
+  --negro:        #07070f;
+  --negro-card:   #0f0f1c;
+  --morado-deep:  #150828;
+  --morado:       #3b0f7a;
+  --morado-med:   #6d28d9;
+  --morado-light: #8b5cf6;
+  --lila:         #c4b5fd;
+  --blanco:       #ede9fe;
+  --gris:         rgba(196,181,253,0.5);
+  --gris-texto:   rgba(196,181,253,0.35);
+  --borde:        rgba(139,92,246,0.18);
+  --borde-hover:  rgba(139,92,246,0.45);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--negro);
+  color: var(--blanco);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Fondo base ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% -5%, rgba(59,15,122,0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 85% 95%, rgba(21,8,40,0.7) 0%, transparent 55%);
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 500;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  background: rgba(7,7,15,0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--borde);
+  transition: background 0.3s;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-logo-icon {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--morado), var(--morado-med));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  box-shadow: 0 0 18px rgba(109,40,217,0.4);
+}
+
+.nav-logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.nav-logo-main {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--blanco);
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.nav-logo-sub {
+  font-size: 0.6rem;
+  color: var(--gris-texto);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.nav-links a {
+  color: var(--gris);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  padding: 7px 16px;
+  border-radius: 7px;
+  border: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--lila);
+  border-color: var(--borde);
+  background: rgba(139,92,246,0.07);
+}
+
+.nav-divider {
+  width: 1px; height: 20px;
+  background: var(--borde);
+  margin: 0 8px;
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 100px 24px 80px;
+}
+
+/* Línea decorativa superior */
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 36px;
+  opacity: 0;
+  animation: slideUp 0.7s 0.1s ease forwards;
+}
+
+.hero-tag-line {
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--morado-light));
+}
+.hero-tag-line.r {
+  background: linear-gradient(90deg, var(--morado-light), transparent);
+}
+
+.hero-tag span {
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--morado-light);
+  font-weight: 500;
+}
+
+/* Título principal */
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: slideUp 0.7s 0.2s ease forwards;
+}
+
+.hero-title .t1 {
+  display: block;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  color: rgba(255,255,255,0.9);
+}
+
+.hero-title .t2 {
+  display: block;
+  font-size: clamp(3.2rem, 7vw, 6rem);
+  background: linear-gradient(135deg, #c4b5fd 0%, #8b5cf6 50%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-desc {
+  font-size: 1rem;
+  color: var(--gris);
+  font-weight: 300;
+  max-width: 480px;
+  line-height: 1.6;
+  margin-bottom: 56px;
+  opacity: 0;
+  animation: slideUp 0.7s 0.3s ease forwards;
+}
+
+/* ── CARDS DE CURSOS ── */
+.cursos-wrap {
+  opacity: 0;
+  animation: slideUp 0.7s 0.4s ease forwards;
+}
+
+.cursos-grid {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.curso-card {
+  position: relative;
+  width: 248px;
+  background: var(--negro-card);
+  border: 1px solid var(--borde);
+  border-radius: 18px;
+  padding: 32px 22px 26px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  overflow: hidden;
+  transition:
+    transform 0.35s cubic-bezier(0.34,1.56,0.64,1),
+    border-color 0.25s,
+    box-shadow 0.35s;
+}
+
+/* Línea superior animada al hover */
+.curso-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 20%; right: 20%;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--morado-light), transparent);
+  opacity: 0;
+  transition: opacity 0.3s, left 0.3s, right 0.3s;
+}
+
+.curso-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--borde-hover);
+  box-shadow:
+    0 20px 56px rgba(59,15,122,0.45),
+    0 0 0 1px rgba(139,92,246,0.12),
+    inset 0 0 40px rgba(109,40,217,0.04);
+}
+
+.curso-card:hover::before {
+  opacity: 1;
+  left: 0; right: 0;
+}
+
+/* Número grande */
+.curso-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 4.2rem;
+  font-weight: 900;
+  background: linear-gradient(160deg, #c4b5fd 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 4px;
+  transition: filter 0.3s;
+}
+
+.curso-card:hover .curso-num {
+  filter: drop-shadow(0 0 16px rgba(139,92,246,0.6));
+}
+
+.curso-sublabel {
+  font-size: 0.58rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gris-texto);
+  margin-bottom: 10px;
+}
+
+.curso-nombre {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.82);
+  margin-bottom: 16px;
+}
+
+.curso-chips {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.chip {
+  background: rgba(139,92,246,0.08);
+  border: 1px solid rgba(139,92,246,0.2);
+  color: var(--gris);
+  font-size: 0.62rem;
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+}
+
+.curso-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(109,40,217,0.15);
+  border: 1px solid rgba(139,92,246,0.3);
+  color: var(--lila);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 18px;
+  border-radius: 8px;
+  transition: background 0.25s, box-shadow 0.25s;
+}
+
+.cta-arrow {
+  display: inline-block;
+  transition: transform 0.25s;
+}
+
+.curso-card:hover .curso-cta {
+  background: rgba(109,40,217,0.3);
+  box-shadow: 0 0 16px rgba(109,40,217,0.25);
+}
+
+.curso-card:hover .cta-arrow { transform: translateX(4px); }
+
+/* Indicador de scroll */
+.scroll-indicator {
+  margin-top: 60px;
+  opacity: 0;
+  animation: slideUp 0.7s 0.7s ease forwards;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--gris-texto);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.scroll-bar {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(180deg, var(--morado-light), transparent);
+  animation: scrollBar 1.5s ease infinite;
+}
+
+@keyframes scrollBar {
+  0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+  50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  100% { transform: scaleY(1); transform-origin: bottom; opacity: 0; }
+}
+
+/* ── SECCIÓN AVISOS ── */
+.section-sep {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 48px;
+  margin-bottom: 52px;
+}
+
+.sep-line {
+  flex: 1;
+  height: 1px;
+  background: var(--borde);
+}
+
+.sep-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--morado-light);
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0.65;
+}
+
+.avisos-section {
+  position: relative;
+  z-index: 1;
+  padding: 0 48px 100px;
+  max-width: 1260px;
+  margin: 0 auto;
+}
+
+/* Cabecera avisos */
+.avisos-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 36px;
+}
+
+.avisos-title-group .eyebrow {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--morado-light);
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+.avisos-title-group h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 700;
+  color: #fff;
+}
+
+.avisos-title-group h2 em {
+  font-style: normal;
+  color: var(--lila);
+}
+
+/* Filtro */
+.filtro-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--negro-card);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.filtro-label {
+  padding: 0 14px;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gris-texto);
+  border-right: 1px solid var(--borde);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.filtro-wrapper input[type="date"] {
+  background: transparent;
+  border: none;
+  color: var(--blanco);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  padding: 0 14px;
+  height: 40px;
+  outline: none;
+  cursor: pointer;
+  color-scheme: dark;
+  min-width: 140px;
+}
+
+.btn-reset {
+  background: rgba(139,92,246,0.1);
+  border: none;
+  border-left: 1px solid var(--borde);
+  color: var(--gris);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  padding: 0 16px;
+  height: 40px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  letter-spacing: 0.06em;
+}
+
+.btn-reset:hover {
+  background: rgba(139,92,246,0.2);
+  color: var(--lila);
+}
+
+/* Grid masonry */
+.avisos-grid {
+  columns: 3;
+  column-gap: 16px;
+}
+
+@media (max-width: 980px) { .avisos-grid { columns: 2; } }
+@media (max-width: 560px) { .avisos-grid { columns: 1; } }
+
+/* Card de aviso */
+.aviso-card {
+  break-inside: avoid;
+  margin-bottom: 16px;
+  background: var(--negro-card);
+  border: 1px solid var(--borde);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.28s ease, border-color 0.28s, box-shadow 0.28s;
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.aviso-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--borde-hover);
+  box-shadow: 0 14px 40px rgba(59,15,122,0.35);
+}
+
+.aviso-img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  display: block;
+  border-bottom: 1px solid var(--borde);
+}
+
+.aviso-body { padding: 16px 18px 18px; }
+
+.aviso-fecha {
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--morado-light);
+  opacity: 0.75;
+  margin-bottom: 6px;
+}
+
+.aviso-titulo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.88);
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+
+.aviso-desc {
+  font-size: 0.82rem;
+  color: var(--gris);
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* Estados */
+.estado {
+  text-align: center;
+  padding: 64px 20px;
+  color: var(--gris-texto);
+  font-size: 0.88rem;
+}
+
+.spinner {
+  width: 32px; height: 32px;
+  border: 2px solid rgba(139,92,246,0.12);
+  border-top-color: var(--morado-light);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+  margin: 0 auto 14px;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.no-data {
+  text-align: center;
+  padding: 56px 20px;
+  color: var(--gris-texto);
+  font-size: 0.86rem;
+}
+
+.error-box {
+  background: rgba(239,68,68,0.05);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 10px;
+  padding: 18px 22px;
+  color: #fca5a5;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+/* ── FOOTER ── */
+footer {
+  position: relative;
+  z-index: 1;
+  padding: 28px 48px;
+  border-top: 1px solid var(--borde);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-icon {
+  width: 26px; height: 26px;
+  background: linear-gradient(135deg, var(--morado), var(--morado-med));
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.footer-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.4);
+}
+
+.footer-copy {
+  font-size: 0.7rem;
+  color: var(--gris-texto);
+  letter-spacing: 0.06em;
+}
+
+/* ── ANIMACIONES ── */
+@keyframes slideUp {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* Scroll reveal para elementos fuera del hero */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <div class="nav-logo">CEDM · Santa Teresa de Ávila</div>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">🎓</div>
+    <div class="nav-logo-text">
+      <div class="nav-logo-main">Santa Teresa de Avila</div>
+      <div class="nav-logo-sub">Centro Escolar</div>
+    </div>
+  </div>
   <div class="nav-links">
     <a href="index.html">Inicio</a>
+    <div class="nav-divider"></div>
     <a href="paginas/primero.html">1° Curso</a>
     <a href="paginas/segundo.html">2° Curso</a>
     <a href="paginas/tercero.html">3° Curso</a>
   </div>
 </nav>
 
-<div class="hero">
-  <div class="hero-badge">Centro de Información Escolar</div>
-  <h1>Bienvenido a<br><span>Santa Teresa</span></h1>
-  <p>Consulta tareas, avisos y horarios de cada curso</p>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">
+    <div class="hero-tag-line"></div>
+    <span>Centro de Informacion Escolar</span>
+    <div class="hero-tag-line r"></div>
+  </div>
+
+  <h1 class="hero-title">
+    <span class="t1">Bienvenido a</span>
+    <span class="t2">Santa Teresa</span>
+  </h1>
+
+  <p class="hero-desc">
+    Consulta tareas, horarios y avisos del centro escolar, organizados por curso y actualizados en tiempo real.
+  </p>
+
+  <div class="cursos-wrap">
+    <div class="cursos-grid">
+      <a class="curso-card" href="paginas/primero.html">
+        <div class="curso-num">1°</div>
+        <div class="curso-sublabel">Primer Curso</div>
+        <div class="curso-nombre">Primero</div>
+        <div class="curso-chips">
+          <span class="chip">📚 Tareas</span>
+          <span class="chip">🕒 Horarios</span>
+        </div>
+        <div class="curso-cta">Acceder <span class="cta-arrow">→</span></div>
+      </a>
+
+      <a class="curso-card" href="paginas/segundo.html">
+        <div class="curso-num">2°</div>
+        <div class="curso-sublabel">Segundo Curso</div>
+        <div class="curso-nombre">Segundo</div>
+        <div class="curso-chips">
+          <span class="chip">📚 Tareas</span>
+          <span class="chip">🕒 Horarios</span>
+        </div>
+        <div class="curso-cta">Acceder <span class="cta-arrow">→</span></div>
+      </a>
+
+      <a class="curso-card" href="paginas/tercero.html">
+        <div class="curso-num">3°</div>
+        <div class="curso-sublabel">Tercer Curso</div>
+        <div class="curso-nombre">Tercero</div>
+        <div class="curso-chips">
+          <span class="chip">📚 Tareas</span>
+          <span class="chip">🕒 Horarios</span>
+        </div>
+        <div class="curso-cta">Acceder <span class="cta-arrow">→</span></div>
+      </a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-bar"></div>
+    <span>Avisos</span>
+  </div>
+</section>
+
+<!-- SEPARADOR -->
+<div class="section-sep reveal">
+  <div class="sep-line"></div>
+  <div class="sep-label">Tablón de Avisos Generales</div>
+  <div class="sep-line"></div>
 </div>
 
-<div class="divider">Selecciona tu curso</div>
-
-<div class="cursos-grid">
-  <a class="curso-card" href="paginas/primero.html">
-    <div class="curso-numero">1°</div>
-    <div class="curso-label">Primer Curso</div>
-    <div class="curso-titulo">Primero</div>
-    <div class="curso-tags">
-      <span class="tag">📢 Avisos</span><span class="tag">📚 Tareas</span><span class="tag">🕒 Horarios</span>
+<!-- AVISOS -->
+<section class="avisos-section">
+  <div class="avisos-head reveal">
+    <div class="avisos-title-group">
+      <div class="eyebrow">Información del Centro</div>
+      <h2>Avisos <em>Generales</em></h2>
     </div>
-    <div class="curso-arrow">Ver curso →</div>
-  </a>
-
-  <a class="curso-card" href="paginas/segundo.html">
-    <div class="curso-numero">2°</div>
-    <div class="curso-label">Segundo Curso</div>
-    <div class="curso-titulo">Segundo</div>
-    <div class="curso-tags">
-      <span class="tag">📢 Avisos</span><span class="tag">📚 Tareas</span><span class="tag">🕒 Horarios</span>
+    <div class="filtro-wrapper">
+      <div class="filtro-label">Filtrar por fecha</div>
+      <input type="date" id="filtro-input" onchange="filtrarAvisos()">
+      <button class="btn-reset" onclick="limpiarFiltro()">Limpiar</button>
     </div>
-    <div class="curso-arrow">Ver curso →</div>
-  </a>
+  </div>
 
-  <a class="curso-card" href="paginas/tercero.html">
-    <div class="curso-numero">3°</div>
-    <div class="curso-label">Tercer Curso</div>
-    <div class="curso-titulo">Tercero</div>
-    <div class="curso-tags">
-      <span class="tag">📢 Avisos</span><span class="tag">📚 Tareas</span><span class="tag">🕒 Horarios</span>
-    </div>
-    <div class="curso-arrow">Ver curso →</div>
-  </a>
-</div>
+  <div class="avisos-grid" id="avisos-grid">
+    <div class="estado"><div class="spinner"></div>Cargando avisos...</div>
+  </div>
+</section>
 
-<footer>© 2026 CEDM Santa Teresa de Ávila</footer>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-icon">🎓</div>
+    <div class="footer-name">CEDM Santa Teresa de Avila</div>
+  </div>
+  <div class="footer-copy">© 2026 — Todos los derechos reservados</div>
+</footer>
+
+<script src="config.js"></script>
+<script>
+// ── Scroll reveal ────────────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── Nav scroll ───────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  nav.style.background = window.scrollY > 40
+    ? 'rgba(7,7,15,0.95)'
+    : 'rgba(7,7,15,0.75)';
+});
+
+// ── Avisos ───────────────────────────────────────────────
+let todosAvisos = [];
+
+function normFecha(str) {
+  if (!str) return "";
+  const m = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (m) return `${m[3]}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`;
+  return str.substring(0, 10);
+}
+
+function fmtFecha(str) {
+  if (!str) return "";
+  try {
+    const d = new Date(normFecha(str) + "T00:00:00");
+    return d.toLocaleDateString("es-ES", { day:"numeric", month:"long", year:"numeric" });
+  } catch { return str; }
+}
+
+function renderAvisos(filas) {
+  if (!filas.length) return '<div class="no-data">No hay avisos para mostrar.</div>';
+  return filas.map((f, i) => {
+    const img = f["Imagen"]
+      ? `<img class="aviso-img" src="${f["Imagen"]}" alt="Aviso" onerror="this.style.display='none'">`
+      : "";
+    const desc = f["Descripcion"]
+      ? `<p class="aviso-desc">${f["Descripcion"]}</p>`
+      : "";
+    return `
+      <div class="aviso-card" style="animation-delay:${i * 0.07}s">
+        ${img}
+        <div class="aviso-body">
+          <div class="aviso-fecha">${fmtFecha(f["Fecha"] || f["Marca temporal"] || "")}</div>
+          <div class="aviso-titulo">${f["Titulo"] || "(sin titulo)"}</div>
+          ${desc}
+        </div>
+      </div>`;
+  }).join("");
+}
+
+function filtrarAvisos() {
+  const fecha = document.getElementById("filtro-input").value;
+  const grid = document.getElementById("avisos-grid");
+  if (!fecha) { grid.innerHTML = renderAvisos(todosAvisos); return; }
+  const fil = todosAvisos.filter(f =>
+    normFecha(f["Fecha"] || f["Marca temporal"] || "") === fecha
+  );
+  grid.innerHTML = fil.length
+    ? renderAvisos(fil)
+    : '<div class="no-data">No hay avisos para esa fecha.</div>';
+}
+
+function limpiarFiltro() {
+  document.getElementById("filtro-input").value = "";
+  document.getElementById("avisos-grid").innerHTML = renderAvisos(todosAvisos);
+}
+
+async function cargarAvisos() {
+  const grid = document.getElementById("avisos-grid");
+  try {
+    const filas = await cargarHoja(SHEETS_CONFIG.avisos.spreadsheetId, SHEETS_CONFIG.avisos.hoja);
+    todosAvisos = filas.sort((a, b) => {
+      const fa = normFecha(a["Fecha"] || a["Marca temporal"] || "");
+      const fb = normFecha(b["Fecha"] || b["Marca temporal"] || "");
+      return fb.localeCompare(fa);
+    });
+    grid.innerHTML = renderAvisos(todosAvisos);
+  } catch (e) {
+    grid.innerHTML = `<div class="error-box">No se pudieron cargar los avisos. Verifica que el Sheet sea publico y que el ID en config.js sea correcto.<br><br><small>${e.message}</small></div>`;
+  }
+}
+
+cargarAvisos();
+</script>
 </body>
 </html>
-
-
