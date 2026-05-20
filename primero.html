@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1° Curso — CEDM Santa Teresa</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --negro:        #07070f;
+  --negro-card:   #0f0f1c;
+  --morado:       #3b0f7a;
+  --morado-med:   #6d28d9;
+  --morado-light: #8b5cf6;
+  --lila:         #c4b5fd;
+  --blanco:       #ede9fe;
+  --gris:         rgba(196,181,253,0.5);
+  --gris-texto:   rgba(196,181,253,0.3);
+  --borde:        rgba(139,92,246,0.18);
+  --borde-hover:  rgba(139,92,246,0.45);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--negro);
+  color: var(--blanco);
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -5%, rgba(59,15,122,0.5) 0%, transparent 60%),
+    radial-gradient(ellipse 35% 30% at 90% 95%, rgba(21,8,40,0.6) 0%, transparent 55%);
+}
+
+/* NAV */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:500;
+  height: 68px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px;
+  background: rgba(7,7,15,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--borde);
+}
+
+.nav-logo { display:flex; align-items:center; gap:12px; }
+.nav-logo-icon { width:32px;height:32px;border-radius:7px;background:linear-gradient(135deg,var(--morado),var(--morado-med));display:flex;align-items:center;justify-content:center;font-size:.95rem; }
+.nav-logo-main { font-family:'Playfair Display',serif;font-size:.86rem;font-weight:700;color:var(--blanco);line-height:1; }
+.nav-logo-sub { font-size:.58rem;color:var(--gris-texto);letter-spacing:.15em;text-transform:uppercase; }
+
+.nav-links { display:flex;align-items:center;gap:2px; }
+.nav-links a { color:var(--gris);text-decoration:none;font-size:.76rem;font-weight:400;letter-spacing:.06em;padding:7px 15px;border-radius:7px;border:1px solid transparent;transition:color .2s,border-color .2s,background .2s; }
+.nav-links a:hover,.nav-links a.active { color:var(--lila);border-color:var(--borde);background:rgba(139,92,246,.07); }
+.nav-divider { width:1px;height:18px;background:var(--borde);margin:0 6px; }
+
+/* PAGE HEADER */
+.page-header {
+  position: relative; z-index:1;
+  padding: 120px 48px 56px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+  border-bottom: 1px solid var(--borde);
+  margin-bottom: 0;
+}
+
+.header-left {}
+
+.breadcrumb {
+  display: flex; align-items: center; gap:8px;
+  font-size:.62rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--gris-texto);
+  margin-bottom: 14px;
+}
+
+.breadcrumb a { color:var(--gris-texto); text-decoration:none; transition:color .2s; }
+.breadcrumb a:hover { color:var(--lila); }
+.breadcrumb-sep { opacity:.4; }
+
+.page-badge {
+  display: inline-block;
+  background: rgba(139,92,246,.1);
+  border: 1px solid rgba(139,92,246,.28);
+  color: var(--morado-light);
+  font-size:.6rem; letter-spacing:.22em; text-transform:uppercase;
+  padding:5px 14px; border-radius:20px; margin-bottom:12px;
+}
+
+.page-title {
+  font-family:'Playfair Display',serif;
+  font-size: clamp(2.4rem,5vw,4rem);
+  font-weight:900; line-height:1.05;
+}
+
+.page-title span {
+  background:linear-gradient(135deg,#c4b5fd 0%,#8b5cf6 100%);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+
+.page-subtitle { font-size:.88rem;color:var(--gris);margin-top:8px;font-weight:300; }
+
+/* Indicador de datos en vivo */
+.live-badge {
+  display:inline-flex; align-items:center; gap:7px;
+  background:rgba(34,197,94,.07); border:1px solid rgba(34,197,94,.2);
+  color:rgba(134,239,172,.7); font-size:.65rem; letter-spacing:.1em;
+  padding:7px 14px; border-radius:8px;
+  align-self: flex-start;
+}
+
+.live-dot { width:6px;height:6px;background:#22c55e;border-radius:50%;animation:livePulse 2s infinite; }
+@keyframes livePulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* TABS */
+.tabs-bar {
+  position: relative; z-index:1;
+  display:flex; align-items:center; gap:0;
+  padding: 0 48px;
+  border-bottom: 1px solid var(--borde);
+  background: rgba(7,7,15,0.5);
+  backdrop-filter: blur(10px);
+}
+
+.tab-btn {
+  background:transparent; border:none;
+  color:var(--gris-texto);
+  font-family:'Inter',sans-serif; font-size:.8rem; font-weight:400;
+  letter-spacing:.06em;
+  padding: 18px 24px;
+  cursor:pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom:-1px;
+  transition: color .25s, border-color .25s;
+  display:flex; align-items:center; gap:8px;
+}
+
+.tab-btn:hover { color:var(--lila); }
+
+.tab-btn.active {
+  color: var(--lila);
+  border-bottom-color: var(--morado-light);
+  font-weight: 500;
+}
+
+/* CONTENT */
+.content {
+  position:relative; z-index:1;
+  max-width:900px; margin:0 auto;
+  padding:44px 48px 100px;
+}
+
+.section { display:none; }
+.section.active { display:block; }
+
+/* Filtros */
+.filtros-bar {
+  display:flex; align-items:center; gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:28px;
+  padding:14px 18px;
+  background:var(--negro-card);
+  border:1px solid var(--borde);
+  border-radius:10px;
+}
+
+.filtro-group { display:flex; align-items:center; gap:8px; }
+
+.filtro-group label {
+  font-size:.6rem; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--gris-texto); white-space:nowrap;
+}
+
+.filtro-group input[type="date"],
+.filtro-group select {
+  background:rgba(139,92,246,.06);
+  border:1px solid var(--borde);
+  border-radius:7px;
+  color:var(--blanco);
+  font-family:'Inter',sans-serif;
+  font-size:.8rem; padding:6px 11px;
+  outline:none; cursor:pointer;
+  transition:border-color .2s;
+  color-scheme:dark;
+}
+
+.filtro-group select option { background:#0f0f1c; }
+
+.filtro-group input:focus,
+.filtro-group select:focus { border-color:rgba(139,92,246,.5); }
+
+.filtros-sep { width:1px; height:22px; background:var(--borde); }
+
+.btn-limpiar {
+  background:transparent; border:1px solid var(--borde);
+  color:var(--gris-texto); font-family:'Inter',sans-serif;
+  font-size:.7rem; padding:6px 13px; border-radius:7px;
+  cursor:pointer; transition:all .2s; letter-spacing:.05em;
+  margin-left:auto;
+}
+
+.btn-limpiar:hover { border-color:var(--borde-hover); color:var(--lila); }
+
+/* Cards de tareas */
+.tarea-card {
+  background:var(--negro-card);
+  border:1px solid var(--borde);
+  border-radius:12px;
+  padding:18px 22px;
+  margin-bottom:12px;
+  display:flex; gap:18px; align-items:flex-start;
+  transition:transform .25s, border-color .25s, box-shadow .25s;
+  opacity:0; animation:fadeIn .4s ease forwards;
+}
+
+@keyframes fadeIn {
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.tarea-card:hover {
+  transform:translateX(4px);
+  border-color:var(--borde-hover);
+  box-shadow:0 8px 28px rgba(59,15,122,.3);
+}
+
+.tarea-acento {
+  width:3px; min-height:100%;
+  border-radius:2px;
+  background:linear-gradient(180deg,var(--morado-med),var(--morado-light));
+  flex-shrink:0; align-self:stretch;
+}
+
+.tarea-body { flex:1; }
+
+.tarea-meta {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(139,92,246,.08);
+  border:1px solid rgba(139,92,246,.18);
+  border-radius:20px;
+  padding:3px 10px;
+  margin-bottom:8px;
+}
+
+.tarea-meta-materia {
+  font-size:.62rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--morado-light); font-weight:500;
+}
+
+.tarea-meta-sep { width:1px; height:10px; background:rgba(139,92,246,.3); }
+
+.tarea-meta-fecha { font-size:.62rem; color:var(--gris-texto); letter-spacing:.06em; }
+
+.tarea-titulo { font-family:'Playfair Display',serif; font-size:.98rem; font-weight:600; color:rgba(255,255,255,.88); margin-bottom:5px; line-height:1.3; }
+.tarea-desc { font-size:.82rem; color:var(--gris); font-weight:300; line-height:1.55; margin-bottom:10px; }
+
+/* Archivo adjunto */
+.tarea-archivo { margin-top:10px; }
+
+.tarea-img-preview {
+  width:100%; max-height:200px; object-fit:cover;
+  border-radius:8px; border:1px solid var(--borde);
+  display:block; margin-bottom:8px;
+}
+
+.btn-descarga {
+  display:inline-flex; align-items:center; gap:7px;
+  background:rgba(139,92,246,.1);
+  border:1px solid rgba(139,92,246,.28);
+  color:var(--lila);
+  font-family:'Inter',sans-serif;
+  font-size:.72rem; font-weight:500;
+  letter-spacing:.06em;
+  padding:7px 14px; border-radius:7px;
+  text-decoration:none;
+  transition:background .2s, border-color .2s, box-shadow .2s;
+}
+
+.btn-descarga:hover {
+  background:rgba(139,92,246,.22);
+  border-color:var(--borde-hover);
+  box-shadow:0 0 14px rgba(139,92,246,.2);
+}
+
+.btn-descarga svg { flex-shrink:0; }
+
+/* Horario */
+.horario-wrap { overflow-x:auto; border-radius:12px; border:1px solid var(--borde); }
+
+.horario-table { width:100%; border-collapse:collapse; font-size:.82rem; min-width:580px; }
+
+.horario-table thead tr { background:rgba(139,92,246,.08); }
+
+.horario-table th {
+  color:var(--morado-light); font-weight:500;
+  letter-spacing:.08em; text-transform:uppercase;
+  font-size:.65rem; padding:14px 16px; text-align:left;
+  border-bottom:1px solid var(--borde);
+}
+
+.horario-table td {
+  padding:12px 16px;
+  border-bottom:1px solid rgba(139,92,246,.06);
+  color:rgba(255,255,255,.65);
+}
+
+.horario-table tr:last-child td { border-bottom:none; }
+.horario-table tr:hover td { background:rgba(139,92,246,.04); color:rgba(255,255,255,.85); }
+
+.hora-cell { color:var(--gris-texto); font-size:.75rem; font-weight:500; white-space:nowrap; }
+
+.materia-pill {
+  display:inline-block;
+  background:rgba(139,92,246,.1);
+  border:1px solid rgba(139,92,246,.2);
+  color:var(--lila);
+  padding:3px 10px; border-radius:20px;
+  font-size:.73rem;
+}
+
+/* Estado */
+.estado { text-align:center; padding:56px 20px; color:var(--gris-texto); font-size:.86rem; }
+.spinner { width:30px;height:30px;border:2px solid rgba(139,92,246,.1);border-top-color:var(--morado-light);border-radius:50%;animation:spin .75s linear infinite;margin:0 auto 14px; }
+@keyframes spin{ to{transform:rotate(360deg)} }
+.no-data { text-align:center;padding:48px 20px;color:var(--gris-texto);font-size:.84rem; }
+.error-box { background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.2);border-radius:10px;padding:16px 20px;color:#fca5a5;font-size:.82rem;line-height:1.6; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">🎓</div>
+    <div>
+      <div class="nav-logo-main">Santa Teresa de Avila</div>
+      <div class="nav-logo-sub">Centro Escolar</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="../index.html">Inicio</a>
+    <div class="nav-divider"></div>
+    <a href="primero.html" class="active">1° Curso</a>
+    <a href="segundo.html">2° Curso</a>
+    <a href="tercero.html">3° Curso</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="header-left">
+    <div class="breadcrumb">
+      <a href="../index.html">Inicio</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>Primer Curso</span>
+    </div>
+    <div class="page-badge">Primer Curso</div>
+    <h1 class="page-title">Curso <span>Primero</span></h1>
+    <p class="page-subtitle">Tareas y horarios — actualizados desde Google Sheets</p>
+  </div>
+  <div class="live-badge">
+    <div class="live-dot"></div>
+    Datos en tiempo real
+  </div>
+</div>
+
+<div class="tabs-bar">
+  <button class="tab-btn active" onclick="cambiarTab('tareas',this)">📚 Tareas</button>
+  <button class="tab-btn" onclick="cambiarTab('horarios',this)">🕒 Horario</button>
+</div>
+
+<div class="content">
+
+  <!-- TAREAS -->
+  <div class="section active" id="tareas">
+    <div class="filtros-bar">
+      <div class="filtro-group">
+        <label>Fecha de entrega</label>
+        <input type="date" id="filtro-fecha" onchange="filtrarTareas()">
+      </div>
+      <div class="filtros-sep"></div>
+      <div class="filtro-group">
+        <label>Materia</label>
+        <select id="filtro-materia" onchange="filtrarTareas()">
+          <option value="">Todas</option>
+        </select>
+      </div>
+      <button class="btn-limpiar" onclick="limpiarFiltros()">Limpiar filtros</button>
+    </div>
+    <div id="tareas-contenido">
+      <div class="estado"><div class="spinner"></div>Cargando tareas...</div>
+    </div>
+  </div>
+
+  <!-- HORARIOS -->
+  <div class="section" id="horarios">
+    <div id="horarios-contenido">
+      <div class="estado"><div class="spinner"></div>Cargando horario...</div>
+    </div>
+  </div>
+
+</div>
+
+<script src="../config.js"></script>
+<script>
+const CURSO = "primero";
+let todasTareas = [];
+
+// Nav scroll
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.background =
+    window.scrollY > 20 ? 'rgba(7,7,15,0.97)' : 'rgba(7,7,15,0.85)';
+});
+
+function cambiarTab(tab, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+function normFecha(str) {
+  if (!str) return "";
+  const m = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (m) return `${m[3]}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`;
+  return str.substring(0,10);
+}
+
+function renderArchivo(url) {
+  if (!url) return "";
+  const esImagen = /\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(url)
+    || url.includes("uc?export=view");
+  if (esImagen) {
+    return `
+      <div class="tarea-archivo">
+        <img class="tarea-img-preview" src="${url}" alt="Imagen adjunta" onerror="this.style.display='none'">
+        <a class="btn-descarga" href="${url}" target="_blank" download>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Descargar imagen
+        </a>
+      </div>`;
+  }
+  return `
+    <div class="tarea-archivo">
+      <a class="btn-descarga" href="${url}" target="_blank" download>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Descargar archivo
+      </a>
+    </div>`;
+}
+
+function renderTareas(filas) {
+  if (!filas.length) return '<div class="no-data">No hay tareas para mostrar.</div>';
+  return filas.map((f,i) => `
+    <div class="tarea-card" style="animation-delay:${i*0.06}s">
+      <div class="tarea-acento"></div>
+      <div class="tarea-body">
+        <div class="tarea-meta">
+          <span class="tarea-meta-materia">${f["Materia"] || "—"}</span>
+          <div class="tarea-meta-sep"></div>
+          <span class="tarea-meta-fecha">Entrega: ${f["Entrega"] || "—"}</span>
+        </div>
+        <div class="tarea-titulo">${f["Titulo"] || "(sin titulo)"}</div>
+        <div class="tarea-desc">${f["Descripcion"] || ""}</div>
+        ${renderArchivo(f["Archivo"] || "")}
+      </div>
+    </div>`).join("");
+}
+
+function poblarMaterias(filas) {
+  const sel = document.getElementById("filtro-materia");
+  [...new Set(filas.map(f=>f["Materia"]).filter(Boolean))].sort().forEach(m => {
+    const o = document.createElement("option");
+    o.value = m; o.textContent = m;
+    sel.appendChild(o);
+  });
+}
+
+function filtrarTareas() {
+  const fecha   = document.getElementById("filtro-fecha").value;
+  const materia = document.getElementById("filtro-materia").value;
+  let fil = todasTareas;
+  if (fecha)   fil = fil.filter(f => normFecha(f["Entrega"]) === fecha);
+  if (materia) fil = fil.filter(f => f["Materia"] === materia);
+  document.getElementById("tareas-contenido").innerHTML = renderTareas(fil);
+}
+
+function limpiarFiltros() {
+  document.getElementById("filtro-fecha").value = "";
+  document.getElementById("filtro-materia").value = "";
+  document.getElementById("tareas-contenido").innerHTML = renderTareas(todasTareas);
+}
+
+function renderHorario(filas) {
+  if (!filas.length) return '<div class="no-data">No hay horario cargado.</div>';
+  const dias = ["Lunes","Martes","Miercoles","Jueves","Viernes"];
+  const ths = dias.map(d=>`<th>${d}</th>`).join("");
+  const rows = filas.map(f => {
+    const celdas = dias.map(d => {
+      const v = f[d]||"";
+      return `<td>${v?`<span class="materia-pill">${v}</span>`:"<span style='color:rgba(255,255,255,.15)'>—</span>"}</td>`;
+    }).join("");
+    return `<tr><td class="hora-cell">${f["Hora"]||""}</td>${celdas}</tr>`;
+  }).join("");
+  return `
+    <div class="horario-wrap">
+      <table class="horario-table">
+        <thead><tr><th>Hora</th>${ths}</tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+}
+
+async function cargarTareas() {
+  const cont = document.getElementById("tareas-contenido");
+  try {
+    const filas = await cargarHoja(SHEETS_CONFIG.tareas.spreadsheetId, SHEETS_CONFIG.tareas.hoja);
+    todasTareas = filas.filter(f=>(f["Curso"]||"").toLowerCase()===CURSO);
+    poblarMaterias(todasTareas);
+    cont.innerHTML = renderTareas(todasTareas);
+  } catch(e) {
+    cont.innerHTML = `<div class="error-box">No se pudieron cargar las tareas.<br><small>${e.message}</small></div>`;
+  }
+}
+
+async function cargarHorario() {
+  const cont = document.getElementById("horarios-contenido");
+  try {
+    const filas = await cargarHoja(SHEETS_CONFIG.horarios.spreadsheetId, SHEETS_CONFIG.horarios.hojas[CURSO]);
+    cont.innerHTML = renderHorario(filas);
+  } catch(e) {
+    cont.innerHTML = `<div class="error-box">No se pudo cargar el horario.<br><small>${e.message}</small></div>`;
+  }
+}
+
+cargarTareas();
+cargarHorario();
+</script>
+</body>
+</html>
