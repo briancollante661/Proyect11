@@ -68,14 +68,35 @@ nav {
 }
 
 .nav-logo-icon {
-  width: 34px; height: 34px;
+  width: 38px; height: 38px;
   border-radius: 8px;
-  background: linear-gradient(135deg, var(--morado), var(--morado-med));
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
-  box-shadow: 0 0 18px rgba(109,40,217,0.4);
+  filter: drop-shadow(0 0 8px rgba(139,92,246,0.5));
+}
+
+.nav-logo-icon img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+}
+
+/* Logo empresa en hero */
+.hero-logo-wrap {
+  margin-bottom: 28px;
+  animation: slideUp 0.7s 0s ease both;
+}
+
+.hero-logo-wrap img {
+  width: 110px;
+  height: auto;
+  filter: drop-shadow(0 0 24px rgba(139,92,246,0.5));
+  transition: filter 0.3s;
+}
+
+.hero-logo-wrap img:hover {
+  filter: drop-shadow(0 0 36px rgba(139,92,246,0.8));
 }
 
 .nav-logo-text {
@@ -616,13 +637,18 @@ footer {
 }
 
 .footer-icon {
-  width: 26px; height: 26px;
-  background: linear-gradient(135deg, var(--morado), var(--morado-med));
+  width: 28px; height: 28px;
   border-radius: 6px;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+}
+
+.footer-icon img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  opacity: 0.5;
 }
 
 .footer-name {
@@ -661,7 +687,9 @@ footer {
 <!-- NAV -->
 <nav>
   <div class="nav-logo">
-    <div class="nav-logo-icon">🎓</div>
+    <div class="nav-logo-icon">
+      <img src="imagenes/insignia.png" alt="Insignia CEDM">
+    </div>
     <div class="nav-logo-text">
       <div class="nav-logo-main">Santa Teresa de Avila</div>
       <div class="nav-logo-sub">Centro Escolar</div>
@@ -678,6 +706,10 @@ footer {
 
 <!-- HERO -->
 <section class="hero">
+  <div class="hero-logo-wrap">
+    <img src="imagenes/logo.png" alt="Logo SIE">
+  </div>
+
   <div class="hero-tag">
     <div class="hero-tag-line"></div>
     <span>Centro de Informacion Escolar</span>
@@ -765,7 +797,7 @@ footer {
 <!-- FOOTER -->
 <footer>
   <div class="footer-left">
-    <div class="footer-icon">🎓</div>
+    <div class="footer-icon"><img src="imagenes/insignia.png" alt="CEDM"></div>
     <div class="footer-name">CEDM Santa Teresa de Avila</div>
   </div>
   <div class="footer-copy">© 2026 — Todos los derechos reservados</div>
