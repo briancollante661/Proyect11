@@ -5,7 +5,9 @@
 const SHEETS_CONFIG = {
 
   avisos: {
-    spreadsheetId: "1aYJ0ZukO-DxzZN77sWMgmzhvsHRQXfsjdDUXel_jE2A",
+    spreadsheetId: 
+    //"1aYJ0ZukO-DxzZN77sWMgmzhvsHRQXfsjdDUXel_jE2A"//,
+    "1FAIpQLSfGnti73ZsA0ur7KM5S5QItflirTriVEWEo9NYMr3alnxEb6A",
     hoja: "Avisos"
   },
 
