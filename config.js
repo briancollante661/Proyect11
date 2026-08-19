@@ -9,7 +9,7 @@ const SHEETS_CONFIG = {
     //"1aYJ0ZukO-DxzZN77sWMgmzhvsHRQXfsjdDUXel_jE2A"//,
     "1FAIpQLSfGnti73ZsA0ur7KM5S5QItflirTriVEWEo9NYMr3alnxEb6A",
     hoja: "Avisos"
-  },
+   },
 
   tareas: {
     spreadsheetId: "18iAw-IVW-9NW3gVJmJzQHw0U8m7UCGEDa1Yi3X4zOHk",
