@@ -6,8 +6,7 @@ const SHEETS_CONFIG = {
 
   avisos: {
     spreadsheetId: 
-    "1aYJ0ZukO-DxzZN77sWMgmzhvsHRQXfsjdDUXel_jE2A",
-    //"1FAIpQLSfGnti73ZsA0ur7KM5S5QItflirTriVEWEo9NYMr3alnxEb6A",
+    "1xt5ep0wThwCWtr9Xz3y5pliaPhboC8bbfiTFrDIyxsc",
     hoja: "Avisos"
    },
 
@@ -17,7 +16,7 @@ const SHEETS_CONFIG = {
   },
 
   horarios: {
-    spreadsheetId: "1xt5ep0wThwCWtr9Xz3y5pliaPhboC8bbfiTFrDIyxsc",
+    spreadsheetId: "1aYJ0ZukO-DxzZN77sWMgmzhvsHRQXfsjdDUXel_jE2A",
     hojas: {
       primero: "Primero",
       segundo: "Segundo",
