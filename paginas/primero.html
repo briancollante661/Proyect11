@@ -435,6 +435,7 @@ function renderArchivo(url) {
   const esImagen = /\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(url)
     || url.includes("uc?export=view");
   if (esImagen) {
+      const urlImg = url.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1000");
     return `
       <div class="tarea-archivo">
         <img class="tarea-img-preview" src="${urlImg}" alt="Imagen adjunta" onerror="this.style.display='none'">
