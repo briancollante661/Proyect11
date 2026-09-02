@@ -695,13 +695,15 @@ footer {
       <div class="nav-logo-sub">Centro Escolar</div>
     </div>
   </div>
-  <div class="nav-links">
-    <a href="index.html">Inicio</a>
-    <div class="nav-divider"></div>
-    <a href="paginas/primero.html">1° Curso</a>
-    <a href="paginas/segundo.html">2° Curso</a>
-    <a href="paginas/tercero.html">3° Curso</a>
-  </div>
+ <div class="nav-links">
+  <a href="index.html">Inicio</a>
+  <div class="nav-divider"></div>
+  <a href="paginas/primero.html">1° Curso</a>
+  <a href="paginas/segundo.html">2° Curso</a>
+  <a href="paginas/tercero.html">3° Curso</a>
+  <div class="nav-divider"></div>
+  <a href="#" onclick="accederProfesores(); return false;">Profesores</a>
+</div>
 </nav>
 
 <!-- HERO -->
@@ -897,6 +899,15 @@ async function cargarAvisos() {
 }
 
 cargarAvisos();
+//Aqui esta la funcion de profesores, no te olvides.
+function accederProfesores() {
+  const clave = prompt("Ingresá la clave de acceso:");
+  if (clave === "1234") {
+    window.location.href = "paginas/profesores.html";
+  } else if (clave !== null) {
+    alert("Clave incorrecta.");
+  }
+}
 </script>
 </body>
 </html>
