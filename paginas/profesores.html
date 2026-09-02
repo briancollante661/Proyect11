@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel de Profesores — CEDM Santa Teresa de Avila</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --negro:        #07070f;
+  --negro-card:   #0f0f1c;
+  --morado-deep:  #150828;
+  --morado:       #3b0f7a;
+  --morado-med:   #6d28d9;
+  --morado-light: #8b5cf6;
+  --lila:         #c4b5fd;
+  --blanco:       #ede9fe;
+  --gris:         rgba(196,181,253,0.5);
+  --gris-texto:   rgba(196,181,253,0.35);
+  --borde:        rgba(139,92,246,0.18);
+  --borde-hover:  rgba(139,92,246,0.45);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--negro);
+  color: var(--blanco);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% -5%, rgba(59,15,122,0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 85% 95%, rgba(21,8,40,0.7) 0%, transparent 55%);
+}
+
+.form-wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 520px;
+  background: var(--negro-card);
+  border: 1px solid var(--borde);
+  border-radius: 18px;
+  padding: 36px 32px;
+}
+
+.form-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.form-sub {
+  font-size: 0.8rem;
+  color: var(--gris-texto);
+  margin-bottom: 28px;
+}
+
+.campo {
+  margin-bottom: 18px;
+}
+
+.campo label {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gris);
+  margin-bottom: 6px;
+}
+
+.campo input,
+.campo select,
+.campo textarea {
+  width: 100%;
+  background: var(--negro);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--blanco);
+  font-family: inherit;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+  border-color: var(--borde-hover);
+}
+
+.campo textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.btn-enviar {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--morado-med), var(--morado-light));
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: opacity 0.2s;
+}
+
+.btn-enviar:hover { opacity: 0.9; }
+.btn-enviar:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.estado-msg {
+  margin-top: 16px;
+  font-size: 0.82rem;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  display: none;
+}
+
+.estado-msg.ok {
+  display: block;
+  background: rgba(34,197,94,0.08);
+  border: 1px solid rgba(34,197,94,0.25);
+  color: #86efac;
+}
+
+.estado-msg.error {
+  display: block;
+  background: rgba(239,68,68,0.05);
+  border: 1px solid rgba(239,68,68,0.2);
+  color: #fca5a5;
+}
+
+.volver {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-size: 0.78rem;
+  color: var(--gris);
+  text-decoration: none;
+}
+
+.volver:hover { color: var(--lila); }
+</style>
+</head>
+<body>
+
+<div class="form-wrap">
+  <a class="volver" href="../index.html">← Volver al inicio</a>
+  <div class="form-title">Panel de Profesores</div>
+  <div class="form-sub">Subí una tarea directamente al sistema.</div>
+
+  <form id="form-tarea">
+    <div class="campo">
+      <label>Curso</label>
+      <select id="curso" required>
+        <option value="">Seleccioná un curso</option>
+        <option value="Primero">Primero</option>
+        <option value="Segundo">Segundo</option>
+        <option value="Tercero">Tercero</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Materia</label>
+      <select id="materia" required disabled>
+        <option value="">Seleccioná primero un curso</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Título</label>
+      <input type="text" id="titulo" required>
+    </div>
+
+    <div class="campo">
+      <label>Descripción</label>
+      <textarea id="descripcion"></textarea>
+    </div>
+
+    <div class="campo">
+      <label>Fecha de entrega</label>
+      <input type="date" id="entrega" required>
+    </div>
+
+    <div class="campo">
+      <label>Archivo (opcional)</label>
+      <input type="file" id="archivo">
+    </div>
+
+    <button type="submit" class="btn-enviar" id="btn-enviar">Subir tarea</button>
+    <div class="estado-msg" id="estado-msg"></div>
+  </form>
+</div>
+
+<script>
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxuJqRb2DkzMm1YZbZFZ5L-OBePgbbGCkS1s1LRDhgvyj0CEmsRs_bPMm4CBbmMQnteUg/exec";
+
+const MATERIAS_POR_CURSO = {
+  "Primero": [
+    "Matemática", "Matemática aplicada", "Algoritmica", "Física", "Software",
+    "Hardware", "Laboratorio", "Dibujo técnico", "Historia y geografía", "Ética",
+    "Química", "Ciencias Naturales", "Educación física", "Guaraní", "Castellano",
+    "Inglés", "Orientación"
+  ],
+  "Segundo": [
+    "Matemática", "Matemática aplicada", "Algoritmica", "Laboratorio", "Mercadotecnia",
+    "Administración Financiera", "Psicología", "Economía", "Orientación",
+    "Ciencias Naturales", "Investigación social", "Historia y Geografía",
+    "Castellano", "Educación física"
+  ],
+  "Tercero": [
+    "Matemática", "Matemática aplicada", "Algoritmica", "Laboratorio", "Mercadotecnia",
+    "Administración Financiera", "Economía", "Psicología", "Castellano",
+    "Ciencias Naturales", "Orientación", "Investigación Social",
+    "Historia y Geografía", "Educación Física"
+  ]
+};
+
+const selCurso = document.getElementById("curso");
+const selMateria = document.getElementById("materia");
+
+selCurso.addEventListener("change", () => {
+  const curso = selCurso.value;
+  selMateria.innerHTML = "";
+
+  if (!curso) {
+    selMateria.disabled = true;
+    selMateria.innerHTML = '<option value="">Seleccioná primero un curso</option>';
+    return;
+  }
+
+  selMateria.disabled = false;
+  selMateria.innerHTML = '<option value="">Seleccioná una materia</option>';
+  MATERIAS_POR_CURSO[curso].forEach(m => {
+    const opt = document.createElement("option");
+    opt.value = m;
+    opt.textContent = m;
+    selMateria.appendChild(opt);
+  });
+});
+
+function archivoABase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+document.getElementById("form-tarea").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const btn = document.getElementById("btn-enviar");
+  const msg = document.getElementById("estado-msg");
+  msg.className = "estado-msg";
+  msg.textContent = "";
+  btn.disabled = true;
+  btn.textContent = "Subiendo...";
+
+  try {
+    const archivoInput = document.getElementById("archivo");
+    const archivo = archivoInput.files[0];
+
+    const payload = {
+      curso: selCurso.value,
+      materia: selMateria.value,
+      titulo: document.getElementById("titulo").value,
+      descripcion: document.getElementById("descripcion").value,
+      entrega: document.getElementById("entrega").value
+    };
+
+    if (archivo) {
+      payload.archivoBase64 = await archivoABase64(archivo);
+      payload.archivoNombre = archivo.name;
+      payload.archivoTipo = archivo.type;
+    }
+
+    const resp = await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await resp.json();
+
+    if (data.status === "ok") {
+      msg.className = "estado-msg ok";
+      msg.textContent = "✓ Tarea subida correctamente.";
+      document.getElementById("form-tarea").reset();
+      selMateria.disabled = true;
+      selMateria.innerHTML = '<option value="">Seleccioná primero un curso</option>';
+    } else {
+      throw new Error(data.message || "Error desconocido");
+    }
+  } catch (err) {
+    msg.className = "estado-msg error";
+    msg.textContent = "Ocurrió un error al subir la tarea: " + err.message;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "Subir tarea";
+  }
+});
+</script>
+</body>
+</html>
