@@ -277,8 +277,8 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
   btn.textContent = "Subiendo...";
 
   try {
-    const archivoInput = document.getElementById("archivo");
-    const archivo = archivoInput.files[0];
+     const archivoInput = document.getElementById("archivo");
+    const archivos = Array.from(archivoInput.files);
 
     const payload = {
       curso: selCurso.value,
@@ -288,10 +288,12 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
       entrega: document.getElementById("entrega").value
     };
 
-    if (archivo) {
-      payload.archivoBase64 = await archivoABase64(archivo);
-      payload.archivoNombre = archivo.name;
-      payload.archivoTipo = archivo.type;
+    if (archivos.length) {
+      payload.archivos = await Promise.all(archivos.map(async (f) => ({
+        base64: await archivoABase64(f),
+        nombre: f.name,
+        tipo: f.type
+      })));
     }
 
     const resp = await fetch(APPS_SCRIPT_URL, {
