@@ -574,5 +574,9 @@ async function cargarHorario() {
 cargarTareas();
 cargarHorario();
 </script>
+<div class="lightbox-overlay" id="lightbox" onclick="cerrarLightbox()">
+  <span class="lightbox-close" onclick="cerrarLightbox()">&times;</span>
+  <img id="lightbox-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
+</div>
 </body>
 </html>
