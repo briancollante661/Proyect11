@@ -572,6 +572,15 @@ async function cargarHorario() {
   }
 }
 
+function abrirLightbox(url) {
+  document.getElementById("lightbox-img").src = url;
+  document.getElementById("lightbox").classList.add("active");
+}
+function cerrarLightbox() {
+  document.getElementById("lightbox").classList.remove("active");
+  document.getElementById("lightbox-img").src = "";
+}
+
 cargarTareas();
 cargarHorario();
 </script>
