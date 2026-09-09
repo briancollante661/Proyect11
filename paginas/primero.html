@@ -489,7 +489,17 @@ function renderArchivo(urlRaw) {
     imagenes.forEach(u => {
       const urlImg = u.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1000");
       const urlImgGrande = u.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1600");
-      html += `<img class="tarea-img-preview" src="${urlImg}" alt="Imagen adjunta" onclick="abrirLightbox('${urlImgGrande}')" onerror="this.style.display='none'">`;
+      html += `
+        <div class="tarea-img-wrap">
+          <img class="tarea-img-preview" src="${urlImg}" alt="Imagen adjunta" onclick="abrirLightbox('${urlImgGrande}')" onerror="this.style.display='none'">
+          <a class="tarea-img-descarga" href="${urlImgGrande}" target="_blank" download onclick="event.stopPropagation()" title="Descargar imagen">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </a>
+        </div>`;
     });
     html += `</div>`;
   }
