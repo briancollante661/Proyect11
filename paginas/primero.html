@@ -272,9 +272,19 @@ nav {
 .tarea-galeria {
   display:flex; flex-wrap:wrap; gap:8px;
 }
-.tarea-galeria .tarea-img-preview {
-  width:calc(50% - 4px); max-height:120px; margin-bottom:0;
+.tarea-img-wrap { position:relative; width:100%; }
+.tarea-img-wrap .tarea-img-preview { width:100%; margin-bottom:0; }
+.tarea-galeria .tarea-img-wrap { width:calc(50% - 4px); }
+.tarea-img-descarga {
+  position:absolute; top:6px; right:6px;
+  width:26px; height:26px;
+  background:rgba(7,7,15,0.75);
+  border:1px solid var(--borde);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--blanco);
 }
+.tarea-img-descarga:hover { background:rgba(7,7,15,0.92); }
 .tarea-img-preview { cursor:zoom-in; }
 
 .lightbox-overlay {
