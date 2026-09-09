@@ -462,26 +462,44 @@ function normFecha(str) {
   return str.substring(0,10);
 }
 
-function renderArchivo(url) {
-  if (!url) return "";
-  const esImagen = /\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(url)
-    || url.includes("uc?export=view");
-  if (esImagen) {
-     const urlImg = url.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1000");
-      const urlImgGrande = url.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1600");
-    return `
-      <div class="tarea-archivo">
-        <img class="tarea-img-preview" src="${urlImg}" alt="Imagen adjunta" onclick="abrirLightbox('${urlImgGrande}')" onerror="this.style.display='none'">
-       <a class="btn-descarga" href="${urlImgGrande}" target="_blank">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          Ver imagen completa
-        </a>
-      </div>`;
+function renderArchivo(urlRaw) {
+  if (!urlRaw) return "";
+  const links = urlRaw.split(",").map(u => u.trim()).filter(Boolean);
+  if (!links.length) return "";
+
+  const esImagen = (u) => /\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(u) || u.includes("uc?export=view");
+  const imagenes = links.filter(esImagen);
+  const otros = links.filter(u => !esImagen(u));
+
+  let html = "";
+
+  if (imagenes.length) {
+    const claseGaleria = imagenes.length > 1 ? " tarea-galeria" : "";
+    html += `<div class="tarea-archivo${claseGaleria}">`;
+    imagenes.forEach(u => {
+      const urlImg = u.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1000");
+      const urlImgGrande = u.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1600");
+      html += `<img class="tarea-img-preview" src="${urlImg}" alt="Imagen adjunta" onclick="abrirLightbox('${urlImgGrande}')" onerror="this.style.display='none'">`;
+    });
+    html += `</div>`;
   }
+
+  otros.forEach(u => {
+    html += `
+    <div class="tarea-archivo">
+      <a class="btn-descarga" href="${u}" target="_blank" download>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Descargar archivo
+      </a>
+    </div>`;
+  });
+
+  return html;
+}
   return `
     <div class="tarea-archivo">
       <a class="btn-descarga" href="${url}" target="_blank" download>
@@ -493,7 +511,7 @@ function renderArchivo(url) {
         Descargar archivo
       </a>
     </div>`;
-}
+
 
 function renderTareas(filas) {
   if (!filas.length) return '<div class="no-data">No hay tareas para mostrar.</div>';
