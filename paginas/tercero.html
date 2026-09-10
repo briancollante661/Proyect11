@@ -270,6 +270,49 @@ nav {
   display:block; margin-bottom:8px;
 }
 
+.tarea-galeria {
+  display:flex; flex-wrap:wrap; gap:8px;
+}
+.tarea-img-wrap { position:relative; width:100%; }
+.tarea-img-wrap .tarea-img-preview { width:100%; margin-bottom:0; }
+.tarea-galeria .tarea-img-wrap { width:calc(50% - 4px); }
+.tarea-img-descarga {
+  position:absolute; top:6px; right:6px;
+  width:26px; height:26px;
+  background:rgba(7,7,15,0.75);
+  border:1px solid var(--borde);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--blanco);
+}
+.tarea-img-descarga:hover { background:rgba(7,7,15,0.92); }
+.tarea-img-preview { cursor:zoom-in; }
+
+.lightbox-overlay {
+  display:none;
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.92);
+  z-index:999;
+  align-items:center; justify-content:center;
+  padding:20px;
+}
+.lightbox-overlay.active { display:flex; }
+.lightbox-overlay img {
+  max-width:100%; max-height:100%;
+  object-fit:contain;
+  border-radius:8px;
+}
+.lightbox-close {
+  position:fixed; top:16px; right:20px;
+  color:#fff; font-size:2rem; line-height:1;
+  cursor:pointer; z-index:1000;
+  background:rgba(255,255,255,.12);
+  width:40px; height:40px;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+}
+
+
 .btn-descarga {
   display:inline-flex; align-items:center; gap:7px;
   background:rgba(139,92,246,.1);
