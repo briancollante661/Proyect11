@@ -474,21 +474,27 @@ function normFecha(str) {
 
 function renderArchivo(urlRaw) {
   if (!urlRaw) return "";
-  const links = urlRaw.split(",").map(u => u.trim()).filter(Boolean);
+  const links = urlRaw.split(",").map(e => e.trim()).filter(Boolean).map(entry => {
+    const [url, nombre] = entry.split("::");
+    return { url, nombre: nombre || "" };
+  });
   if (!links.length) return "";
 
-  const esImagen = (u) => /\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(u) || u.includes("uc?export=view");
+  const esImagen = (item) => {
+    if (item.nombre) return /\.(jpg|jpeg|png|gif|webp)$/i.test(item.nombre);
+    return /\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(item.url) || item.url.includes("uc?export=view");
+  };
   const imagenes = links.filter(esImagen);
-  const otros = links.filter(u => !esImagen(u));
+  const otros = links.filter(item => !esImagen(item));
 
   let html = "";
 
   if (imagenes.length) {
     const claseGaleria = imagenes.length > 1 ? " tarea-galeria" : "";
     html += `<div class="tarea-archivo${claseGaleria}">`;
-    imagenes.forEach(u => {
-      const urlImg = u.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1000");
-      const urlImgGrande = u.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1600");
+    imagenes.forEach(item => {
+      const urlImg = item.url.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1000");
+      const urlImgGrande = item.url.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1600");
       html += `
         <div class="tarea-img-wrap">
           <img class="tarea-img-preview" src="${urlImg}" alt="Imagen adjunta" onclick="abrirLightbox('${urlImgGrande}')" onerror="this.style.display='none'">
@@ -504,16 +510,16 @@ function renderArchivo(urlRaw) {
     html += `</div>`;
   }
 
-  otros.forEach(u => {
+  otros.forEach(item => {
     html += `
     <div class="tarea-archivo">
-      <a class="btn-descarga" href="${u}" target="_blank" download>
+      <a class="btn-descarga" href="${item.url}" target="_blank" download>
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
           <polyline points="7 10 12 15 17 10"/>
           <line x1="12" y1="15" x2="12" y2="3"/>
         </svg>
-        Descargar archivo
+        ${item.nombre ? "Descargar " + item.nombre : "Descargar archivo"}
       </a>
     </div>`;
   });
