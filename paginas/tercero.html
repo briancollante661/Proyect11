@@ -369,11 +369,39 @@ nav {
 }
 
 /* Estado */
-.estado { text-align:center; padding:56px 20px; color:var(--gris-texto); font-size:.86rem; }
-.spinner { width:30px;height:30px;border:2px solid rgba(139,92,246,.1);border-top-color:var(--morado-light);border-radius:50%;animation:spin .75s linear infinite;margin:0 auto 14px; }
-@keyframes spin{ to{transform:rotate(360deg)} }
 .no-data { text-align:center;padding:48px 20px;color:var(--gris-texto);font-size:.84rem; }
 .error-box { background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.2);border-radius:10px;padding:16px 20px;color:#fca5a5;font-size:.82rem;line-height:1.6; }
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 640px) {
+  nav { padding: 0 16px; height: 60px; }
+  .nav-logo-sub { display:none; }
+  .nav-logo-main { font-size:.72rem; }
+  .nav-links { gap:0; }
+  .nav-links a { padding:6px 8px; font-size:.68rem; }
+  .nav-divider { display:none; }
+
+  .page-header { padding: 88px 20px 32px; gap:14px; }
+  .page-title { font-size: clamp(1.6rem, 8vw, 2.2rem); }
+  .page-subtitle { font-size:.78rem; }
+  .live-badge { font-size:.6rem; padding:6px 10px; }
+
+  .tabs-bar { padding: 0 20px; overflow-x:auto; }
+  .tab-btn { padding: 14px 14px; font-size:.74rem; }
+
+  .content { padding: 28px 20px 70px; }
+
+  .filtros-bar { padding:12px; gap:8px; }
+  .filtro-group { flex: 1 1 auto; }
+  .filtro-group select, .filtro-group input[type="date"] { font-size:.76rem; padding:6px 9px; }
+  .btn-limpiar { margin-left:0; }
+
+  .tarea-card { padding:14px 16px; gap:12px; }
+  .tarea-titulo { font-size:.9rem; }
+  .tarea-desc { font-size:.78rem; }
+
+  .btn-descarga { font-size:.68rem; padding:6px 11px; }
+}
 </style>
 </head>
 <body>
