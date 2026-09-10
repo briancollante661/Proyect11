@@ -28,6 +28,7 @@ body {
   background: var(--negro);
   color: var(--blanco);
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 body::before {
@@ -72,6 +73,7 @@ nav {
   border-bottom: 1px solid var(--borde);
   margin-bottom: 0;
 }
+
 .breadcrumb {
   display: flex; align-items: center; gap:8px;
   font-size:.62rem; letter-spacing:.18em; text-transform:uppercase;
@@ -268,6 +270,48 @@ nav {
   display:block; margin-bottom:8px;
 }
 
+.tarea-galeria {
+  display:flex; flex-wrap:wrap; gap:8px;
+}
+.tarea-img-wrap { position:relative; width:100%; }
+.tarea-img-wrap .tarea-img-preview { width:100%; margin-bottom:0; }
+.tarea-galeria .tarea-img-wrap { width:calc(50% - 4px); }
+.tarea-img-descarga {
+  position:absolute; top:6px; right:6px;
+  width:26px; height:26px;
+  background:rgba(7,7,15,0.75);
+  border:1px solid var(--borde);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--blanco);
+}
+.tarea-img-descarga:hover { background:rgba(7,7,15,0.92); }
+.tarea-img-preview { cursor:zoom-in; }
+
+.lightbox-overlay {
+  display:none;
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.92);
+  z-index:999;
+  align-items:center; justify-content:center;
+  padding:20px;
+}
+.lightbox-overlay.active { display:flex; }
+.lightbox-overlay img {
+  max-width:100%; max-height:100%;
+  object-fit:contain;
+  border-radius:8px;
+}
+.lightbox-close {
+  position:fixed; top:16px; right:20px;
+  color:#fff; font-size:2rem; line-height:1;
+  cursor:pointer; z-index:1000;
+  background:rgba(255,255,255,.12);
+  width:40px; height:40px;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+}
+
 .btn-descarga {
   display:inline-flex; align-items:center; gap:7px;
   background:rgba(139,92,246,.1);
@@ -329,6 +373,37 @@ nav {
 @keyframes spin{ to{transform:rotate(360deg)} }
 .no-data { text-align:center;padding:48px 20px;color:var(--gris-texto);font-size:.84rem; }
 .error-box { background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.2);border-radius:10px;padding:16px 20px;color:#fca5a5;font-size:.82rem;line-height:1.6; }
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 640px) {
+  nav { padding: 0 16px; height: 60px; }
+  .nav-logo-sub { display:none; }
+  .nav-logo-main { font-size:.72rem; }
+  .nav-links { gap:0; }
+  .nav-links a { padding:6px 8px; font-size:.68rem; }
+  .nav-divider { display:none; }
+
+  .page-header { padding: 88px 20px 32px; gap:14px; }
+  .page-title { font-size: clamp(1.6rem, 8vw, 2.2rem); }
+  .page-subtitle { font-size:.78rem; }
+  .live-badge { font-size:.6rem; padding:6px 10px; }
+
+  .tabs-bar { padding: 0 20px; overflow-x:auto; }
+  .tab-btn { padding: 14px 14px; font-size:.74rem; }
+
+  .content { padding: 28px 20px 70px; }
+
+  .filtros-bar { padding:12px; gap:8px; }
+  .filtro-group { flex: 1 1 auto; }
+  .filtro-group select, .filtro-group input[type="date"] { font-size:.76rem; padding:6px 9px; }
+  .btn-limpiar { margin-left:0; }
+
+  .tarea-card { padding:14px 16px; gap:12px; }
+  .tarea-titulo { font-size:.9rem; }
+  .tarea-desc { font-size:.78rem; }
+
+  .btn-descarga { font-size:.68rem; padding:6px 11px; }
+}
 </style>
 </head>
 <body>
@@ -429,38 +504,61 @@ function normFecha(str) {
   return str.substring(0,10);
 }
 
-function renderArchivo(url) {
-  if (!url) return "";
-  const esImagen = /\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(url)
-    || url.includes("uc?export=view");
-  if (esImagen) {
-      const urlImg = url.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1000");
-    return `
-      <div class="tarea-archivo">
-        <img class="tarea-img-preview" src="${urlImg}" alt="Imagen adjunta" onerror="this.style.display='none'">
-        <a class="btn-descarga" href="${url}" target="_blank" download>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          Descargar imagen
-        </a>
-      </div>`;
+function renderArchivo(urlRaw) {
+  if (!urlRaw) return "";
+  const links = urlRaw.split(",").map(e => e.trim()).filter(Boolean).map(entry => {
+    const [url, nombre] = entry.split("::");
+    return { url, nombre: nombre || "" };
+  });
+  if (!links.length) return "";
+
+  const esImagen = (item) => {
+    if (item.nombre) return /\.(jpg|jpeg|png|gif|webp)$/i.test(item.nombre);
+    return /\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(item.url) || item.url.includes("uc?export=view");
+  };
+  const imagenes = links.filter(esImagen);
+  const otros = links.filter(item => !esImagen(item));
+
+  let html = "";
+
+  if (imagenes.length) {
+    const claseGaleria = imagenes.length > 1 ? " tarea-galeria" : "";
+    html += `<div class="tarea-archivo${claseGaleria}">`;
+    imagenes.forEach(item => {
+      const urlImg = item.url.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1000");
+      const urlImgGrande = item.url.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1600");
+      html += `
+        <div class="tarea-img-wrap">
+          <img class="tarea-img-preview" src="${urlImg}" alt="Imagen adjunta" onclick="abrirLightbox('${urlImgGrande}')" onerror="this.style.display='none'">
+          <a class="tarea-img-descarga" href="${urlImgGrande}" target="_blank" download onclick="event.stopPropagation()" title="Descargar imagen">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </a>
+        </div>`;
+    });
+    html += `</div>`;
   }
-  return `
+
+  otros.forEach(item => {
+    html += `
     <div class="tarea-archivo">
-      <a class="btn-descarga" href="${url}" target="_blank" download>
+      <a class="btn-descarga" href="${item.url}" target="_blank" download>
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
           <polyline points="7 10 12 15 17 10"/>
           <line x1="12" y1="15" x2="12" y2="3"/>
         </svg>
-        Descargar archivo
+        ${item.nombre ? "Descargar " + item.nombre : "Descargar archivo"}
       </a>
     </div>`;
-}
+  });
 
+  return html;
+}
+  
 function renderTareas(filas) {
   if (!filas.length) return '<div class="no-data">No hay tareas para mostrar.</div>';
   return filas.map((f,i) => `
@@ -468,7 +566,7 @@ function renderTareas(filas) {
       <div class="tarea-acento"></div>
       <div class="tarea-body">
         <div class="tarea-meta">
-          <span class="tarea-meta-materia">${f["Materia"] || "—"}</span>
+          <span class="tarea-meta-materia">${f["Materia(Segundo)"] || "—"}</span>
           <div class="tarea-meta-sep"></div>
           <span class="tarea-meta-fecha">Entrega: ${f["Entrega"] || "—"}</span>
         </div>
@@ -481,7 +579,7 @@ function renderTareas(filas) {
 
 function poblarMaterias(filas) {
   const sel = document.getElementById("filtro-materia");
-  [...new Set(filas.map(f=>f["Materia"]).filter(Boolean))].sort().forEach(m => {
+  [...new Set(filas.map(f=>f["Materia(Segundo)"]).filter(Boolean))].sort().forEach(m => {
     const o = document.createElement("option");
     o.value = m; o.textContent = m;
     sel.appendChild(o);
@@ -493,7 +591,7 @@ function filtrarTareas() {
   const materia = document.getElementById("filtro-materia").value;
   let fil = todasTareas;
   if (fecha)   fil = fil.filter(f => normFecha(f["Entrega"]) === fecha);
-  if (materia) fil = fil.filter(f => f["Materia"] === materia);
+  if (materia) fil = fil.filter(f => f["Materia(Segundo)"] === materia);
   document.getElementById("tareas-contenido").innerHTML = renderTareas(fil);
 }
 
@@ -545,8 +643,21 @@ async function cargarHorario() {
   }
 }
 
+function abrirLightbox(url) {
+  document.getElementById("lightbox-img").src = url;
+  document.getElementById("lightbox").classList.add("active");
+}
+function cerrarLightbox() {
+  document.getElementById("lightbox").classList.remove("active");
+  document.getElementById("lightbox-img").src = "";
+}
+
 cargarTareas();
 cargarHorario();
 </script>
+<div class="lightbox-overlay" id="lightbox" onclick="cerrarLightbox()">
+  <span class="lightbox-close" onclick="cerrarLightbox()">&times;</span>
+  <img id="lightbox-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
+</div>
 </body>
 </html>
