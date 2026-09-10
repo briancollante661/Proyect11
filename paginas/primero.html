@@ -528,7 +528,7 @@ function renderTareas(filas) {
       <div class="tarea-acento"></div>
       <div class="tarea-body">
         <div class="tarea-meta">
-          <span class="tarea-meta-materia">${f["Materia"] || "—"}</span>
+          <span class="tarea-meta-materia">${f["Materia(Primero)"] || "—"}</span>
           <div class="tarea-meta-sep"></div>
           <span class="tarea-meta-fecha">Entrega: ${f["Entrega"] || "—"}</span>
         </div>
@@ -541,7 +541,7 @@ function renderTareas(filas) {
 
 function poblarMaterias(filas) {
   const sel = document.getElementById("filtro-materia");
-  [...new Set(filas.map(f=>f["Materia"]).filter(Boolean))].sort().forEach(m => {
+  [...new Set(filas.map(f=>f["Materia(Primero)"]).filter(Boolean))].sort().forEach(m => {
     const o = document.createElement("option");
     o.value = m; o.textContent = m;
     sel.appendChild(o);
@@ -553,7 +553,7 @@ function filtrarTareas() {
   const materia = document.getElementById("filtro-materia").value;
   let fil = todasTareas;
   if (fecha)   fil = fil.filter(f => normFecha(f["Entrega"]) === fecha);
-  if (materia) fil = fil.filter(f => f["Materia"] === materia);
+  if (materia) fil = fil.filter(f => f["Materia(Primero)"] === materia);
   document.getElementById("tareas-contenido").innerHTML = renderTareas(fil);
 }
 
