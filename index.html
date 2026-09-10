@@ -895,11 +895,19 @@ function fmtFecha(str) {
   } catch { return str; }
 }
 
+function urlImagenThumb(url, tam) {
+  if (!url) return "";
+  return url.replace(/\/uc\?export=view&id=([-\w]+)/, `/thumbnail?id=$1&sz=w${tam}`);
+}
+
 function renderAvisos(filas) {
   if (!filas.length) return '<div class="no-data">No hay avisos para mostrar.</div>';
   return filas.map((f, i) => {
-    const img = f["Imagen"]
-      ? `<img class="aviso-img" src="${f["Imagen"]}" alt="Aviso" onerror="this.style.display='none'">`
+    const urlOriginal = f["Imagen"] || "";
+    const urlImg = urlImagenThumb(urlOriginal, 800);
+    const urlImgGrande = urlImagenThumb(urlOriginal, 1600);
+    const img = urlOriginal
+      ? `<img class="aviso-img" src="${urlImg}" alt="Aviso" onclick="abrirLightbox('${urlImgGrande}')" onerror="this.style.display='none'">`
       : "";
     const desc = f["Descripcion"]
       ? `<p class="aviso-desc">${f["Descripcion"]}</p>`
