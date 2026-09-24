@@ -752,7 +752,7 @@ footer {
   <a href="paginas/segundo.html">2° Curso</a>
   <a href="paginas/tercero.html">3° Curso</a>
   <div class="nav-divider"></div>
-  <a href="#" onclick="accederProfesores(); return false;">Profesores</a>
+  <a href="profesores.html">Profesores</a>
 </div>
 </nav>
 
@@ -966,15 +966,7 @@ function cerrarLightbox() {
 }
 
 cargarAvisos();
-//Aqui esta la funcion de profesores, no te olvides.
-function accederProfesores() {
-  const clave = prompt("Ingresá la clave de acceso:");
-  if (clave === "1234") {
-    window.location.href = "paginas/profesores.html";
-  } else if (clave !== null) {
-    alert("Clave incorrecta.");
-  }
-}
+
 </script>
 <div class="lightbox-overlay" id="lightbox" onclick="cerrarLightbox()">
   <span class="lightbox-close" onclick="cerrarLightbox()">&times;</span>
