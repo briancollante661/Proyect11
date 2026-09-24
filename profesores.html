@@ -287,7 +287,8 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
      const archivoInput = document.getElementById("archivo");
     const archivos = Array.from(archivoInput.files);
 
-    const payload = {
+       const payload = {
+      idToken: await firebase.auth().currentUser.getIdToken(),
       curso: selCurso.value,
       materia: selMateria.value,
       titulo: document.getElementById("titulo").value,
@@ -318,6 +319,10 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
       selMateria.disabled = true;
       selMateria.innerHTML = '<option value="">Seleccioná primero un curso</option>';
     } else {
+      if (data.message === "No autorizado") {
+        window.location.href = "login.html";
+        return;
+      }
       throw new Error(data.message || "Error desconocido");
     }
   } catch (err) {
