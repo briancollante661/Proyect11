@@ -378,12 +378,14 @@ nav {
 
 /* RESPONSIVE MOBILE */
 @media (max-width: 640px) {
-  nav { padding: 0 16px; height: 60px; }
-  .nav-logo-sub { display:none; }
-  .nav-logo-main { font-size:.72rem; }
-  .nav-links { gap:0; }
-  .nav-links a { padding:6px 8px; font-size:.68rem; }
-  .nav-divider { display:none; }
+  nav { padding: 0 16px; height: 60px; gap: 12px; }
+.nav-logo { flex-shrink: 0; }
+.nav-logo-sub { display:none; }
+.nav-logo-main { font-size:.72rem; }
+.nav-links { gap:0; min-width:0; overflow-x:auto; scrollbar-width:none; }
+.nav-links::-webkit-scrollbar { display:none; }
+.nav-links a { padding:6px 8px; font-size:.68rem; white-space:nowrap; flex-shrink:0; }
+.nav-divider { display:none; }
 
   .page-header { padding: 88px 20px 32px; gap:14px; }
   .page-title { font-size: clamp(1.6rem, 8vw, 2.2rem); }
@@ -405,6 +407,15 @@ nav {
   .tarea-desc { font-size:.78rem; }
 
   .btn-descarga { font-size:.68rem; padding:6px 11px; }
+}
+@media (max-width: 480px) {
+  .nav-logo-text { display: none; }
+  .nav-links a { padding: 6px 6px; font-size: .64rem; letter-spacing: .02em; }
+
+  .page-header { padding: 88px 16px 28px; }
+  .tabs-bar { padding: 0 16px; }
+  .content { padding: 24px 16px 60px; }
+  .tarea-card { padding: 12px 14px; gap: 10px; }
 }
 </style>
 </head>
