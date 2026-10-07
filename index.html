@@ -7,18 +7,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-  --negro:        #0e0101;
-  --negro-card:   #0f0f1c;
-  --morado-deep:  #150828;
+  --negro:        #fdfdfd;
+  --negro-card:   #2b2bd2;
+  --morado-deep:  #090909;
   --morado:       #3b0f7a;
   --morado-med:   #6d28d9;
-  --morado-light: #8b5cf6;
+  --morado-light: #b593d4;
   --lila:         #c4b5fd;
   --blanco:       #ede9fe;
   --gris:         rgba(241, 240, 244, 0.922);
-  --gris-texto:   rgba(244, 13, 13, 0.84);
-  --borde:        rgba(139,92,246,0.18);
-  --borde-hover:  rgba(42, 218, 165, 0.45);
+  --gris-texto:   rgba(246, 239, 239, 0.84);
+  --borde:        rgb(182, 183, 173);
+  --borde-hover:  rgb(246, 11, 195);
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -40,7 +40,7 @@ body::before {
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(ellipse 70% 55% at 50% -5%, rgba(59,15,122,0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 55% at 50% -5%, #6B248C 0%, transparent 60%),
     radial-gradient(ellipse 40% 30% at 85% 95%, rgba(142, 131, 159, 0.7) 0%, transparent 55%);
 }
 
@@ -54,7 +54,7 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding: 0 48px;
-  background: rgba(7,7,15,0.75);
+  background: #8C3FA5;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--borde);
@@ -204,13 +204,13 @@ nav {
 .hero-title .t1 {
   display: block;
   font-size: clamp(2.8rem, 6vw, 5rem);
-  color: rgba(255,255,255,0.9);
+  color: rgba(18, 18, 18, 0.9);
 }
 
 .hero-title .t2 {
   display: block;
   font-size: clamp(3.2rem, 7vw, 6rem);
-  background: linear-gradient(135deg, #c4b5fd 0%, #8b5cf6 50%, #a78bfa 100%);
+  background: linear-gradient(135deg, #984eb1a6 0%, #984EB1 50%, #3a3647 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
