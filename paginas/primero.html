@@ -645,7 +645,7 @@ async function cargarTareas() {
     cont.innerHTML = renderTareas(todasTareas);
   } catch(e) {
     cont.innerHTML = `<div class="error-box">No se pudieron cargar las tareas.<br><small>${e.message}</small></div>`;
-  }
+  } 
 }
 
 async function cargarHorario() {
