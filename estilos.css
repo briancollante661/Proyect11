@@ -409,3 +409,151 @@ nav {
   .content { padding: 24px 16px 60px; }
   .tarea-card { padding: 12px 14px; gap: 10px; }
 }
+
+/* ===== ACCESO DE PROFESORES ===== */
+body.pagina-login { font-family: system-ui, sans-serif; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; background:#150E24; color:#F1ECFA; }
+body.pagina-login .box { width:90%; max-width:340px; padding:28px; border-radius:14px; background:#1F1733; border:1px solid #3C2F58; }
+body.pagina-login h1 { font-size:18px; margin:0 0 18px; text-align:center; }
+body.pagina-login label { font-size:13px; color:#B9A9D9; display:block; margin-bottom:4px; }
+body.pagina-login input { width:100%; box-sizing:border-box; padding:10px 12px; margin-bottom:14px; border-radius:8px; border:1px solid #3C2F58; background:#150E24; color:#F1ECFA; font-size:14px; }
+body.pagina-login button { width:100%; padding:11px; border:0; border-radius:8px; background:#8B5CF6; color:white; font-size:14px; font-weight:600; cursor:pointer; }
+body.pagina-login button:disabled { opacity:.6; cursor:default; }
+body.pagina-login #error { color:#fca5a5; font-size:13px; margin-top:12px; text-align:center; min-height:16px; }
+
+/* ===== PANEL DE PROFESORES ===== */
+body.pagina-profesores {
+  --negro:        #07070f;
+  --negro-card:   #0f0f1c;
+  --morado-deep:  #150828;
+  --morado:       #3b0f7a;
+  --morado-med:   #6d28d9;
+  --morado-light: #8b5cf6;
+  --lila:         #c4b5fd;
+  --blanco:       #ede9fe;
+  --gris:         rgba(196,181,253,0.5);
+  --gris-texto:   rgba(196,181,253,0.35);
+  --borde:        rgba(139,92,246,0.18);
+  --borde-hover:  rgba(139,92,246,0.45);
+}
+body.pagina-profesores, body.pagina-profesores * { margin:0; padding:0; box-sizing:border-box; }
+body.pagina-profesores {
+  font-family: 'Inter', sans-serif;
+  background: var(--negro);
+  color: var(--blanco);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+body.pagina-profesores::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% -5%, rgba(59,15,122,0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 85% 95%, rgba(21,8,40,0.7) 0%, transparent 55%);
+}
+body.pagina-profesores .form-wrap {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 520px;
+  background: var(--negro-card);
+  border: 1px solid var(--borde);
+  border-radius: 18px;
+  padding: 36px 32px;
+}
+body.pagina-profesores .form-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+body.pagina-profesores .form-sub {
+  font-size: 0.8rem;
+  color: var(--gris-texto);
+  margin-bottom: 28px;
+}
+body.pagina-profesores .campo {
+  margin-bottom: 18px;
+}
+body.pagina-profesores .campo label {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gris);
+  margin-bottom: 6px;
+}
+body.pagina-profesores .campo input,
+body.pagina-profesores .campo select,
+body.pagina-profesores .campo textarea {
+  width: 100%;
+  background: var(--negro);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--blanco);
+  font-family: inherit;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+body.pagina-profesores .campo input:focus,
+body.pagina-profesores .campo select:focus,
+body.pagina-profesores .campo textarea:focus {
+  border-color: var(--borde-hover);
+}
+body.pagina-profesores .campo textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+body.pagina-profesores .btn-enviar {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--morado-med), var(--morado-light));
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: opacity 0.2s;
+}
+body.pagina-profesores .btn-enviar:hover { opacity: 0.9; }
+body.pagina-profesores .btn-enviar:disabled { opacity: 0.5; cursor: not-allowed; }
+body.pagina-profesores .estado-msg {
+  margin-top: 16px;
+  font-size: 0.82rem;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  display: none;
+}
+body.pagina-profesores .estado-msg.ok {
+  display: block;
+  background: rgba(34,197,94,0.08);
+  border: 1px solid rgba(34,197,94,0.25);
+  color: #86efac;
+}
+body.pagina-profesores .estado-msg.error {
+  display: block;
+  background: rgba(239,68,68,0.05);
+  border: 1px solid rgba(239,68,68,0.2);
+  color: #fca5a5;
+}
+body.pagina-profesores .volver {
+  display: inline-block;
+  margin-bottom: 20px;
+  font-size: 0.78rem;
+  color: var(--gris);
+  text-decoration: none;
+}
+body.pagina-profesores .volver:hover { color: var(--lila); }
+
+
