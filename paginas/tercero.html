@@ -48,6 +48,7 @@
 <div class="tabs-bar">
   <button class="tab-btn active" onclick="cambiarTab('tareas',this)">📚 Tareas</button>
   <button class="tab-btn" onclick="cambiarTab('horarios',this)">🕒 Horario</button>
+    <button class="tab-btn" onclick="cambiarTab('avisos',this)">📢 Avisos</button>
 </div>
 
 <div class="content">
@@ -79,6 +80,12 @@
     </div>
   </div>
 
+  <!-- AVISOS -->
+  <div class="section" id="avisos">
+    <div id="avisos-curso">
+      <div class="estado"><div class="spinner"></div>Cargando avisos...</div>
+    </div>
+  </div>
 </div>
 
 <script src="../config.js"></script>
@@ -256,6 +263,7 @@ function cerrarLightbox() {
 
 cargarTareas();
 cargarHorario();
+cargarAvisosCurso(CURSO, "avisos-curso");
 </script>
 <div class="lightbox-overlay" id="lightbox" onclick="cerrarLightbox()">
   <span class="lightbox-close" onclick="cerrarLightbox()">&times;</span>

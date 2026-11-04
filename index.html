@@ -1048,14 +1048,14 @@ function renderAvisos(filas) {
       ? `<img class="aviso-img" src="${urlImg}" alt="Aviso" onclick="abrirLightbox('${urlImgGrande}')" onerror="this.style.display='none'">`
       : "";
     const desc = f["Descripcion"]
-      ? `<p class="aviso-desc">${f["Descripcion"]}</p>`
+          ? `<p class="aviso-desc">${esc(f["Descripcion"])}</p>`
       : "";
     return `
       <div class="aviso-card" style="animation-delay:${i * 0.07}s">
         ${img}
         <div class="aviso-body">
           <div class="aviso-fecha">${fmtFecha(f["Fecha"] || f["Marca temporal"] || "")}</div>
-          <div class="aviso-titulo">${f["Titulo"] || "(sin titulo)"}</div>
+          <div class="aviso-titulo">${esc(f["Titulo"] || "(sin titulo)")}</div>
           ${desc}
         </div>
       </div>`;
@@ -1082,7 +1082,11 @@ function limpiarFiltro() {
 async function cargarAvisos() {
   const grid = document.getElementById("avisos-grid");
   try {
-    const filas = await cargarHoja(SHEETS_CONFIG.avisos.spreadsheetId, SHEETS_CONFIG.avisos.hoja);
+       const hoy = new Date().toLocaleDateString("sv-SE");
+    const filas = (await cargarHoja(SHEETS_CONFIG.avisos.spreadsheetId, SHEETS_CONFIG.avisos.hoja))
+      .filter(f => f.estado === "activo" && f.curso === "general" &&
+                   (!f.vigente_hasta || f.vigente_hasta >= hoy))
+      .map(f => ({ Titulo: f.titulo, Descripcion: f.descripcion, Fecha: f.publicado_en }));
     todosAvisos = filas.sort((a, b) => {
       const fa = normFecha(a["Fecha"] || a["Marca temporal"] || "");
       const fb = normFecha(b["Fecha"] || b["Marca temporal"] || "");
