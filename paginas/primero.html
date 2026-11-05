@@ -3,116 +3,377 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1° Curso — CEDM Santa Teresa</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>1° Curso — CEDM Santa Teresa de Ávila</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="../imagenes/logo.png">
 <link rel="stylesheet" href="../estilos.css">
 </head>
 <body>
 
-<nav>
-  <div class="nav-logo">
-<div class="nav-logo-icon">
-  <img src="../imagenes/insignia.png" alt="Insignia CEDM">
-</div>
-    <div>
-      <div class="nav-logo-main">Santa Teresa de Avila</div>
-      <div class="nav-logo-sub">Centro Escolar</div>
+<!-- ── NAVBAR MORADA INSTITUCIONAL ── -->
+<div class="header-nav-wrap">
+  <nav class="sie-navbar" role="navigation" aria-label="Navegación principal institucional">
+    <div class="nav-left">
+      <div class="nav-crest-wrap">
+        <img src="../imagenes/insignia.png" alt="Insignia Institucional CEDM">
+      </div>
+      <div class="nav-inst-titles">
+        <span class="nav-inst-main">Santa Teresa de Ávila</span>
+        <span class="nav-inst-sub">Centro Escolar</span>
+      </div>
+      <div class="nav-brand-divider"></div>
+      <span class="nav-sie-acronym">SIE</span>
     </div>
-  </div>
-  <div class="nav-links">
-    <a href="../index.html">Inicio</a>
-    <div class="nav-divider"></div>
-    <a href="primero.html" class="active">1° Curso</a>
-    <a href="segundo.html">2° Curso</a>
-    <a href="tercero.html">3° Curso</a>
-  </div>
-</nav>
 
-<div class="page-header">
-  <div class="header-left">
-    <div class="breadcrumb">
+    <!-- Navegación horizontal en escritorio y tablets -->
+    <div class="nav-links">
       <a href="../index.html">Inicio</a>
-      <span class="breadcrumb-sep">›</span>
-      <span>Primer Curso</span>
+      <a href="primero.html" class="active" aria-current="page">1.° Curso</a>
+      <a href="segundo.html">2.° Curso</a>
+      <a href="tercero.html">3.° Curso</a>
+      <a href="../profesores.html">Profesores</a>
     </div>
-    <div class="page-badge">Primer Curso</div>
-    <h1 class="page-title">Curso <span>Primero</span></h1>
-    <p class="page-subtitle">Tareas y horarios — actualizados desde Google Sheets</p>
-  </div>
-  <div class="live-badge">
-    <div class="live-dot"></div>
-    Datos en tiempo real
-  </div>
+
+    <!-- Acciones Móviles (Visibles exclusivamente en celulares: Inicio + Menú Hamburguesa) -->
+    <div class="nav-mobile-actions">
+      <a href="../index.html" class="nav-mobile-home-btn" aria-label="Volver a la página de inicio">
+        <span>Inicio</span>
+      </a>
+      <button 
+        type="button" 
+        class="nav-hamburger-btn" 
+        id="nav-hamburger-btn" 
+        aria-label="Abrir menú de cursos" 
+        aria-expanded="false" 
+        aria-controls="nav-mobile-menu"
+      >
+        <span class="hamburger-bar bar-1"></span>
+        <span class="hamburger-bar bar-2"></span>
+        <span class="hamburger-bar bar-3"></span>
+      </button>
+    </div>
+
+    <!-- Menú Desplegable Flotante Compacto (Sin oscurecer la pantalla) -->
+    <div 
+      class="nav-mobile-dropdown" 
+      id="nav-mobile-menu" 
+      role="region" 
+      aria-label="Menú de cursos y profesores"
+    >
+      <div class="mobile-menu-inner">
+        <a href="primero.html" class="mobile-nav-link active" aria-current="page">
+          <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span>1.° Curso</span>
+        </a>
+        <a href="segundo.html" class="mobile-nav-link">
+          <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span>2.° Curso</span>
+        </a>
+        <a href="tercero.html" class="mobile-nav-link">
+          <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span>3.° Curso</span>
+        </a>
+        <a href="../profesores.html" class="mobile-nav-link mobile-nav-docente">
+          <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span>Profesores</span>
+        </a>
+      </div>
+    </div>
+  </nav>
 </div>
 
-<div class="tabs-bar">
-  <button class="tab-btn active" onclick="cambiarTab('tareas',this)">📚 Tareas</button>
-  <button class="tab-btn" onclick="cambiarTab('horarios',this)">🕒 Horario</button>
-    <button class="tab-btn" onclick="cambiarTab('avisos',this)">📢 Avisos</button>
-</div>
+<!-- ── CONTENEDOR PRINCIPAL DEL CURSO ── -->
+<main class="course-page-wrapper">
 
-<div class="content">
+  <!-- ── 1. HERO ACADÉMICO ── -->
+  <header class="course-hero-card">
+    <div class="course-hero-left">
+      <nav class="course-breadcrumb" aria-label="Ruta de navegación">
+        <a href="../index.html">Inicio</a>
+        <span class="course-breadcrumb-sep">/</span>
+        <span>Primer Curso</span>
+      </nav>
+      <div class="course-kicker">PRIMER CURSO</div>
+      <h1 class="course-hero-title">Curso <span class="t-destacado">Primero</span></h1>
+      <p class="course-hero-desc">Tareas, horarios y avisos del curso</p>
+    </div>
 
-  <!-- TAREAS -->
-  <div class="section active" id="tareas">
-    <div class="filtros-bar">
-      <div class="filtro-group">
-        <label>Fecha de entrega</label>
-        <input type="date" id="filtro-fecha" onchange="filtrarTareas()">
+    <div class="course-hero-right">
+      <div class="course-live-badge">
+        <span class="course-live-dot"></span>
+        Datos en tiempo real
       </div>
-      <div class="filtros-sep"></div>
-      <div class="filtro-group">
-        <label>Materia</label>
-        <select id="filtro-materia" onchange="filtrarTareas()">
-          <option value="">Todas</option>
-        </select>
+    </div>
+
+    <!-- Trazos decorativos de fondo -->
+    <svg class="course-hero-bg-shapes" viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="160" cy="40" r="80" stroke="#A664BE" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.35"/>
+      <circle cx="160" cy="40" r="120" stroke="#59217C" stroke-width="1" opacity="0.2"/>
+      <path d="M40 140C90 110 130 150 180 120" stroke="#A664BE" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+    </svg>
+  </header>
+
+  <!-- ── 2. ACCESOS RÁPIDOS DEL CURSO (3 TARJETAS) ── -->
+  <section class="quick-access-section" aria-label="Accesos rápidos del curso">
+    <h2 class="quick-access-title">Accesos rápidos del curso</h2>
+
+    <div class="quick-access-grid">
+      <!-- Tarjeta 1: Tareas -->
+      <div class="quick-access-card" id="card-tareas" onclick="alternarSeccion('tareas')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')alternarSeccion('tareas')">
+        <div class="quick-card-top-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 11 12 14 22 4"></polyline>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+        </div>
+        <div class="quick-card-title">Tareas</div>
+        <div class="quick-card-desc">Actividades y entregas del curso</div>
+        <div class="quick-card-bottom-row">
+          <span class="quick-card-arrow-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </span>
+        </div>
       </div>
-      <button class="btn-limpiar" onclick="limpiarFiltros()">Limpiar filtros</button>
-    </div>
-    <div id="tareas-contenido">
-      <div class="estado"><div class="spinner"></div>Cargando tareas...</div>
-    </div>
-  </div>
 
-  <!-- HORARIOS -->
-  <div class="section" id="horarios">
-    <div id="horarios-contenido">
-      <div class="estado"><div class="spinner"></div>Cargando horario...</div>
-    </div>
-  </div>
+      <!-- Panel: Tareas -->
+      <section class="panel-academico" id="panel-tareas" aria-labelledby="title-panel-tareas">
+        <div class="panel-header-bar">
+          <div class="panel-header-left">
+            <div class="panel-header-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 11 12 14 22 4"></polyline>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+              </svg>
+            </div>
+            <h3 class="panel-header-title" id="title-panel-tareas">Tareas del curso</h3>
+          </div>
+          <button class="btn-cerrar-panel" onclick="cerrarPaneles()" title="Cerrar panel">&times;</button>
+        </div>
 
-  <!-- AVISOS -->
-  <div class="section" id="avisos">
-    <div id="avisos-curso">
-      <div class="estado"><div class="spinner"></div>Cargando avisos...</div>
-    </div>
-  </div>
+        <!-- Barra de Filtros -->
+        <div class="filtros-bar">
+          <div class="filtro-group">
+            <label for="filtro-fecha">Fecha de entrega</label>
+            <input type="date" id="filtro-fecha" onchange="filtrarTareas()">
+          </div>
+          <div class="filtros-sep"></div>
+          <div class="filtro-group">
+            <label for="filtro-materia">Materia</label>
+            <select id="filtro-materia" onchange="filtrarTareas()">
+              <option value="">Todas</option>
+            </select>
+          </div>
+          <button class="btn-limpiar" onclick="limpiarFiltros()">Limpiar filtros</button>
+        </div>
 
+        <div id="tareas-contenido">
+          <div class="estado"><div class="spinner"></div>Cargando tareas...</div>
+        </div>
+      </section>
+
+      <!-- Tarjeta 2: Horario -->
+      <div class="quick-access-card" id="card-horarios" onclick="alternarSeccion('horarios')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')alternarSeccion('horarios')">
+        <div class="quick-card-top-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+            <line x1="16" x2="16" y1="2" y2="6"/>
+            <line x1="8" x2="8" y1="2" y2="6"/>
+            <line x1="3" x2="21" y1="10" y2="10"/>
+            <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/>
+          </svg>
+        </div>
+        <div class="quick-card-title">Horario</div>
+        <div class="quick-card-desc">Organización semanal de clases</div>
+        <div class="quick-card-bottom-row">
+          <span class="quick-card-arrow-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      <!-- Panel: Horario -->
+      <section class="panel-academico" id="panel-horarios" aria-labelledby="title-panel-horarios">
+        <div class="panel-header-bar">
+          <div class="panel-header-left">
+            <div class="panel-header-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
+                <line x1="16" x2="16" y1="2" y2="6"/>
+                <line x1="8" x2="8" y1="2" y2="6"/>
+                <line x1="3" x2="21" y1="10" y2="10"/>
+              </svg>
+            </div>
+            <h3 class="panel-header-title" id="title-panel-horarios">Horario del curso</h3>
+          </div>
+          <button class="btn-cerrar-panel" onclick="cerrarPaneles()" title="Cerrar panel">&times;</button>
+        </div>
+
+        <div id="horarios-contenido">
+          <div class="estado"><div class="spinner"></div>Cargando horario...</div>
+        </div>
+      </section>
+
+      <!-- Tarjeta 3: Avisos -->
+      <div class="quick-access-card" id="card-avisos" onclick="alternarSeccion('avisos')" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')alternarSeccion('avisos')">
+        <div class="quick-card-top-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+        </div>
+        <div class="quick-card-title">Avisos</div>
+        <div class="quick-card-desc">Comunicados de Primer Curso</div>
+        <div class="quick-card-bottom-row">
+          <span class="quick-card-arrow-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      <!-- Panel: Avisos -->
+      <section class="panel-academico" id="panel-avisos" aria-labelledby="title-panel-avisos">
+        <div class="panel-header-bar">
+          <div class="panel-header-left">
+            <div class="panel-header-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </div>
+            <h3 class="panel-header-title" id="title-panel-avisos">Avisos del curso</h3>
+          </div>
+          <button class="btn-cerrar-panel" onclick="cerrarPaneles()" title="Cerrar panel">&times;</button>
+        </div>
+
+        <div id="avisos-contenido">
+          <div class="estado"><div class="spinner"></div>Cargando avisos...</div>
+        </div>
+      </section>
+
+      <!-- Placeholder Inicial (Visible cuando ninguna sección está abierta) -->
+      <div class="placeholder-inicial" id="placeholder-inicial">
+        <span class="placeholder-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/>
+            <path d="m13 13 6 6"/>
+          </svg>
+        </span>
+        <span>Seleccioná uno de los accesos rápidos para mostrar su contenido.</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-icon"><img src="../imagenes/insignia.png" alt="CEDM"></div>
+    <div class="footer-name">CEDM Santa Teresa de Ávila</div>
+  </div>
+  <div class="footer-copy">&copy; 2026 &mdash; Todos los derechos reservados</div>
+</footer>
+
+<!-- ── LIGHTBOX PARA IMÁGENES DE TAREAS Y AVISOS ── -->
+<div class="lightbox-overlay" id="lightbox" onclick="cerrarLightbox()">
+  <span class="lightbox-close" onclick="cerrarLightbox()">&times;</span>
+  <img id="lightbox-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
 </div>
 
 <script src="../config.js"></script>
 <script>
 const CURSO = "primero";
 let todasTareas = [];
+let seccionActiva = null;
 
-// Nav scroll
-window.addEventListener('scroll', () => {
-  document.querySelector('nav').style.background =
-    window.scrollY > 20 ? 'rgba(7,7,15,0.97)' : 'rgba(7,7,15,0.85)';
-});
+// ── Control de Pestañas e Interactividad (Solamente 1 sección a la vez) ──
+function alternarSeccion(nombre) {
+  // Ocultar placeholder
+  const placeholder = document.getElementById("placeholder-inicial");
+  if (placeholder) placeholder.style.display = "none";
 
-function cambiarTab(tab, btn) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(tab).classList.add('active');
-  btn.classList.add('active');
+  // Desactivar todas las tarjetas y ocultar paneles
+  const tarjetas = ["tareas", "horarios", "avisos"];
+  tarjetas.forEach(t => {
+    const card = document.getElementById(`card-${t}`);
+    const panel = document.getElementById(`panel-${t}`);
+    if (card) card.classList.remove("card-activo");
+    if (panel) panel.classList.remove("panel-abierto");
+  });
+
+  // Activar la seleccionada
+  const cardActiva = document.getElementById(`card-${nombre}`);
+  const panelActivo = document.getElementById(`panel-${nombre}`);
+  if (cardActiva) cardActiva.classList.add("card-activo");
+  if (panelActivo) {
+    panelActivo.classList.add("panel-abierto");
+    // Desplazamiento suave hacia la sección activa respetando la navbar fija
+    if (window.innerWidth <= 680) {
+      setTimeout(() => {
+        const navOffset = 76;
+        const rect = cardActiva ? cardActiva.getBoundingClientRect() : panelActivo.getBoundingClientRect();
+        const targetY = window.pageYOffset + rect.top - navOffset;
+        window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+      }, 50);
+    } else {
+      panelActivo.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }
+
+  seccionActiva = nombre;
 }
 
+function cerrarPaneles() {
+  const tarjetas = ["tareas", "horarios", "avisos"];
+  tarjetas.forEach(t => {
+    const card = document.getElementById(`card-${t}`);
+    const panel = document.getElementById(`panel-${t}`);
+    if (card) card.classList.remove("card-activo");
+    if (panel) panel.classList.remove("panel-abierto");
+  });
+
+  // Restaurar el placeholder inicial
+  const placeholder = document.getElementById("placeholder-inicial");
+  if (placeholder) placeholder.style.display = "flex";
+
+  seccionActiva = null;
+}
+
+// ── Funciones de Datos Existentes ──
 function normFecha(str) {
   if (!str) return "";
   const m = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
   if (m) return `${m[3]}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`;
   return str.substring(0,10);
+}
+
+function fmtFecha(str) {
+  if (!str) return "";
+  try {
+    const d = new Date(normFecha(str) + "T00:00:00");
+    return d.toLocaleDateString("es-ES", { day:"numeric", month:"long", year:"numeric" });
+  } catch { return str; }
 }
 
 function renderArchivo(urlRaw) {
@@ -131,7 +392,6 @@ function renderArchivo(urlRaw) {
   const otros = links.filter(item => !esImagen(item));
 
   let html = "";
-
   if (imagenes.length) {
     const claseGaleria = imagenes.length > 1 ? " tarea-galeria" : "";
     html += `<div class="tarea-archivo${claseGaleria}">`;
@@ -181,7 +441,7 @@ function renderTareas(filas) {
           <div class="tarea-meta-sep"></div>
           <span class="tarea-meta-fecha">Entrega: ${f["Entrega"] || "—"}</span>
         </div>
-        <div class="tarea-titulo">${f["Titulo"] || "(sin titulo)"}</div>
+        <div class="tarea-titulo">${f["Titulo"] || "(sin título)"}</div>
         <div class="tarea-desc">${f["Descripcion"] || ""}</div>
         ${renderArchivo(f["Archivo"] || "")}
       </div>
@@ -190,6 +450,8 @@ function renderTareas(filas) {
 
 function poblarMaterias(filas) {
   const sel = document.getElementById("filtro-materia");
+  if (!sel) return;
+  sel.innerHTML = '<option value="">Todas</option>';
   [...new Set(filas.map(f=>f["Materia(Primero)"]).filter(Boolean))].sort().forEach(m => {
     const o = document.createElement("option");
     o.value = m; o.textContent = m;
@@ -219,7 +481,7 @@ function renderHorario(filas) {
   const rows = filas.map(f => {
     const celdas = dias.map(d => {
       const v = f[d]||"";
-      return `<td>${v?`<span class="materia-pill">${v}</span>`:"<span style='color:rgba(255,255,255,.15)'>—</span>"}</td>`;
+      return `<td>${v?`<span class="materia-pill">${v}</span>`:"<span style='color:var(--malva); opacity:0.4;'>—</span>"}</td>`;
     }).join("");
     return `<tr><td class="hora-cell">${f["Hora"]||""}</td>${celdas}</tr>`;
   }).join("");
@@ -230,6 +492,28 @@ function renderHorario(filas) {
         <tbody>${rows}</tbody>
       </table>
     </div>`;
+}
+
+function renderAvisosCurso(filas) {
+  if (!filas.length) return '<div class="no-data">No hay avisos para mostrar en este curso.</div>';
+  return filas.map((f, i) => {
+    const urlOriginal = f["Imagen"] || "";
+    const urlImg = urlOriginal ? urlOriginal.replace(/\/uc\?export=view&id=([-\w]+)/, `/thumbnail?id=$1&sz=w800`) : "";
+    const urlImgGrande = urlOriginal ? urlOriginal.replace(/\/uc\?export=view&id=([-\w]+)/, `/thumbnail?id=$1&sz=w1600`) : "";
+    const img = urlOriginal
+      ? `<img class="aviso-img" src="${urlImg}" alt="Aviso" onclick="abrirLightbox('${urlImgGrande}')" onerror="this.style.display='none'">`
+      : "";
+    const desc = f["Descripcion"] ? `<p class="aviso-desc">${f["Descripcion"]}</p>` : "";
+    return `
+      <div class="aviso-card" style="margin-bottom:14px;">
+        ${img}
+        <div class="aviso-body">
+          <div class="aviso-fecha">${fmtFecha(f["Fecha"] || f["Marca temporal"] || "")}</div>
+          <div class="aviso-titulo">${f["Titulo"] || "(Sin título)"}</div>
+          ${desc}
+        </div>
+      </div>`;
+  }).join("");
 }
 
 async function cargarTareas() {
@@ -254,6 +538,7 @@ async function cargarHorario() {
   }
 }
 
+// La carga de avisos se delega al helper original en config.js.
 function abrirLightbox(url) {
   document.getElementById("lightbox-img").src = url;
   document.getElementById("lightbox").classList.add("active");
@@ -263,13 +548,59 @@ function cerrarLightbox() {
   document.getElementById("lightbox-img").src = "";
 }
 
+// ── Control del Menú Hamburguesa Móvil Compacto & Accesible ──
+const hamburgerBtn = document.getElementById("nav-hamburger-btn");
+const mobileMenu = document.getElementById("nav-mobile-menu");
+
+function toggleMenuMovil(forzarEstado) {
+  if (!hamburgerBtn || !mobileMenu) return;
+  const estaAbierto = mobileMenu.classList.contains("is-open");
+  const nuevoEstado = (typeof forzarEstado === "boolean") ? forzarEstado : !estaAbierto;
+
+  hamburgerBtn.classList.toggle("is-open", nuevoEstado);
+  mobileMenu.classList.toggle("is-open", nuevoEstado);
+
+  hamburgerBtn.setAttribute("aria-expanded", String(nuevoEstado));
+  hamburgerBtn.setAttribute("aria-label", nuevoEstado ? "Cerrar menú de cursos" : "Abrir menú de cursos");
+}
+
+if (hamburgerBtn) {
+  hamburgerBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleMenuMovil();
+  });
+}
+
+// Cerrar al tocar fuera del menú flotante sin bloquear la interacción con la página
+document.addEventListener("click", (e) => {
+  if (mobileMenu && mobileMenu.classList.contains("is-open")) {
+    if (!mobileMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+      toggleMenuMovil(false);
+    }
+  }
+});
+
+// Cerrar con la tecla Escape para máxima accesibilidad
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && mobileMenu && mobileMenu.classList.contains("is-open")) {
+    toggleMenuMovil(false);
+    if (hamburgerBtn) hamburgerBtn.focus();
+  }
+});
+
+// Cerrar al pulsar cualquier enlace del menú móvil
+if (mobileMenu) {
+  mobileMenu.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      toggleMenuMovil(false);
+    });
+  });
+}
+
+// Cargas en segundo plano (manteniendo paneles cerrados)
 cargarTareas();
 cargarHorario();
-cargarAvisosCurso(CURSO, "avisos-curso");
+cargarAvisosCurso(CURSO, "avisos-contenido");
 </script>
-<div class="lightbox-overlay" id="lightbox" onclick="cerrarLightbox()">
-  <span class="lightbox-close" onclick="cerrarLightbox()">&times;</span>
-  <img id="lightbox-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
-</div>
 </body>
 </html>
