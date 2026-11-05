@@ -1478,6 +1478,9 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
       if (data?.confirmada !== true) {
         throw new Error("No se pudo confirmar el envío. Revisá si aparece en Tareas. Si reintentás, conservá los mismos datos.");
       }
+      // Si el servidor confirma el registro, la operación fue exitosa
+      // aunque se haya perdido la respuesta del primer POST.
+      data = { ok: true, confirmada: true };
     }
 
     if (data.ok === true) {
