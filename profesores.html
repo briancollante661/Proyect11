@@ -1,167 +1,1404 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panel de Profesores — CEDM Santa Teresa de Avila</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Panel de Profesores — CEDM Santa Teresa de Ávila | SIE</title>
+<link rel="icon" type="image/png" href="imagenes/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="estilos.css">
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
 <script src="firebase-config.js"></script>
 <script src="config.js"></script>
 <script src="auth-guard.js"></script>
-</head>
-<body class="pagina-profesores">
-<div class="form-wrap">
-  <a href="index.html" style="display:inline-block; margin-bottom:14px; font-size:12px; color:#B9A9D9; text-decoration:none;">← Volver al inicio</a>
-  <div class="form-title">Panel de Profesores</div>
-  <div class="form-sub">Publicá tareas y avisos para los cursos.</div>
-  <button type="button" onclick="cerrarSesion()">Cerrar sesión</button>
 
-  <!-- FORMULARIO DE TAREAS (independiente) -->
-  <form id="form-tarea">
-    <div class="campo">
-      <label for="curso">Curso</label>
-      <select id="curso" required>
-        <option value="">Seleccioná un curso</option>
-        <option value="Primero">Primero</option>
-        <option value="Segundo">Segundo</option>
-        <option value="Tercero">Tercero</option>
-      </select>
-    </div>
-    <div class="campo">
-      <label for="materia">Materia</label>
-      <select id="materia" required disabled>
-        <option value="">Seleccioná primero un curso</option>
-      </select>
-    </div>
-    <div class="campo">
-      <label for="titulo">Título</label>
-      <input type="text" id="titulo" required>
-    </div>
-    <div class="campo">
-      <label for="descripcion">Descripción</label>
-      <textarea id="descripcion"></textarea>
-    </div>
-    <div class="campo">
-      <label for="entrega">Fecha de entrega</label>
-      <input type="date" id="entrega" required>
-    </div>
-    <div class="campo">
-      <label for="archivo">Archivos (opcional, podés elegir varios)</label>
-      <input type="file" id="archivo" multiple>
-    </div>
-    <button type="submit" class="btn-enviar" id="btn-enviar">Subir tarea</button>
-    <div class="estado-msg" id="estado-msg"></div>
-  </form>
+<style>
+  /* ═══════════════════════════════════════════════════════════════
+     SIE — SISTEMA DE INFORMACIÓN ESCOLAR
+     Portal de Profesores — Interfaz Compacta, Legible y Profesional
+     Paleta Institucional:
+       #59217C (Morado Principal)
+       #A664BE (Lila Principal)
+       #573C72 (Morado Secundario / Contraste)
+       #926D92 (Malva)
+       #202040 (Azul Profundo)
+       Fondos: #FFFFFF, #F8F5FC, #F0E8F6
+     ═══════════════════════════════════════════════════════════════ */
 
-  <hr style="margin:28px 0; border:0; border-top:1px solid rgba(255,255,255,.15);">
-  <div class="form-title">Publicar aviso</div>
+  :root {
+    --morado-principal:  #59217C;
+    --lila-principal:    #A664BE;
+    --morado-secundario: #573C72;
+    --morado-oscuro:     #43245E;
+    --malva:             #926D92;
+    --azul-texto:        #202040;
+    --texto-placeholder: #6B5383;
 
-  <!-- FORMULARIO DE AVISOS (independiente) -->
-  <form id="form-aviso">
-    <div class="campo">
-      <label for="aviso-curso">Curso</label>
-      <select id="aviso-curso" required>
-        <option value="">Seleccioná un curso</option>
-        <option value="general">General (todos los cursos)</option>
-        <option value="primero">Primero</option>
-        <option value="segundo">Segundo</option>
-        <option value="tercero">Tercero</option>
-      </select>
-    </div>
-    <div class="campo">
-      <label for="aviso-tipo">Tipo</label>
-      <select id="aviso-tipo" required>
-        <option value="evento">Evento</option>
-        <option value="cambio_horario">Cambio de horario</option>
-        <option value="otro">Otro</option>
-      </select>
-    </div>
-    <div class="campo">
-      <label for="aviso-titulo">Título</label>
-      <input type="text" id="aviso-titulo" maxlength="100" required>
-    </div>
-    <div class="campo">
-      <label for="aviso-descripcion">Descripción</label>
-      <textarea id="aviso-descripcion" maxlength="1000" required></textarea>
-    </div>
-    <div class="campo">
-      <label for="aviso-fecha-evento">Fecha del evento (opcional)</label>
-      <input type="date" id="aviso-fecha-evento">
-    </div>
-    <div class="campo">
-      <label for="aviso-vigente">Vigente hasta (opcional)</label>
-      <input type="date" id="aviso-vigente">
-    </div>
-    <button type="submit" class="btn-enviar" id="btn-aviso">Publicar aviso</button>
-    <div class="estado-msg" id="estado-aviso"></div>
-  </form>
+    --fondo-base:        #F8F5FC;
+    --blanco:            #FFFFFF;
+    --lila-suave:        #F0E8F6;
+    --lila-tenue:        #EADFF3;
 
-  <hr style="margin:28px 0; border:0; border-top:1px solid rgba(255,255,255,.15);">
-  <div class="form-title">Avisos activos</div>
-  <div class="estado-msg" id="estado-retiro"></div>
-  <div id="lista-avisos">Cargando avisos...</div>
-</div>
+    --borde:             rgba(87, 60, 114, 0.14);
+    --borde-suave:       rgba(87, 60, 114, 0.08);
+    --borde-focus:       #A664BE;
+    --sombra-card:       0 10px 32px -8px rgba(89, 33, 124, 0.07), 0 2px 8px rgba(89, 33, 124, 0.02);
+    --sombra-hover:      0 14px 40px -8px rgba(89, 33, 124, 0.11);
+    --sombra-btn:        0 4px 16px rgba(89, 33, 124, 0.20);
+    --sombra-btn-hover:  0 8px 24px rgba(89, 33, 124, 0.28);
 
-<script>
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxk5-MfbmPN82De2LmFkLPaeKI3IprTiYaRuCqo8yEvXwxrniq0QSPDrIokVvJMqhGWXw/exec";
-
-const MATERIAS_POR_CURSO = {
-  "Primero": [
-    "Matemática", "Matemática aplicada", "Algoritmica", "Física", "Software",
-    "Hardware", "Laboratorio", "Dibujo técnico", "Historia y geografía", "Ética",
-    "Química", "Ciencias Naturales", "Educación física", "Guaraní", "Castellano",
-    "Inglés", "Orientación"
-  ],
-  "Segundo": [
-    "Matemática", "Matemática aplicada", "Algoritmica", "Laboratorio", "Mercadotecnia",
-    "Administración Financiera", "Psicología", "Economía", "Orientación",
-    "Ciencias Naturales", "Investigación social", "Historia y Geografía",
-    "Castellano", "Educación física"
-  ],
-  "Tercero": [
-    "Matemática", "Matemática aplicada", "Algoritmica", "Laboratorio", "Mercadotecnia",
-    "Administración Financiera", "Economía", "Psicología", "Castellano",
-    "Ciencias Naturales", "Orientación", "Investigación Social",
-    "Historia y Geografía", "Educación Física"
-  ]
-};
-
-const selCurso = document.getElementById("curso");
-const selMateria = document.getElementById("materia");
-
-selCurso.addEventListener("change", () => {
-  const curso = selCurso.value;
-  selMateria.innerHTML = "";
-
-  if (!curso) {
-    selMateria.disabled = true;
-    selMateria.innerHTML = '<option value="">Seleccioná primero un curso</option>';
-    return;
+    --radio-card:        18px;
+    --radio-control:     10px;
+    --radio-pill:        9999px;
   }
 
-  selMateria.disabled = false;
-  selMateria.innerHTML = '<option value="">Seleccioná una materia</option>';
+  /* Reset y Base */
+  body.pagina-profesores {
+    display: block !important;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: var(--fondo-base);
+    color: var(--azul-texto);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    position: relative;
+  }
 
-  MATERIAS_POR_CURSO[curso].forEach(m => {
-    const opt = document.createElement("option");
-    opt.value = m;
-    opt.textContent = m;
-    selMateria.appendChild(opt);
-  });
-});
+  /* Lienzo ambiental sutil con atmósfera SIE */
+  .ambient-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
 
-function archivoABase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result.split(",")[1]);
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
+  .ambient-glow-top {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    top: -180px;
+    right: -80px;
+    background: radial-gradient(circle, rgba(166, 100, 190, 0.10) 0%, rgba(240, 232, 246, 0.03) 60%, transparent 75%);
+    filter: blur(60px);
+  }
+
+  .ambient-glow-bottom {
+    position: absolute;
+    width: 650px;
+    height: 650px;
+    border-radius: 50%;
+    bottom: -200px;
+    left: -100px;
+    background: radial-gradient(circle, rgba(89, 33, 124, 0.07) 0%, rgba(166, 100, 190, 0.04) 55%, transparent 75%);
+    filter: blur(70px);
+  }
+
+  /* ── 1. BARRA DE CABECERA COMPACTA ── */
+  .profesores-header {
+    position: sticky;
+    top: 0;
+    z-index: 500;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--borde);
+    box-shadow: 0 2px 14px rgba(89, 33, 124, 0.04);
+  }
+
+  .header-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  /* Botón de retorno al inicio */
+  .nav-return-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    border-radius: var(--radio-pill);
+    background: var(--fondo-base);
+    border: 1px solid var(--borde);
+    color: var(--morado-secundario);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nav-return-btn svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.22s ease;
+  }
+
+  .nav-return-btn:hover {
+    color: var(--morado-principal);
+    background: #FFFFFF;
+    border-color: var(--lila-principal);
+    transform: translateX(-2px);
+    box-shadow: 0 3px 10px rgba(89, 33, 124, 0.08);
+  }
+
+  .header-brand-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--borde);
+  }
+
+  .header-institution {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header-crest {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: #FFFFFF;
+    padding: 3px;
+    border: 1px solid rgba(166, 100, 190, 0.3);
+    box-shadow: 0 2px 8px rgba(89, 33, 124, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .header-crest img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .header-titles {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .inst-subtitle {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--morado-secundario);
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+  }
+
+  .inst-title {
+    font-size: 0.90rem;
+    font-weight: 800;
+    color: var(--morado-principal);
+    letter-spacing: -0.01em;
+  }
+
+  /* Lado derecho del header */
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .user-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 5px 12px;
+    border-radius: var(--radio-pill);
+    background: var(--lila-suave);
+    border: 1px solid rgba(166, 100, 190, 0.25);
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--morado-principal);
+  }
+
+  .status-beacon {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--lila-principal);
+    box-shadow: 0 0 0 0 rgba(166, 100, 190, 0.7);
+    animation: beaconPulse 2s infinite;
+  }
+
+  /* Botón Cerrar Sesión */
+  .btn-logout {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 14px;
+    border-radius: var(--radio-pill);
+    background: #FFFFFF;
+    border: 1.5px solid rgba(87, 60, 114, 0.18);
+    color: var(--morado-secundario);
+    font-family: inherit;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    box-shadow: 0 2px 6px rgba(89, 33, 124, 0.03);
+  }
+
+  .btn-logout svg {
+    width: 14px;
+    height: 14px;
+    color: var(--morado-secundario);
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  .btn-logout:hover {
+    background: #FEF2F2;
+    border-color: #FECACA;
+    color: #DC2626;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 12px rgba(220, 38, 38, 0.12);
+  }
+
+  .btn-logout:hover svg {
+    color: #DC2626;
+    transform: translateX(2px);
+  }
+
+  /* ── 2. ÁREA DE TRABAJO PRINCIPAL (GRID COMPACTA) ── */
+  .profesores-main {
+    position: relative;
+    z-index: 1;
+    padding: 22px 20px 48px;
+  }
+
+  .profesores-container {
+    max-width: 1220px;
+    margin: 0 auto;
+    display: grid;
+    /* DISTRIBUCIÓN OBLIGATORIA: Avisos Izquierda (1fr), Panel Tareas Derecha (1.15fr) */
+    grid-template-columns: 1fr 1.15fr;
+    gap: 22px;
+    align-items: start;
+    animation: entranceFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* Columna Izquierda: Avisos */
+  .col-avisos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Columna Derecha: Tareas */
+  .col-tareas {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── 3. TARJETAS COMPACTAS Y PROFESIONALES ── */
+  .panel-card {
+    position: relative;
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-card);
+    padding: 24px 24px;
+    box-shadow: var(--sombra-card);
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+    overflow: hidden;
+  }
+
+  .panel-card:hover {
+    border-color: rgba(166, 100, 190, 0.32);
+    box-shadow: var(--sombra-hover);
+  }
+
+  /* Filete superior ornamental */
+  .panel-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3.5px;
+    background: linear-gradient(90deg, var(--morado-principal) 0%, var(--lila-principal) 60%, var(--morado-secundario) 100%);
+  }
+
+  .panel-card.panel-avisos-activos::before {
+    background: linear-gradient(90deg, var(--morado-secundario) 0%, var(--malva) 100%);
+  }
+
+  /* Encabezados de Panel Compactos */
+  .panel-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--borde-suave);
+  }
+
+  /* ── 3.1 ICONOS UNIFICADOS (FONDO MORADO SÓLIDO + ICONO BLANCO) ── */
+  .panel-icon-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, var(--morado-principal) 0%, #7A359E 100%);
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(89, 33, 124, 0.15);
+  }
+
+  .panel-icon-badge svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .panel-icon-badge.badge-activos {
+    background: linear-gradient(135deg, #573C72 0%, #7A359E 100%);
+  }
+
+  .panel-header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .panel-eyebrow {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--morado-principal);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .panel-header-text h2 {
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: var(--azul-texto);
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  /* Descripción con alto contraste legible WCAG AA */
+  .panel-header-text p {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--morado-secundario);
+    line-height: 1.35;
+    margin-top: 2px;
+  }
+
+  /* ── 4. FORMULARIOS: CAMPOS CON PROFUNDIDAD, RELIEVE Y ELEGANCIA ── */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .campo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    position: relative;
+    transition: transform 0.22s ease;
+  }
+
+  /* Etiquetas de alto contraste con microinteracción de foco */
+  .campo label {
+    font-size: 0.69rem;
+    font-weight: 750;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--morado-oscuro);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.22s ease, transform 0.22s ease;
+  }
+
+  .campo:focus-within label {
+    color: var(--morado-principal);
+    transform: translateX(2px);
+  }
+
+  /* Controles con profundidad, relieve sutil y gradientes de superficie */
+  .campo input,
+  .campo select,
+  .campo textarea {
+    width: 100%;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FAF7FD 100%);
+    border: 1.5px solid rgba(87, 60, 114, 0.16);
+    border-radius: var(--radio-control);
+    padding: 8px 13px;
+    color: var(--azul-texto);
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 500;
+    height: 41px;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(89, 33, 124, 0.04), 0 1px 3px rgba(89, 33, 124, 0.03);
+    transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    box-sizing: border-box;
+    caret-color: var(--morado-principal);
+  }
+
+  /* Estado Hover refinado con elevación sutil */
+  .campo input:hover:not(:disabled),
+  .campo select:hover:not(:disabled),
+  .campo textarea:hover:not(:disabled) {
+    background: #FFFFFF;
+    border-color: rgba(166, 100, 190, 0.45);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 3px 8px rgba(89, 33, 124, 0.06);
+    transform: translateY(-1px);
+  }
+
+  /* Estado Focus con aura de luz lila multicapa */
+  .campo input:focus,
+  .campo select:focus,
+  .campo textarea:focus {
+    background: #FFFFFF;
+    border-color: var(--lila-principal);
+    box-shadow: 0 0 0 3.5px rgba(166, 100, 190, 0.20), 0 4px 14px rgba(89, 33, 124, 0.08);
+    transform: translateY(-1px);
+  }
+
+  /* Selects con relieve y chevron interactivo */
+  .campo select {
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2359217C' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 13px;
+    padding-right: 34px;
+    transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1), background-position 0.2s ease;
+  }
+
+  .campo select:hover:not(:disabled) {
+    background-position: right 12px center;
+  }
+
+  .campo select:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    background: #EFEBF4;
+    border-color: rgba(87, 60, 114, 0.10);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .campo select option {
+    background: #FFFFFF;
+    color: var(--azul-texto);
+    padding: 8px;
+  }
+
+  /* Inputs de fecha con icono calendar interactivo morado */
+  .campo input[type="date"] {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .campo input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(18%) sepia(50%) saturate(2200%) hue-rotate(265deg) brightness(85%) contrast(100%);
+    opacity: 0.8;
+    padding: 4px;
+    border-radius: 4px;
+    transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+  }
+
+  .campo input[type="date"]:hover::-webkit-calendar-picker-indicator {
+    opacity: 1;
+    transform: scale(1.15);
+    background-color: var(--lila-suave);
+  }
+
+  /* Textareas con superficie táctil */
+  .campo textarea {
+    resize: vertical;
+    min-height: 64px;
+    height: 70px;
+    line-height: 1.5;
+  }
+
+  /* ── 5. ZONA DE SUBIDA TÁCTIL (DROPZONE PREMIUM) ── */
+  .file-upload-box {
+    position: relative;
+    border: 1.5px dashed rgba(166, 100, 190, 0.50);
+    border-radius: var(--radio-control);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 232, 246, 0.55) 100%);
+    padding: 12px 14px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: inset 0 1px 3px rgba(89, 33, 124, 0.03), 0 2px 6px rgba(89, 33, 124, 0.02);
+    transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .file-upload-box:hover {
+    background: #FFFFFF;
+    border-color: var(--morado-principal);
+    border-style: solid;
+    box-shadow: 0 6px 18px rgba(89, 33, 124, 0.09);
+    transform: translateY(-1px);
+  }
+
+  .file-upload-box:hover .file-upload-visual svg {
+    transform: translateY(-2px) scale(1.08);
+    color: var(--morado-principal);
+  }
+
+  .file-upload-box input[type="file"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .file-upload-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    pointer-events: none;
+  }
+
+  .file-upload-visual svg {
+    width: 24px;
+    height: 24px;
+    color: var(--lila-principal);
+    transition: transform 0.22s ease, color 0.22s ease;
+  }
+
+  .file-cta-text {
+    font-size: 0.81rem;
+    font-weight: 750;
+    color: var(--morado-principal);
+    letter-spacing: -0.01em;
+  }
+
+  .file-limit-text {
+    font-size: 0.70rem;
+    font-weight: 550;
+    color: var(--morado-secundario);
+  }
+
+  /* Chips visuales de archivos seleccionados */
+  .file-chosen-list {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .selected-file-chip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 7px 12px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FAF8FC 100%);
+    border: 1px solid rgba(87, 60, 114, 0.15);
+    border-left: 3.5px solid var(--lila-principal);
+    border-radius: 9px;
+    box-shadow: 0 2px 7px rgba(89, 33, 124, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: entranceFade 0.25s ease both;
+  }
+
+  .selected-file-chip:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(89, 33, 124, 0.08);
+  }
+
+  .file-chip-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .file-chip-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--morado-principal);
+    flex-shrink: 0;
+  }
+
+  .file-chip-name {
+    font-size: 0.78rem;
+    font-weight: 650;
+    color: var(--azul-texto);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .file-chip-size {
+    font-size: 0.68rem;
+    font-weight: 550;
+    color: var(--morado-secundario);
+    flex-shrink: 0;
+  }
+
+  .btn-remove-file {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(87, 60, 114, 0.08);
+    color: var(--morado-secundario);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.18s ease;
+  }
+
+  .btn-remove-file:hover {
+    background: #FEE2E2;
+    color: #DC2626;
+    transform: scale(1.12);
+  }
+
+  /* ── 6. BOTONES DE ACCIÓN (CTAs COMPACTOS Y ELEVADOS) ── */
+  button.btn-enviar {
+    position: relative;
+    width: 100%;
+    height: 42px;
+    margin-top: 4px;
+    border: none;
+    border-radius: var(--radio-control);
+    color: #FFFFFF;
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: var(--sombra-btn);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+  }
+
+  /* Botón Subir Tarea */
+  button.btn-tarea {
+    background: linear-gradient(135deg, var(--morado-principal) 0%, #7A359E 50%, var(--lila-principal) 100%);
+  }
+
+  /* Botón Publicar Aviso */
+  button.btn-aviso {
+    background: linear-gradient(135deg, var(--morado-secundario) 0%, #74408C 50%, var(--lila-principal) 100%);
+  }
+
+  /* Brillo reflectante animado en hover */
+  button.btn-enviar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+    transform: skewX(-22deg);
+    transition: left 0.6s ease;
+  }
+
+  button.btn-enviar:hover:not(:disabled)::after {
+    left: 180%;
+  }
+
+  button.btn-enviar:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-btn-hover);
+    filter: brightness(1.04);
+  }
+
+  button.btn-enviar:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(89, 33, 124, 0.2);
+  }
+
+  button.btn-enviar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  button.btn-enviar svg.btn-icon {
+    width: 15px;
+    height: 15px;
+  }
+
+  /* ── 7. MENSAJES DE ESTADO DE ALTO CONTRASTE ── */
+  .estado-msg {
+    margin-top: 10px;
+    font-size: 0.80rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 9px 14px;
+    border-radius: var(--radio-control);
+    display: none;
+    animation: entranceFade 0.3s ease both;
+  }
+
+  .estado-msg.ok {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(89, 33, 124, 0.08);
+    border: 1px solid rgba(166, 100, 190, 0.35);
+    color: var(--morado-oscuro);
+  }
+
+  .estado-msg.error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    color: #DC2626;
+  }
+
+  /* ── 8. LISTA DE AVISOS ACTIVOS ── */
+  .lista-avisos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 40px;
+    font-size: 0.80rem;
+    color: var(--morado-secundario);
+  }
+
+  #lista-avisos > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--fondo-base);
+    border: 1px solid var(--borde);
+    border-radius: var(--radio-control);
+    font-size: 0.80rem;
+    color: var(--azul-texto);
+    transition: all 0.2s ease;
+  }
+
+  #lista-avisos > div:hover {
+    background: #FFFFFF;
+    border-color: rgba(166, 100, 190, 0.35);
+    box-shadow: 0 3px 10px rgba(89, 33, 124, 0.05);
+  }
+
+  #lista-avisos span {
+    font-weight: 550;
+    line-height: 1.35;
+    word-break: break-word;
+    color: var(--azul-texto);
+  }
+
+  /* Botón Retirar Aviso */
+  #lista-avisos button {
+    padding: 5px 12px;
+    border-radius: 7px;
+    border: 1px solid rgba(220, 38, 38, 0.22);
+    background: #FEF2F2;
+    color: #DC2626;
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+
+  #lista-avisos button:hover {
+    background: #DC2626;
+    color: #FFFFFF;
+    border-color: #DC2626;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
+    transform: translateY(-1px);
+  }
+
+  #lista-avisos button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* ── 9. KEYFRAMES & ANIMACIONES ── */
+  @keyframes entranceFade {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes beaconPulse {
+    0% { box-shadow: 0 0 0 0 rgba(166, 100, 190, 0.7); }
+    70% { box-shadow: 0 0 0 7px rgba(166, 100, 190, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(166, 100, 190, 0); }
+  }
+
+  /* ── 10. RESPONSIVE DESIGN (1440px, 768px, 360px, 320px) ── */
+  @media (max-width: 960px) {
+    /* En tablets y móviles los dos bloques principales se acomodan uno debajo del otro */
+    .profesores-container {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .header-inner {
+      padding: 10px 16px;
+    }
+
+    .panel-card {
+      padding: 22px 18px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .header-inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+    }
+
+    .header-left {
+      justify-content: space-between;
+    }
+
+    .header-brand-divider {
+      display: none;
+    }
+
+    .header-right {
+      justify-content: space-between;
+    }
+
+    .form-row-2 {
+      grid-template-columns: 1fr;
+    }
+
+    .panel-header {
+      gap: 10px;
+    }
+
+    .panel-icon-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+    }
+
+    .panel-header-text h2 {
+      font-size: 1.10rem;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .profesores-main {
+      padding: 16px 10px 36px;
+    }
+
+    .panel-card {
+      padding: 18px 14px;
+      border-radius: 16px;
+    }
+
+    .campo input,
+    .campo select,
+    .campo textarea {
+      padding: 7px 10px;
+      font-size: 0.84rem;
+    }
+
+    button.btn-enviar {
+      height: 40px;
+      font-size: 0.86rem;
+    }
+  }
+
+  /* ── RESPETO POR PREFERS-REDUCED-MOTION ── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+      transform: none !important;
+    }
+  }
+</style>
+</head>
+<body class="pagina-profesores">
+
+  <!-- Lienzo ambiental con destellos SIE -->
+  <div class="ambient-canvas" aria-hidden="true">
+    <div class="ambient-glow-top"></div>
+    <div class="ambient-glow-bottom"></div>
+  </div>
+
+  <!-- ── 1. BARRA SUPERIOR INSTITUCIONAL ── -->
+  <header class="profesores-header">
+    <div class="header-inner">
+      <div class="header-left">
+        <!-- Retorno al Inicio -->
+        <a href="index.html" class="nav-return-btn" id="link-volver">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>Volver al inicio</span>
+        </a>
+
+        <div class="header-brand-divider" aria-hidden="true"></div>
+
+        <!-- Identidad Institucional -->
+        <div class="header-institution">
+          <div class="header-crest">
+            <img src="imagenes/insignia.png" alt="Insignia Santa Teresa de Ávila">
+          </div>
+          <div class="header-titles">
+            <span class="inst-subtitle">Centro Escolar Santa Teresa de Ávila</span>
+            <span class="inst-title">SIE &bull; Gestión Docente</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Estado y Logout -->
+      <div class="header-right">
+        <div class="user-status-pill">
+          <span class="status-beacon" aria-hidden="true"></span>
+          <span>Docente Autenticado</span>
+        </div>
+
+        <button type="button" class="btn-logout" onclick="cerrarSesion()" id="btn-logout" aria-label="Cerrar sesión activa">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Cerrar sesión</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── 2. ÁREA PRINCIPAL CON DISTRIBUCIÓN RESPONSIVE ── -->
+  <main class="profesores-main">
+    <div class="profesores-container">
+
+      <!-- ══════════════════════════════════════════════════════════
+           COLUMNA IZQUIERDA EN ESCRITORIO:
+           PUBLICAR AVISO + AVISOS ACTIVOS
+           ══════════════════════════════════════════════════════════ -->
+      <section class="col-avisos" aria-label="Gestión de Comunicados y Avisos">
+        
+        <!-- Tarjeta 1: Formulario Publicar Aviso -->
+        <div class="panel-card panel-publicar-aviso">
+          <div class="panel-header">
+            <!-- Icono Unificado: Fondo Morado Sólido + Símbolo Campana Blanco -->
+            <div class="panel-icon-badge badge-aviso" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </div>
+            <div class="panel-header-text">
+              <span class="panel-eyebrow">Comunicación Oficial</span>
+              <h2>Publicar aviso</h2>
+              <p>Difundí comunicados generales, eventos o cambios de horario</p>
+            </div>
+          </div>
+
+          <!-- FORMULARIO DE AVISOS (IDs funcionales intactos) -->
+          <form id="form-aviso">
+            <div class="form-row-2">
+              <div class="campo">
+                <label for="aviso-curso">Destinatarios / Curso</label>
+                <select id="aviso-curso" required>
+                  <option value="">Seleccioná un curso</option>
+                  <option value="general">General (todos los cursos)</option>
+                  <option value="primero">Primero</option>
+                  <option value="segundo">Segundo</option>
+                  <option value="tercero">Tercero</option>
+                </select>
+              </div>
+
+              <div class="campo">
+                <label for="aviso-tipo">Tipo de aviso</label>
+                <select id="aviso-tipo" required>
+                  <option value="evento">Evento</option>
+                  <option value="cambio_horario">Cambio de horario</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="campo">
+              <label for="aviso-titulo">Título del aviso</label>
+              <input type="text" id="aviso-titulo" maxlength="100" required>
+            </div>
+
+            <div class="campo">
+              <label for="aviso-descripcion">Descripción del comunicado</label>
+              <textarea id="aviso-descripcion" maxlength="1000" required></textarea>
+            </div>
+
+            <div class="form-row-2">
+              <div class="campo">
+                <label for="aviso-fecha-evento">Fecha del evento (opcional)</label>
+                <input type="date" id="aviso-fecha-evento">
+              </div>
+
+              <div class="campo">
+                <label for="aviso-vigente">Vigente hasta (opcional)</label>
+                <input type="date" id="aviso-vigente">
+              </div>
+            </div>
+
+            <button type="submit" class="btn-enviar btn-aviso" id="btn-aviso">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+              <span>Publicar aviso</span>
+            </button>
+            <div class="estado-msg" id="estado-aviso"></div>
+          </form>
+        </div>
+
+        <!-- Tarjeta 2: Avisos Activos en la Plataforma -->
+        <div class="panel-card panel-avisos-activos">
+          <div class="panel-header">
+            <div class="panel-icon-badge badge-activos" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+              </svg>
+            </div>
+            <div class="panel-header-text">
+              <span class="panel-eyebrow">Publicaciones Activas</span>
+              <h2>Avisos activos</h2>
+              <p>Consultá y administrá los comunicados actualmente en línea</p>
+            </div>
+          </div>
+
+          <div class="estado-msg" id="estado-retiro"></div>
+          <div id="lista-avisos" class="lista-avisos-container">Cargando avisos...</div>
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════════════════════════════════
+           COLUMNA DERECHA EN ESCRITORIO:
+           PANEL DE PROFESORES (FORMULARIO PRINCIPAL DE TAREAS)
+           ══════════════════════════════════════════════════════════ -->
+      <section class="col-tareas" aria-label="Panel de Profesores - Publicación de Tareas">
+        
+        <div class="panel-card panel-tareas">
+          <div class="panel-header">
+            <!-- Icono Unificado: Fondo Morado Sólido + Símbolo Libro Blanco -->
+            <div class="panel-icon-badge badge-tarea" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+            </div>
+            <div class="panel-header-text">
+              <span class="panel-eyebrow">Gestión Académica</span>
+              <h2>Panel de Profesores</h2>
+              <p>Publicación de tareas, consignas y archivos para los cursos</p>
+            </div>
+          </div>
+
+          <!-- FORMULARIO DE TAREAS (IDs funcionales intactos) -->
+          <form id="form-tarea">
+            <div class="form-row-2">
+              <div class="campo">
+                <label for="curso">Curso</label>
+                <select id="curso" required>
+                  <option value="">Seleccioná un curso</option>
+                  <option value="Primero">Primero</option>
+                  <option value="Segundo">Segundo</option>
+                  <option value="Tercero">Tercero</option>
+                </select>
+              </div>
+
+              <div class="campo">
+                <label for="materia">Materia</label>
+                <select id="materia" required disabled>
+                  <option value="">Seleccioná primero un curso</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="campo">
+              <label for="titulo">Título de la tarea</label>
+              <input type="text" id="titulo" required>
+            </div>
+
+            <div class="campo">
+              <label for="descripcion">Descripción y consignas</label>
+              <textarea id="descripcion"></textarea>
+            </div>
+
+            <div class="campo">
+              <label for="entrega">Fecha de entrega</label>
+              <input type="date" id="entrega" required>
+            </div>
+
+            <!-- Área de Archivos con Lista Interactiva y Botón de Quitar -->
+            <div class="campo campo-archivo">
+              <label for="archivo">Archivos adjuntos (opcional)</label>
+              <div class="file-upload-box">
+                <input type="file" id="archivo" multiple>
+                <div class="file-upload-visual" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                  <span class="file-cta-text">Explorar o arrastrar archivos aquí</span>
+                  <span class="file-limit-text">Hasta 10 archivos (PDF, DOCX, imágenes) • Máx. 5 MB c/u y 10 MB en total</span>
+                </div>
+              </div>
+              <!-- Contenedor dinámico de chips de archivos seleccionados -->
+              <div id="file-chosen-indicator" class="file-chosen-list"></div>
+            </div>
+
+            <button type="submit" class="btn-enviar btn-tarea" id="btn-enviar">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+              <span>Subir tarea</span>
+            </button>
+            <div class="estado-msg" id="estado-msg"></div>
+          </form>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ── 3. LÓGICA JAVASCRIPT FUNCIONAL PRESERVADA Y POTENCIADA ── -->
+  <script>
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxk5-MfbmPN82De2LmFkLPaeKI3IprTiYaRuCqo8yEvXwxrniq0QSPDrIokVvJMqhGWXw/exec";
+
+  const MATERIAS_POR_CURSO = {
+    "Primero": [
+      "Matemática", "Matemática aplicada", "Algoritmica", "Física", "Software",
+      "Hardware", "Laboratorio", "Dibujo técnico", "Historia y geografía", "Ética",
+      "Química", "Ciencias Naturales", "Educación física", "Guaraní", "Castellano",
+      "Inglés", "Orientación"
+    ],
+    "Segundo": [
+      "Matemática", "Matemática aplicada", "Algoritmica", "Laboratorio", "Mercadotecnia",
+      "Administración Financiera", "Psicología", "Economía", "Orientación",
+      "Ciencias Naturales", "Investigación social", "Historia y Geografía",
+      "Castellano", "Educación física"
+    ],
+    "Tercero": [
+      "Matemática", "Matemática aplicada", "Algoritmica", "Laboratorio", "Mercadotecnia",
+      "Administración Financiera", "Economía", "Psicología", "Castellano",
+      "Ciencias Naturales", "Orientación", "Investigación Social",
+      "Historia y Geografía", "Educación Física"
+    ]
+  };
+
+  const selCurso = document.getElementById("curso");
+  const selMateria = document.getElementById("materia");
+  const archivoInput = document.getElementById("archivo");
+  const fileIndicator = document.getElementById("file-chosen-indicator");
+
+  // ── GESTIÓN DE ARCHIVOS SELECCIONADOS CON QUITAR INDIVIDUAL (X) ──
+  let archivosSeleccionados = [];
+
+  function formatearTamano(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+
+  function renderArchivosSeleccionados() {
+    if (!fileIndicator) return;
+    fileIndicator.innerHTML = "";
+
+    if (archivosSeleccionados.length === 0) return;
+
+    archivosSeleccionados.forEach((file, index) => {
+      const chip = document.createElement("div");
+      chip.className = "selected-file-chip";
+
+      const info = document.createElement("div");
+      info.className = "file-chip-info";
+
+      // Icono SVG según documento
+      info.innerHTML = `
+        <svg class="file-chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+        </svg>
+      `;
+
+      const nameSpan = document.createElement("span");
+      nameSpan.className = "file-chip-name";
+      nameSpan.textContent = file.name;
+      nameSpan.title = file.name;
+
+      const sizeSpan = document.createElement("span");
+      sizeSpan.className = "file-chip-size";
+      sizeSpan.textContent = `(${formatearTamano(file.size)})`;
+
+      info.appendChild(nameSpan);
+      info.appendChild(sizeSpan);
+
+      // Botón pequeño X con type="button" para no enviar el formulario
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "btn-remove-file";
+      removeBtn.innerHTML = "&times;";
+      removeBtn.setAttribute("aria-label", `Quitar archivo ${file.name}`);
+      removeBtn.title = `Quitar archivo ${file.name}`;
+
+      removeBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        // Quitar únicamente este archivo del array local
+        archivosSeleccionados.splice(index, 1);
+        renderArchivosSeleccionados();
+      });
+
+      chip.appendChild(info);
+      chip.appendChild(removeBtn);
+      fileIndicator.appendChild(chip);
+    });
+  }
+
+  if (archivoInput) {
+    archivoInput.addEventListener("change", () => {
+      const nuevosArchivos = Array.from(archivoInput.files);
+      if (!nuevosArchivos.length) return;
+
+      const msgTarea = document.getElementById("estado-msg");
+
+      for (const nuevo of nuevosArchivos) {
+        // Validar tamaño individual de 5 MB
+        if (nuevo.size > 5 * 1024 * 1024) {
+          if (msgTarea) {
+            msgTarea.className = "estado-msg error";
+            msgTarea.textContent = `El archivo "${nuevo.name}" supera el límite de 5 MB.`;
+          }
+          continue;
+        }
+
+        // Mantener el límite TOTAL de 10 MB establecido en el repositorio original.
+        if (archivosSeleccionados.reduce((total, f) => total + f.size, 0) + nuevo.size > 10 * 1024 * 1024) {
+          if (msgTarea) {
+            msgTarea.className = "estado-msg error";
+            msgTarea.textContent = "Los archivos juntos no pueden superar 10 MB.";
+          }
+          continue;
+        }
+
+        // Evitar duplicados por nombre y tamaño
+        const yaExiste = archivosSeleccionados.some(f => f.name === nuevo.name && f.size === nuevo.size);
+        if (!yaExiste) {
+          if (archivosSeleccionados.length < 10) {
+            archivosSeleccionados.push(nuevo);
+          } else {
+            if (msgTarea) {
+              msgTarea.className = "estado-msg error";
+              msgTarea.textContent = "Podés adjuntar como máximo 10 archivos por tarea.";
+            }
+            break;
+          }
+        }
+      }
+
+      // Limpiar input file para permitir volver a seleccionar el mismo archivo si se quitó
+      archivoInput.value = "";
+      renderArchivosSeleccionados();
+    });
+  }
+
+  selCurso.addEventListener("change", () => {
+    const curso = selCurso.value;
+    selMateria.innerHTML = "";
+
+    if (!curso) {
+      selMateria.disabled = true;
+      selMateria.innerHTML = '<option value="">Seleccioná primero un curso</option>';
+      return;
+    }
+
+    selMateria.disabled = false;
+    selMateria.innerHTML = '<option value="">Seleccioná una materia</option>';
+
+    MATERIAS_POR_CURSO[curso].forEach(m => {
+      const opt = document.createElement("option");
+      opt.value = m;
+      opt.textContent = m;
+      selMateria.appendChild(opt);
+    });
   });
-}
+
+  function archivoABase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(",")[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
 
 // PUBLICAR TAREAS
 let envioPendiente = null;
@@ -188,10 +1425,10 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
 
   try {
     const archivoInput = document.getElementById("archivo");
-    const archivos = Array.from(archivoInput.files);
+    const archivos = archivosSeleccionados.slice();
 
-    if (archivos.length > 3) {
-      throw new Error("Máximo 3 archivos por tarea.");
+    if (archivos.length > 10) {
+      throw new Error("Máximo 10 archivos por tarea.");
     }
 
     if (archivos.some(f => f.size > 5 * 1024 * 1024)) {
@@ -249,6 +1486,8 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
       msg.textContent = "✓ Tarea subida correctamente.";
 
       document.getElementById("form-tarea").reset();
+      archivosSeleccionados = [];
+      renderArchivosSeleccionados();
       selMateria.disabled = true;
       selMateria.innerHTML = '<option value="">Seleccioná primero un curso</option>';
     } else {
@@ -268,147 +1507,147 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
   }
 });
 
-// PUBLICAR AVISOS
-document.getElementById("form-aviso").addEventListener("submit", async (e) => {
-  e.preventDefault();
+  // PUBLICAR AVISOS
+  document.getElementById("form-aviso").addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  const btn = document.getElementById("btn-aviso");
-  const msg = document.getElementById("estado-aviso");
+    const btn = document.getElementById("btn-aviso");
+    const msg = document.getElementById("estado-aviso");
 
-  msg.className = "estado-msg";
-  msg.textContent = "";
-  btn.disabled = true;
-  btn.textContent = "Publicando...";
+    msg.className = "estado-msg";
+    msg.textContent = "";
+    btn.disabled = true;
+    btn.textContent = "Publicando...";
 
-  try {
-    const payload = {
-      accion: "avisos.publicar",
-      idToken: await firebase.auth().currentUser.getIdToken(),
-      datos: {
-        curso: document.getElementById("aviso-curso").value,
-        tipo: document.getElementById("aviso-tipo").value,
-        titulo: document.getElementById("aviso-titulo").value,
-        descripcion: document.getElementById("aviso-descripcion").value,
-        fecha_evento: document.getElementById("aviso-fecha-evento").value,
-        vigente_hasta: document.getElementById("aviso-vigente").value
-      }
-    };
-
-    const resp = await fetch(APPS_SCRIPT_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(payload)
-    });
-
-    const data = await resp.json();
-
-    if (data.ok === true) {
-      msg.className = "estado-msg ok";
-      msg.textContent = "✓ Aviso publicado correctamente.";
-
-      document.getElementById("form-aviso").reset();
-      cargarAvisosActivos();
-    } else {
-      if (data.codigo === "NO_AUTORIZADO") {
-        window.location.href = "login.html";
-        return;
-      }
-
-      throw new Error(data.error || "Error desconocido");
-    }
-  } catch (err) {
-    msg.className = "estado-msg error";
-    msg.textContent = "Ocurrió un error al publicar el aviso: " + err.message;
-  } finally {
-    btn.disabled = false;
-    btn.textContent = "Publicar aviso";
-  }
-});
-
-// MOSTRAR AVISOS ACTIVOS
-async function cargarAvisosActivos() {
-  const cont = document.getElementById("lista-avisos");
-  cont.textContent = "Cargando...";
-
-  try {
-    const filas = (
-      await cargarHoja(
-        SHEETS_CONFIG.avisos.spreadsheetId,
-        SHEETS_CONFIG.avisos.hoja
-      )
-    )
-      .filter(f => f.estado === "activo")
-      .sort((a, b) => b.publicado_en.localeCompare(a.publicado_en));
-
-    cont.textContent = "";
-
-    if (!filas.length) {
-      cont.textContent = "No hay avisos activos.";
-      return;
-    }
-
-    filas.forEach(f => {
-      const fila = document.createElement("div");
-      fila.style.cssText = "display:flex;gap:10px;align-items:center;justify-content:space-between;margin:8px 0;";
-
-      const txt = document.createElement("span");
-      txt.textContent = "[" + f.curso + "] " + f.titulo + " — " + f.autor_nombre;
-
-      const b = document.createElement("button");
-      b.type = "button";
-      b.textContent = "Retirar";
-      b.addEventListener("click", () => retirarAviso(f.id, b));
-
-      fila.append(txt, b);
-      cont.appendChild(fila);
-    });
-  } catch (e) {
-    cont.textContent = "No se pudieron cargar los avisos.";
-  }
-}
-
-// RETIRAR AVISOS
-async function retirarAviso(id, btn) {
-  if (!confirm("¿Retirar este aviso?")) return;
-
-  const msg = document.getElementById("estado-retiro");
-  msg.className = "estado-msg";
-  msg.textContent = "";
-  btn.disabled = true;
-
-  try {
-    const resp = await fetch(APPS_SCRIPT_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({
-        accion: "avisos.retirar",
+    try {
+      const payload = {
+        accion: "avisos.publicar",
         idToken: await firebase.auth().currentUser.getIdToken(),
-        datos: { id: id }
-      })
-    });
+        datos: {
+          curso: document.getElementById("aviso-curso").value,
+          tipo: document.getElementById("aviso-tipo").value,
+          titulo: document.getElementById("aviso-titulo").value,
+          descripcion: document.getElementById("aviso-descripcion").value,
+          fecha_evento: document.getElementById("aviso-fecha-evento").value,
+          vigente_hasta: document.getElementById("aviso-vigente").value
+        }
+      };
 
-    const data = await resp.json();
+      const resp = await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
 
-    if (data.ok === true) {
-      msg.className = "estado-msg ok";
-      msg.textContent = "✓ Aviso retirado.";
-      await cargarAvisosActivos();
-    } else {
-      if (data.codigo === "NO_AUTORIZADO") {
-        window.location.href = "login.html";
+      const data = await resp.json();
+
+      if (data.ok === true) {
+        msg.className = "estado-msg ok";
+        msg.textContent = "✓ Aviso publicado correctamente.";
+
+        document.getElementById("form-aviso").reset();
+        cargarAvisosActivos();
+      } else {
+        if (data.codigo === "NO_AUTORIZADO") {
+          window.location.href = "login.html";
+          return;
+        }
+
+        throw new Error(data.error || "Error desconocido");
+      }
+    } catch (err) {
+      msg.className = "estado-msg error";
+      msg.textContent = "Ocurrió un error al publicar el aviso: " + err.message;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Publicar aviso";
+    }
+  });
+
+  // MOSTRAR AVISOS ACTIVOS
+  async function cargarAvisosActivos() {
+    const cont = document.getElementById("lista-avisos");
+    cont.textContent = "Cargando avisos...";
+
+    try {
+      const filas = (
+        await cargarHoja(
+          SHEETS_CONFIG.avisos.spreadsheetId,
+          SHEETS_CONFIG.avisos.hoja
+        )
+      )
+        .filter(f => f.estado === "activo")
+        .sort((a, b) => b.publicado_en.localeCompare(a.publicado_en));
+
+      cont.textContent = "";
+
+      if (!filas.length) {
+        cont.textContent = "No hay avisos activos en este momento.";
         return;
       }
 
-      throw new Error(data.error || "Error desconocido");
-    }
-  } catch (err) {
-    msg.className = "estado-msg error";
-    msg.textContent = "No se pudo retirar: " + err.message;
-    btn.disabled = false;
-  }
-}
+      filas.forEach(f => {
+        const fila = document.createElement("div");
+        fila.style.cssText = "display:flex;gap:10px;align-items:center;justify-content:space-between;margin:6px 0;";
 
-cargarAvisosActivos();
-</script>
+        const txt = document.createElement("span");
+        txt.textContent = "[" + f.curso + "] " + f.titulo + " — " + f.autor_nombre;
+
+        const b = document.createElement("button");
+        b.type = "button";
+        b.textContent = "Retirar";
+        b.addEventListener("click", () => retirarAviso(f.id, b));
+
+        fila.append(txt, b);
+        cont.appendChild(fila);
+      });
+    } catch (e) {
+      cont.textContent = "No se pudieron cargar los avisos activos.";
+    }
+  }
+
+  // RETIRAR AVISOS
+  async function retirarAviso(id, btn) {
+    if (!confirm("¿Deseás retirar este aviso?")) return;
+
+    const msg = document.getElementById("estado-retiro");
+    msg.className = "estado-msg";
+    msg.textContent = "";
+    btn.disabled = true;
+
+    try {
+      const resp = await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({
+          accion: "avisos.retirar",
+          idToken: await firebase.auth().currentUser.getIdToken(),
+          datos: { id: id }
+        })
+      });
+
+      const data = await resp.json();
+
+      if (data.ok === true) {
+        msg.className = "estado-msg ok";
+        msg.textContent = "✓ Aviso retirado correctamente.";
+        await cargarAvisosActivos();
+      } else {
+        if (data.codigo === "NO_AUTORIZADO") {
+          window.location.href = "login.html";
+          return;
+        }
+
+        throw new Error(data.error || "Error desconocido");
+      }
+    } catch (err) {
+      msg.className = "estado-msg error";
+      msg.textContent = "No se pudo retirar: " + err.message;
+      btn.disabled = false;
+    }
+  }
+
+  cargarAvisosActivos();
+  </script>
 </body>
 </html>
