@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,17 +14,56 @@
 <script src="auth-guard.js"></script>
 </head>
 <body class="pagina-profesores">
-
 <div class="form-wrap">
   <a href="index.html" style="display:inline-block; margin-bottom:14px; font-size:12px; color:#B9A9D9; text-decoration:none;">← Volver al inicio</a>
   <div class="form-title">Panel de Profesores</div>
-  <div class="form-sub">Subí una tarea directamente al sistema.</div>
+  <div class="form-sub">Publicá tareas y avisos para los cursos.</div>
+  <button type="button" onclick="cerrarSesion()">Cerrar sesión</button>
 
-  <button onclick="cerrarSesion()">Cerrar sesión</button>
-
- <form id="form-aviso">
+  <!-- FORMULARIO DE TAREAS (independiente) -->
+  <form id="form-tarea">
     <div class="campo">
-      <label>Curso</label>
+      <label for="curso">Curso</label>
+      <select id="curso" required>
+        <option value="">Seleccioná un curso</option>
+        <option value="Primero">Primero</option>
+        <option value="Segundo">Segundo</option>
+        <option value="Tercero">Tercero</option>
+      </select>
+    </div>
+    <div class="campo">
+      <label for="materia">Materia</label>
+      <select id="materia" required disabled>
+        <option value="">Seleccioná primero un curso</option>
+      </select>
+    </div>
+    <div class="campo">
+      <label for="titulo">Título</label>
+      <input type="text" id="titulo" required>
+    </div>
+    <div class="campo">
+      <label for="descripcion">Descripción</label>
+      <textarea id="descripcion"></textarea>
+    </div>
+    <div class="campo">
+      <label for="entrega">Fecha de entrega</label>
+      <input type="date" id="entrega" required>
+    </div>
+    <div class="campo">
+      <label for="archivo">Archivos (opcional, podés elegir varios)</label>
+      <input type="file" id="archivo" multiple>
+    </div>
+    <button type="submit" class="btn-enviar" id="btn-enviar">Subir tarea</button>
+    <div class="estado-msg" id="estado-msg"></div>
+  </form>
+
+  <hr style="margin:28px 0; border:0; border-top:1px solid rgba(255,255,255,.15);">
+  <div class="form-title">Publicar aviso</div>
+
+  <!-- FORMULARIO DE AVISOS (independiente) -->
+  <form id="form-aviso">
+    <div class="campo">
+      <label for="aviso-curso">Curso</label>
       <select id="aviso-curso" required>
         <option value="">Seleccioná un curso</option>
         <option value="general">General (todos los cursos)</option>
@@ -33,7 +73,7 @@
       </select>
     </div>
     <div class="campo">
-      <label>Tipo</label>
+      <label for="aviso-tipo">Tipo</label>
       <select id="aviso-tipo" required>
         <option value="evento">Evento</option>
         <option value="cambio_horario">Cambio de horario</option>
@@ -41,71 +81,30 @@
       </select>
     </div>
     <div class="campo">
-      <label>Título</label>
+      <label for="aviso-titulo">Título</label>
       <input type="text" id="aviso-titulo" maxlength="100" required>
     </div>
     <div class="campo">
-      <label>Descripción</label>
+      <label for="aviso-descripcion">Descripción</label>
       <textarea id="aviso-descripcion" maxlength="1000" required></textarea>
     </div>
     <div class="campo">
-      <label>Fecha del evento (opcional)</label>
+      <label for="aviso-fecha-evento">Fecha del evento (opcional)</label>
       <input type="date" id="aviso-fecha-evento">
     </div>
     <div class="campo">
-      <label>Vigente hasta (opcional)</label>
+      <label for="aviso-vigente">Vigente hasta (opcional)</label>
       <input type="date" id="aviso-vigente">
     </div>
     <button type="submit" class="btn-enviar" id="btn-aviso">Publicar aviso</button>
     <div class="estado-msg" id="estado-aviso"></div>
   </form>
-    </div>
-  
-  <form id="form-tarea">
-    <div class="campo">
-      <label>Curso</label>
-      <select id="curso" required>
-        <option value="">Seleccioná un curso</option>
-        <option value="Primero">Primero</option>
-        <option value="Segundo">Segundo</option>
-        <option value="Tercero">Tercero</option>
-      </select>
 
-        <hr style="margin:28px 0; border:0; border-top:1px solid rgba(255,255,255,.15);">
-  <div class="form-title">Publicar aviso</div>
-
-    <div class="campo">
-      <label>Materia</label>
-      <select id="materia" required disabled>
-        <option value="">Seleccioná primero un curso</option>
-      </select>
-    </div>
-
-    <div class="campo">
-      <label>Título</label>
-      <input type="text" id="titulo" required>
-    </div>
-
-    <div class="campo">
-      <label>Descripción</label>
-      <textarea id="descripcion"></textarea>
-    </div>
-
-    <div class="campo">
-      <label>Fecha de entrega</label>
-      <input type="date" id="entrega" required>
-    </div>
-
-    <div class="campo">
-     <label>Archivos (opcional, podés elegir varios)</label>
-      <input type="file" id="archivo" multiple>
-    </div>
-
-    <button type="submit" class="btn-enviar" id="btn-enviar">Subir tarea</button>
-    <div class="estado-msg" id="estado-msg"></div>
-  </form>
+  <hr style="margin:28px 0; border:0; border-top:1px solid rgba(255,255,255,.15);">
+  <div class="form-title">Avisos activos</div>
+  <div class="estado-msg" id="estado-retiro"></div>
+  <div id="lista-avisos">Cargando avisos...</div>
 </div>
-
 
 <script>
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxk5-MfbmPN82De2LmFkLPaeKI3IprTiYaRuCqo8yEvXwxrniq0QSPDrIokVvJMqhGWXw/exec";
@@ -146,6 +145,7 @@ selCurso.addEventListener("change", () => {
 
   selMateria.disabled = false;
   selMateria.innerHTML = '<option value="">Seleccioná una materia</option>';
+
   MATERIAS_POR_CURSO[curso].forEach(m => {
     const opt = document.createElement("option");
     opt.value = m;
@@ -163,29 +163,42 @@ function archivoABase64(file) {
   });
 }
 
+// PUBLICAR TAREAS
 document.getElementById("form-tarea").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const btn = document.getElementById("btn-enviar");
   const msg = document.getElementById("estado-msg");
+
   msg.className = "estado-msg";
   msg.textContent = "";
   btn.disabled = true;
   btn.textContent = "Subiendo...";
 
   try {
-     const archivoInput = document.getElementById("archivo");
+    const archivoInput = document.getElementById("archivo");
     const archivos = Array.from(archivoInput.files);
-    if (archivos.length > 3) throw new Error("Máximo 3 archivos por tarea.");
-    if (archivos.some(f => f.size > 5 * 1024 * 1024)) throw new Error("Cada archivo debe pesar como máximo 5 MB.");
-    if (archivos.reduce((s, f) => s + f.size, 0) > 10 * 1024 * 1024) throw new Error("Los archivos juntos no pueden superar 10 MB.");
-          const datos = {
+
+    if (archivos.length > 3) {
+      throw new Error("Máximo 3 archivos por tarea.");
+    }
+
+    if (archivos.some(f => f.size > 5 * 1024 * 1024)) {
+      throw new Error("Cada archivo debe pesar como máximo 5 MB.");
+    }
+
+    if (archivos.reduce((s, f) => s + f.size, 0) > 10 * 1024 * 1024) {
+      throw new Error("Los archivos juntos no pueden superar 10 MB.");
+    }
+
+    const datos = {
       curso: selCurso.value,
       materia: selMateria.value,
       titulo: document.getElementById("titulo").value,
       descripcion: document.getElementById("descripcion").value,
       entrega: document.getElementById("entrega").value
     };
+
     if (archivos.length) {
       datos.archivos = await Promise.all(archivos.map(async (f) => ({
         base64: await archivoABase64(f),
@@ -193,6 +206,7 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
         tipo: f.type
       })));
     }
+
     const payload = {
       accion: "tareas.publicar",
       idToken: await firebase.auth().currentUser.getIdToken(),
@@ -210,6 +224,7 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
     if (data.ok === true) {
       msg.className = "estado-msg ok";
       msg.textContent = "✓ Tarea subida correctamente.";
+
       document.getElementById("form-tarea").reset();
       selMateria.disabled = true;
       selMateria.innerHTML = '<option value="">Seleccioná primero un curso</option>';
@@ -218,6 +233,7 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
         window.location.href = "login.html";
         return;
       }
+
       throw new Error(data.error || "Error desconocido");
     }
   } catch (err) {
@@ -229,14 +245,18 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
   }
 });
 
+// PUBLICAR AVISOS
 document.getElementById("form-aviso").addEventListener("submit", async (e) => {
   e.preventDefault();
+
   const btn = document.getElementById("btn-aviso");
   const msg = document.getElementById("estado-aviso");
+
   msg.className = "estado-msg";
   msg.textContent = "";
   btn.disabled = true;
   btn.textContent = "Publicando...";
+
   try {
     const payload = {
       accion: "avisos.publicar",
@@ -250,15 +270,19 @@ document.getElementById("form-aviso").addEventListener("submit", async (e) => {
         vigente_hasta: document.getElementById("aviso-vigente").value
       }
     };
+
     const resp = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(payload)
     });
+
     const data = await resp.json();
-        if (data.ok === true) {
+
+    if (data.ok === true) {
       msg.className = "estado-msg ok";
       msg.textContent = "✓ Aviso publicado correctamente.";
+
       document.getElementById("form-aviso").reset();
       cargarAvisosActivos();
     } else {
@@ -266,6 +290,7 @@ document.getElementById("form-aviso").addEventListener("submit", async (e) => {
         window.location.href = "login.html";
         return;
       }
+
       throw new Error(data.error || "Error desconocido");
     }
   } catch (err) {
@@ -277,24 +302,40 @@ document.getElementById("form-aviso").addEventListener("submit", async (e) => {
   }
 });
 
+// MOSTRAR AVISOS ACTIVOS
 async function cargarAvisosActivos() {
   const cont = document.getElementById("lista-avisos");
   cont.textContent = "Cargando...";
+
   try {
-    const filas = (await cargarHoja(SHEETS_CONFIG.avisos.spreadsheetId, SHEETS_CONFIG.avisos.hoja))
+    const filas = (
+      await cargarHoja(
+        SHEETS_CONFIG.avisos.spreadsheetId,
+        SHEETS_CONFIG.avisos.hoja
+      )
+    )
       .filter(f => f.estado === "activo")
       .sort((a, b) => b.publicado_en.localeCompare(a.publicado_en));
+
     cont.textContent = "";
-    if (!filas.length) { cont.textContent = "No hay avisos activos."; return; }
+
+    if (!filas.length) {
+      cont.textContent = "No hay avisos activos.";
+      return;
+    }
+
     filas.forEach(f => {
       const fila = document.createElement("div");
       fila.style.cssText = "display:flex;gap:10px;align-items:center;justify-content:space-between;margin:8px 0;";
+
       const txt = document.createElement("span");
       txt.textContent = "[" + f.curso + "] " + f.titulo + " — " + f.autor_nombre;
+
       const b = document.createElement("button");
       b.type = "button";
       b.textContent = "Retirar";
       b.addEventListener("click", () => retirarAviso(f.id, b));
+
       fila.append(txt, b);
       cont.appendChild(fila);
     });
@@ -303,12 +344,15 @@ async function cargarAvisosActivos() {
   }
 }
 
+// RETIRAR AVISOS
 async function retirarAviso(id, btn) {
   if (!confirm("¿Retirar este aviso?")) return;
+
   const msg = document.getElementById("estado-retiro");
   msg.className = "estado-msg";
   msg.textContent = "";
   btn.disabled = true;
+
   try {
     const resp = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
@@ -319,13 +363,19 @@ async function retirarAviso(id, btn) {
         datos: { id: id }
       })
     });
+
     const data = await resp.json();
+
     if (data.ok === true) {
       msg.className = "estado-msg ok";
       msg.textContent = "✓ Aviso retirado.";
       await cargarAvisosActivos();
     } else {
-      if (data.codigo === "NO_AUTORIZADO") { window.location.href = "login.html"; return; }
+      if (data.codigo === "NO_AUTORIZADO") {
+        window.location.href = "login.html";
+        return;
+      }
+
       throw new Error(data.error || "Error desconocido");
     }
   } catch (err) {
