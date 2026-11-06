@@ -1,0 +1,16 @@
+#gestion-roles[hidden] { display:none; }
+#gestion-roles { max-width:1100px; margin:32px auto; padding:24px; border:1px solid #ded5e7; border-radius:18px; background:#fff; color:#352b40; }
+#gestion-roles h2 { margin:0 0 8px; }
+#gestion-roles p { line-height:1.6; }
+.roles-herramientas { display:flex; align-items:end; flex-wrap:wrap; gap:16px; margin:20px 0; }
+#gestion-roles label { display:flex; flex-direction:column; gap:6px; font-size:.85rem; }
+#gestion-roles input,#gestion-roles select,#gestion-roles button { min-height:44px; padding:10px 12px; border:1px solid #a294af; border-radius:8px; font:inherit; }
+#gestion-roles button { background:#573c72; color:white; cursor:pointer; }
+#gestion-roles button:disabled { opacity:.6; cursor:wait; }
+#gestion-roles :focus-visible { outline:3px solid #246caa; outline-offset:3px; }
+#roles-lista { display:grid; gap:12px; }
+.roles-cuenta { display:flex; align-items:center; flex-wrap:wrap; gap:16px; padding:18px; border:1px solid #e3dce9; border-radius:12px; background:#faf8fc; }
+.roles-identidad { display:flex; flex-direction:column; gap:5px; flex:1 1 240px; overflow-wrap:anywhere; }
+.roles-identidad span { font-size:.85rem; color:#63566e; }
+#roles-estado { min-height:1.6em; margin:12px 0; }
+@media(max-width:600px) { #gestion-roles { margin:20px 12px; padding:16px; } .roles-cuenta label { flex:1 1 100px; } .roles-cuenta button { width:100%; } }

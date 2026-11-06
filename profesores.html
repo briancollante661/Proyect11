@@ -972,6 +972,7 @@
     }
   }
 </style>
+<link rel="stylesheet" href="roles.css">
 </head>
 <body class="pagina-profesores">
 
@@ -1227,6 +1228,18 @@
       </section>
 
     </div>
+  <section id="gestion-roles" hidden aria-labelledby="roles-titulo">
+    <h2 id="roles-titulo">Gestión de roles y acceso</h2>
+    <p id="roles-perfil"></p>
+    <p>Administrá las cuentas registradas en permisos. Los cambios se aplican a las siguientes solicitudes y quedan registrados.</p>
+    <p>Los directivos pueden gestionar profesores y directivos. La cuenta de administrador y tu propio acceso están protegidos. Este panel no crea cuentas de inicio de sesión.</p>
+    <div class="roles-herramientas">
+      <label>Buscar por nombre o correo<input id="roles-buscar" type="search" autocomplete="off"></label>
+      <button id="roles-actualizar" type="button">Actualizar lista</button>
+    </div>
+    <p id="roles-estado" role="status" aria-live="polite"></p>
+    <div id="roles-lista"></div>
+  </section>
   </main>
 
   <!-- ── 3. LÓGICA JAVASCRIPT FUNCIONAL PRESERVADA Y POTENCIADA ── -->
@@ -1674,5 +1687,6 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
 
   cargarAvisosActivos();
   </script>
+<script src="roles.js"></script>
 </body>
 </html>
