@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="../imagenes/logo.png">
 <link rel="stylesheet" href="../estilos.css">
+<link rel="stylesheet" href="../horarios.css">
 </head>
 <body>
 
@@ -302,6 +303,7 @@
 </div>
 
 <script src="../config.js"></script>
+<script src="../horarios.js"></script>
 <script>
 const CURSO = "segundo";
 let todasTareas = [];
@@ -470,26 +472,6 @@ function limpiarFiltros() {
   document.getElementById("tareas-contenido").innerHTML = renderTareas(todasTareas);
 }
 
-function renderHorario(filas) {
-  if (!filas.length) return '<div class="no-data">No hay horario cargado.</div>';
-  const dias = ["Lunes","Martes","Miercoles","Jueves","Viernes"];
-  const ths = dias.map(d=>`<th>${d}</th>`).join("");
-  const rows = filas.map(f => {
-    const celdas = dias.map(d => {
-      const v = f[d]||"";
-      return `<td>${v?`<span class="materia-pill">${v}</span>`:"<span style='color:var(--malva); opacity:0.4;'>—</span>"}</td>`;
-    }).join("");
-    return `<tr><td class="hora-cell">${f["Hora"]||""}</td>${celdas}</tr>`;
-  }).join("");
-  return `
-    <div class="horario-wrap">
-      <table class="horario-table">
-        <thead><tr><th>Hora</th>${ths}</tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>`;
-}
-
 function renderAvisosCurso(filas) {
   if (!filas.length) return '<div class="no-data">No hay avisos para mostrar en este curso.</div>';
   return filas.map((f, i) => {
@@ -524,15 +506,7 @@ async function cargarTareas() {
   } 
 }
 
-async function cargarHorario() {
-  const cont = document.getElementById("horarios-contenido");
-  try {
-    const filas = await cargarHoja(SHEETS_CONFIG.horarios.spreadsheetId, SHEETS_CONFIG.horarios.hojas[CURSO]);
-    cont.innerHTML = renderHorario(filas);
-  } catch(e) {
-    cont.innerHTML = `<div class="error-box">No se pudo cargar el horario.<br><small>${e.message}</small></div>`;
-  }
-}
+
 
 // La carga de avisos se delega al helper original en config.js.
 function abrirLightbox(url) {
@@ -595,7 +569,7 @@ if (mobileMenu) {
 
 // Cargas en segundo plano (manteniendo paneles cerrados)
 cargarTareas();
-cargarHorario();
+Horarios.montar(CURSO);
 cargarAvisosCurso(CURSO, "avisos-contenido");
 </script>
 </body>

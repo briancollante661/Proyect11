@@ -1,0 +1,20 @@
+/* Estilos aislados para facilitar el rediseño sin cambiar la lógica. */
+.horarios-resumen { white-space: pre-line; line-height: 1.8; padding: 16px; background: #f4f0f7; color: #352b40; border-radius: 12px; }
+.horarios-controles { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+.horarios-boton { padding: 10px 14px; min-height: 44px; border: 1px solid #8b7997; border-radius: 8px; background: white; color: #352b40; font: inherit; cursor: pointer; }
+.horarios-boton[aria-pressed="true"] { color: white; background: #554065; }
+.horarios-boton.es-hoy { text-decoration: underline; text-underline-offset: 4px; }
+.horarios-boton:focus-visible { outline: 3px solid #28679f; outline-offset: 3px; }
+.horarios-lista { display: grid; gap: 14px; }
+.horarios-lista.vista-semana { grid-template-columns: repeat(5, minmax(170px, 1fr)); overflow-x: auto; padding-bottom: 12px; }
+.horarios-dia { min-width: 0; padding: 12px; border: 1px solid #ded7e4; border-radius: 12px; }
+.horarios-dia.es-hoy { border-color: #705385; }
+.horarios-dia h4 { margin: 0 0 12px; }
+.horarios-turno { font-weight: 700; margin: 12px 0 8px; }
+.horarios-bloque { margin: 8px 0; padding: 12px; border-radius: 8px; background: #f5f3f7; color: #352b40; overflow-wrap: anywhere; border: 2px solid transparent; }
+.horarios-bloque.tipo-recreo { background: #e8f4ee; color: #244d3c; }
+.horarios-bloque.tipo-libre { background: #f5f5f5; color: #555; border: 1px dashed #999; }
+.horarios-bloque.es-actual { border: 2px solid #705385; box-shadow: 0 0 0 1px #705385; }
+.horarios-hora, .horarios-profesor { font-size: .85rem; line-height: 1.5; }
+.horarios-bloque strong { display: block; margin: 5px 0; }
+.horarios-nota { font-size: .8rem; line-height: 1.5; margin-top: 12px; color: #65596b; }

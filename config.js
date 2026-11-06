@@ -16,12 +16,8 @@ const SHEETS_CONFIG = {
   },
 
   horarios: {
-    spreadsheetId: "1aYJ0ZukO-DxzZN77sWMgmzhvsHRQXfsjdDUXel_jE2A",
-    hojas: {
-      primero: "Primero",
-      segundo: "Segundo",
-      tercero: "Tercero"
-    }
+    spreadsheetId: "1xt5ep0wThwCWtr9Xz3y5pliaPhboC8bbfiTFrDIyxsc",
+    hoja: "horarios"
   }
 
 };
