@@ -24,11 +24,48 @@ const SHEETS_CONFIG = {
 
 async function cargarHoja(spreadsheetId, nombreHoja) {
   const hoja = encodeURIComponent(nombreHoja);
-    const url = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:csv&headers=1&sheet=${hoja}`;
-  const resp = await fetch(url);
-  if (!resp.ok) throw new Error(`No se pudo cargar: ${nombreHoja}`);
-  const texto = await resp.text();
-  return parsearCSV(texto);
+  const url = 'https://docs.google.com/spreadsheets/d/' + spreadsheetId + '/gviz/tq?tqx=out:csv&headers=1&sheet=' + hoja;
+  const controller = new AbortController();
+  let timer;
+  try {
+    const limite = new Promise((_, reject) => {
+      timer = setTimeout(() => {
+        reject(new Error('Tiempo de lectura agotado'));
+        controller.abort();
+      }, 15000);
+    });
+    const lectura = (async () => {
+      const resp = await fetch(url, { signal: controller.signal });
+      if (!resp.ok) throw new Error('Respuesta de lectura inválida');
+      return parsearCSV(await resp.text());
+    })();
+    return await Promise.race([lectura, limite]);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// Solo texto controlado: los detalles técnicos no se insertan en la página.
+function mostrarErrorLectura(cont, recurso, reintentar) {
+  if (!cont) return;
+  const caja = document.createElement('div');
+  caja.className = 'error-box';
+  caja.setAttribute('role', 'status');
+  const mensaje = document.createElement('p');
+  mensaje.textContent = 'No se pudieron cargar ' + recurso + '. Revisá tu conexión o intentá de nuevo en unos momentos.';
+  const boton = document.createElement('button');
+  boton.type = 'button';
+  boton.textContent = 'Reintentar';
+  boton.style.cssText = 'margin-top:10px;padding:10px 16px;min-height:44px;cursor:pointer;font:inherit;';
+  boton.addEventListener('click', async () => {
+    boton.disabled = true;
+    boton.textContent = 'Cargando…';
+    try { await reintentar(); }
+    catch { mostrarErrorLectura(cont, recurso, reintentar); }
+    finally { boton.disabled = false; boton.textContent = 'Reintentar'; }
+  });
+  caja.append(mensaje, boton);
+  cont.replaceChildren(caja);
 }
 
 function parsearCSV(texto) {
@@ -121,7 +158,6 @@ async function cargarAvisosCurso(curso, contenedorId) {
       cont.appendChild(card);
     });
   } catch (e) {
-    cont.textContent = "";
-    cont.appendChild(crear("div", "error-box", "No se pudieron cargar los avisos."));
+    mostrarErrorLectura(cont, "los avisos", () => cargarAvisosCurso(curso, contenedorId));
   }
 }

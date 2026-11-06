@@ -506,7 +506,7 @@ async function cargarTareas() {
     poblarMaterias(todasTareas);
     cont.innerHTML = renderTareas(todasTareas);
   } catch(e) {
-    cont.innerHTML = `<div class="error-box">No se pudieron cargar las tareas.<br><small>${e.message}</small></div>`;
+    mostrarErrorLectura(cont, "las tareas", cargarTareas);
   } 
 }
 

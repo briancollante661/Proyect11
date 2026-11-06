@@ -1802,10 +1802,9 @@ async function cargarAvisos() {
     renderAvisosRecientes(todosAvisos);
     if (grid) grid.innerHTML = renderAvisos(todosAvisos);
   } catch (e) {
-    const errHtml = `<div class="error-box">No se pudieron cargar los avisos.<br><small>${escHtml(e.message)}</small></div>`;
     const recWrap = document.getElementById("recientes-list-wrap");
-    if (recWrap) recWrap.innerHTML = errHtml;
-    if (grid) grid.innerHTML = errHtml;
+    mostrarErrorLectura(recWrap, "los avisos", cargarAvisos);
+    mostrarErrorLectura(grid, "los avisos", cargarAvisos);
   }
 }
 
