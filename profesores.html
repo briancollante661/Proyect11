@@ -1262,6 +1262,7 @@
   // ── GESTIÓN DE ARCHIVOS SELECCIONADOS CON QUITAR INDIVIDUAL (X) ──
   const MAX_ARCHIVOS_TAREA = 10;
   const MAX_BYTES_ARCHIVO_TAREA = 10 * 1024 * 1024;
+  const MAX_BYTES_ENVIO_DIRECTO_TAREA = 10 * 1024 * 1024;
   const EXTENSION_ADJUNTO_TAREA = /\.(pdf|docx|xlsx|pptx|jpe?g|jfif|png|gif|webp)$/i;
   let archivosSeleccionados = [];
 
@@ -1453,7 +1454,19 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
     }
     const envio = envioPendiente;
     const solicitudId = envio.id;
-    while (envio.subidos < archivos.length) {
+    const envioDirecto = archivos.reduce((total, archivo) => total + archivo.size, 0) <= MAX_BYTES_ENVIO_DIRECTO_TAREA;
+    const datosPublicacion = { ...datos, solicitudId };
+
+    if (envioDirecto) {
+      datosPublicacion.archivos = await Promise.all(archivos.map(async archivo => ({
+        nombre: archivo.name,
+        base64: await archivoABase64(archivo)
+      })));
+    } else {
+      datosPublicacion.cantidadAdjuntos = archivos.length;
+    }
+
+    while (!envioDirecto && envio.subidos < archivos.length) {
       const indice = envio.subidos;
       const archivo = archivos[indice];
       btn.textContent = `Subiendo adjunto ${indice + 1} de ${archivos.length}…`;
@@ -1476,7 +1489,7 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
       data = await solicitarTarea({
         accion: "tareas.publicar",
         idToken,
-        datos: { ...datos, solicitudId, cantidadAdjuntos: archivos.length }
+        datos: datosPublicacion
       });
     } catch {
       data = await solicitarTarea({
