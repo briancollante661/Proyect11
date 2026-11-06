@@ -1197,7 +1197,7 @@
             <div class="campo campo-archivo">
               <label for="archivo">Archivos adjuntos (opcional)</label>
               <div class="file-upload-box">
-                <input type="file" id="archivo" multiple>
+                <input type="file" id="archivo" accept=".pdf,.docx,.xlsx,.pptx,.jpg,.jpeg,.jfif,.png,.gif,.webp" multiple>
                 <div class="file-upload-visual" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -1205,7 +1205,7 @@
                     <line x1="12" y1="3" x2="12" y2="15"></line>
                   </svg>
                   <span class="file-cta-text">Explorar o arrastrar archivos aquí</span>
-                  <span class="file-limit-text">Hasta 10 archivos (PDF, DOCX, imágenes) • Máx. 5 MB c/u y 10 MB en total</span>
+                  <span class="file-limit-text">Hasta 10 archivos de 10 MB cada uno • PDF, DOCX, XLSX, PPTX, JPG, JFIF, PNG, GIF y WebP</span>
                 </div>
               </div>
               <!-- Contenedor dinámico de chips de archivos seleccionados -->
@@ -1260,6 +1260,9 @@
   const fileIndicator = document.getElementById("file-chosen-indicator");
 
   // ── GESTIÓN DE ARCHIVOS SELECCIONADOS CON QUITAR INDIVIDUAL (X) ──
+  const MAX_ARCHIVOS_TAREA = 10;
+  const MAX_BYTES_ARCHIVO_TAREA = 10 * 1024 * 1024;
+  const EXTENSION_ADJUNTO_TAREA = /\.(pdf|docx|xlsx|pptx|jpe?g|jfif|png|gif|webp)$/i;
   let archivosSeleccionados = [];
 
   function formatearTamano(bytes) {
@@ -1331,20 +1334,18 @@
       const msgTarea = document.getElementById("estado-msg");
 
       for (const nuevo of nuevosArchivos) {
-        // Validar tamaño individual de 5 MB
-        if (nuevo.size > 5 * 1024 * 1024) {
+        if (!EXTENSION_ADJUNTO_TAREA.test(nuevo.name)) {
           if (msgTarea) {
             msgTarea.className = "estado-msg error";
-            msgTarea.textContent = `El archivo "${nuevo.name}" supera el límite de 5 MB.`;
+            msgTarea.textContent = `El formato de "${nuevo.name}" no está permitido.`;
           }
           continue;
         }
 
-        // Mantener el límite TOTAL de 10 MB establecido en el repositorio original.
-        if (archivosSeleccionados.reduce((total, f) => total + f.size, 0) + nuevo.size > 10 * 1024 * 1024) {
+        if (nuevo.size < 1 || nuevo.size > MAX_BYTES_ARCHIVO_TAREA) {
           if (msgTarea) {
             msgTarea.className = "estado-msg error";
-            msgTarea.textContent = "Los archivos juntos no pueden superar 10 MB.";
+            msgTarea.textContent = `El archivo "${nuevo.name}" debe pesar entre 1 byte y 10 MB.`;
           }
           continue;
         }
@@ -1352,7 +1353,7 @@
         // Evitar duplicados por nombre y tamaño
         const yaExiste = archivosSeleccionados.some(f => f.name === nuevo.name && f.size === nuevo.size);
         if (!yaExiste) {
-          if (archivosSeleccionados.length < 10) {
+          if (archivosSeleccionados.length < MAX_ARCHIVOS_TAREA) {
             archivosSeleccionados.push(nuevo);
           } else {
             if (msgTarea) {
@@ -1424,19 +1425,14 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
   btn.textContent = "Subiendo...";
 
   try {
-    const archivoInput = document.getElementById("archivo");
     const archivos = archivosSeleccionados.slice();
 
-    if (archivos.length > 10) {
+    if (archivos.length > MAX_ARCHIVOS_TAREA) {
       throw new Error("Máximo 10 archivos por tarea.");
     }
 
-    if (archivos.some(f => f.size > 5 * 1024 * 1024)) {
-      throw new Error("Cada archivo debe pesar como máximo 5 MB.");
-    }
-
-    if (archivos.reduce((s, f) => s + f.size, 0) > 10 * 1024 * 1024) {
-      throw new Error("Los archivos juntos no pueden superar 10 MB.");
+    if (archivos.some(f => f.size < 1 || f.size > MAX_BYTES_ARCHIVO_TAREA)) {
+      throw new Error("Cada archivo debe pesar entre 1 byte y 10 MB.");
     }
 
     const datos = {
@@ -1447,27 +1443,40 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
       entrega: document.getElementById("entrega").value
     };
 
-    if (archivos.length) {
-      datos.archivos = await Promise.all(archivos.map(async (f) => ({
-        base64: await archivoABase64(f),
-        nombre: f.name,
-        tipo: f.type
-      })));
-    }
-
     const usuario = firebase.auth().currentUser;
     const idToken = await usuario.getIdToken();
     const contenido = JSON.stringify(datos);
-    if (envioPendiente?.contenido !== contenido || envioPendiente?.uid !== usuario.uid) {
-      envioPendiente = { contenido, uid: usuario.uid, id: crypto.randomUUID() };
+    if (envioPendiente?.contenido !== contenido || envioPendiente?.uid !== usuario.uid ||
+        envioPendiente.archivos.length !== archivos.length ||
+        archivos.some((archivo, indice) => archivo !== envioPendiente.archivos[indice])) {
+      envioPendiente = { contenido, uid: usuario.uid, id: crypto.randomUUID(), archivos, subidos: 0 };
     }
-    const solicitudId = envioPendiente.id;
+    const envio = envioPendiente;
+    const solicitudId = envio.id;
+    while (envio.subidos < archivos.length) {
+      const indice = envio.subidos;
+      const archivo = archivos[indice];
+      btn.textContent = `Subiendo adjunto ${indice + 1} de ${archivos.length}…`;
+      const subida = await solicitarTarea({
+        accion: "tareas.adjuntar",
+        idToken,
+        datos: { solicitudId, indice, archivo: { nombre: archivo.name, base64: await archivoABase64(archivo) } }
+      });
+      if (subida.codigo === "NO_AUTORIZADO") {
+        window.location.href = "login.html";
+        return;
+      }
+      if (subida.ok !== true) throw new Error(subida.error || "No se pudo subir el adjunto.");
+      envio.subidos++;
+    }
+
+    btn.textContent = "Publicando tarea…";
     let data;
     try {
       data = await solicitarTarea({
         accion: "tareas.publicar",
         idToken,
-        datos: { ...datos, solicitudId }
+        datos: { ...datos, solicitudId, cantidadAdjuntos: archivos.length }
       });
     } catch {
       data = await solicitarTarea({
