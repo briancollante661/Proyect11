@@ -15,7 +15,7 @@
   document.documentElement.style.visibility = 'hidden';
 
   firebase.auth().onAuthStateChanged(function (user) {
-    if (!user) {
+    if (!user || !user.emailVerified) {
       // No hay sesión válida -> afuera
       window.location.href = 'login.html';
     } else {

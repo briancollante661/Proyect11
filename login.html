@@ -1252,7 +1252,7 @@
 
     // Si ya hay sesión activa, redirigir directo a profesores.html
     firebase.auth().onAuthStateChanged(user => {
-      if (user) {
+      if (user && user.emailVerified) {
         window.location.href = 'profesores.html';
       }
     });
@@ -1271,7 +1271,11 @@
       const password = passwordInput.value;
 
       try {
-        await firebase.auth().signInWithEmailAndPassword(email, password);
+        const credencial = await firebase.auth().signInWithEmailAndPassword(email, password);
+        if (!credencial.user.emailVerified) {
+          await firebase.auth().signOut();
+          throw { code: 'auth/email-not-verified' };
+        }
         window.location.href = 'profesores.html';
       } catch (err) {
         errorBox.textContent = mensajeError(err.code);
@@ -1311,6 +1315,8 @@
     // Mensajes de error en español amigables y precisos
     function mensajeError(code) {
       switch (code) {
+        case 'auth/email-not-verified':
+          return 'Tu correo todavía no está verificado. Contactá al administrador para habilitar tu cuenta.';
         case 'auth/invalid-email': 
           return 'El correo electrónico no es válido.';
         case 'auth/user-not-found':
