@@ -1650,38 +1650,74 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
 
     const msg = document.getElementById("estado-retiro");
     msg.className = "estado-msg";
-    msg.textContent = "";
+    msg.textContent = "Retirando aviso...";
     btn.disabled = true;
 
+    const controller = new AbortController();
+    let tiempo;
+    let solicitudEnviada = false;
+    let retirado = false;
+
     try {
-      const resp = await fetch(APPS_SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({
-          accion: "avisos.retirar",
-          idToken: await firebase.auth().currentUser.getIdToken(),
-          datos: { id: id }
+      const data = await Promise.race([
+        (async () => {
+          const idToken = await firebase.auth().currentUser.getIdToken();
+          if (controller.signal.aborted) return;
+          solicitudEnviada = true;
+          const resp = await fetch(APPS_SCRIPT_URL, {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            signal: controller.signal,
+            body: JSON.stringify({
+              accion: "avisos.retirar",
+              idToken,
+              datos: { id }
+            })
+          });
+
+          if (!resp.ok) throw new Error("Respuesta HTTP inesperada");
+          return resp.json();
+        })(),
+        new Promise((_, reject) => {
+          tiempo = setTimeout(() => {
+            controller.abort();
+            reject(new Error("Tiempo de espera agotado"));
+          }, 25000);
         })
-      });
+      ]);
 
-      const data = await resp.json();
-
-      if (data.ok === true) {
-        msg.className = "estado-msg ok";
-        msg.textContent = "✓ Aviso retirado correctamente.";
-        await cargarAvisosActivos();
+      if (data?.ok === true) {
+        retirado = true;
+      } else if (data?.ok !== false) {
+        throw new Error("Respuesta inesperada");
+      } else if (data.codigo === "NO_AUTORIZADO") {
+        window.location.href = "login.html";
+        return;
       } else {
-        if (data.codigo === "NO_AUTORIZADO") {
-          window.location.href = "login.html";
-          return;
-        }
-
-        throw new Error(data.error || "Error desconocido");
+        const mensajes = {
+          SIN_PERMISO: "No tenés permiso para retirar este aviso.",
+          NO_ENCONTRADO: "No se encontró el aviso. Actualizá la lista.",
+          LIMITE: "Alcanzaste el límite de solicitudes. Intentá más tarde."
+        };
+        msg.className = "estado-msg error";
+        msg.textContent = Object.hasOwn(mensajes, data.codigo)
+          ? mensajes[data.codigo]
+          : "No pudimos confirmar el retiro. Recargá la página para verificar si el aviso sigue activo antes de volver a intentarlo.";
       }
     } catch (err) {
       msg.className = "estado-msg error";
-      msg.textContent = "No se pudo retirar: " + err.message;
-      btn.disabled = false;
+      msg.textContent = solicitudEnviada
+        ? "No pudimos confirmar el retiro. Recargá la página para verificar si el aviso sigue activo antes de volver a intentarlo."
+        : "No pudimos enviar la solicitud. Volvé a intentarlo.";
+    } finally {
+      clearTimeout(tiempo);
+      btn.disabled = retirado;
+    }
+
+    if (retirado) {
+      msg.className = "estado-msg ok";
+      msg.textContent = "✓ Aviso retirado correctamente.";
+      await cargarAvisosActivos();
     }
   }
 
