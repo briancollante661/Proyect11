@@ -108,6 +108,16 @@ body.pagina-profesores .aviso-activo-card { border-radius:0; box-shadow:none; }
  body.pagina-profesores .profesores-main { grid-template-columns:180px minmax(0,1fr); padding-top:36px; gap:36px; }
 }
 @media(max-width:767px) {
+ body.sie-curso { padding-bottom:calc(76px + env(safe-area-inset-bottom, 0px)); }
+ .sie-curso nav.section-tabs {
+   position:fixed; inset:auto 0 0; z-index:600; margin:0;
+   padding:8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+   background:#fff; border:0; border-top:1px solid var(--sie-line);
+   box-shadow:0 -4px 16px #29233308; gap:4px;
+ }
+ .sie-curso .section-tabs button { min-height:48px; border:0; border-radius:8px; }
+ .sie-curso .section-tabs button[aria-pressed=true] { background:#eee5f4; color:var(--sie-purple); }
+ .sie-curso :is(input,select,button,summary,[tabindex]) { scroll-margin-bottom:calc(88px + env(safe-area-inset-bottom, 0px)); }
  body.pagina-profesores .inst-subtitle,body.pagina-profesores .header-crest { display:none; }
  body.pagina-profesores .inst-title { font-size:0; }
  body.pagina-profesores .inst-title::after { content:'SIE'; font-size:1rem; }
