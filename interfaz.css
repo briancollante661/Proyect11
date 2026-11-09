@@ -21,10 +21,10 @@ nav.sie-navbar { box-shadow:none; border-radius:0; background:var(--sie-purple);
 .sie-curso .panel-academico { padding:0; margin:0; border:0; border-radius:0; background:transparent; box-shadow:none; animation:none; }
 .sie-curso .panel-header-bar { margin:0 0 18px; padding:0; border:0; }
 .sie-curso .panel-header-title { font-size:1.15rem; font-weight:650; }
-.sie-curso .tarea-card { border:0; border-bottom:1px solid var(--sie-line); border-radius:0; box-shadow:none; background:transparent; margin:0; animation:none; opacity:1; }
+.sie-curso .tarea-card { padding:0; border:1px solid var(--sie-line); border-radius:12px; box-shadow:none; background:white; margin:0 0 14px; animation:none; opacity:1; }
 .sie-curso .tarea-card:hover { transform:none; box-shadow:none; }
 .sie-curso .tarea-acento { display:none; }
-.sie-curso .tarea-body { padding:22px 0; display:flex; flex-direction:column; gap:10px; min-width:0; }
+.sie-curso .tarea-body { padding:20px; display:flex; flex-direction:column; gap:12px; min-width:0; }
 .sie-curso .tarea-titulo { order:-1; margin:0; font-size:1.2rem; }
 .sie-curso .tarea-meta { margin:0; flex-wrap:wrap; gap:8px; }
 .sie-curso .tarea-meta-fecha { color:var(--sie-ink); }
@@ -34,6 +34,14 @@ nav.sie-navbar { box-shadow:none; border-radius:0; background:var(--sie-purple);
 .tarea-detalle summary::before { content:'＋'; margin-right:8px; }
 .tarea-detalle[open] summary::before { content:'−'; }
 .tarea-desc { overflow-wrap:anywhere; white-space:pre-wrap; }
+.sie-curso .tarea-desc { line-height:1.7; font-size:.95rem; color:var(--sie-muted); margin:12px 0; }
+.sie-curso .tarea-detalle { border-top:1px solid #eee9f1; padding-top:8px; }
+.sie-curso .tarea-detalle summary { width:100%; font-size:.85rem; }
+.sie-curso .tarea-detalle[open] summary { margin-bottom:8px; }
+.sie-curso .tarea-meta-materia { color:var(--sie-purple); font-weight:600; }
+.sie-curso .tarea-meta-fecha { margin-left:auto; }
+.sie-curso .tarea-meta-sep { display:none; }
+.sie-curso .no-data { padding:28px 20px; background:#fff; border:1px dashed #dcd3e3; border-radius:12px; line-height:1.6; color:var(--sie-muted); }
 .sie-curso .tarea-img-descarga { position:static; width:auto; height:auto; min-height:44px; display:inline-flex; gap:8px; padding:10px 12px; border-radius:6px; background:var(--sie-purple); color:white; font-size:.85rem; }
 .sie-curso .filtros-bar { flex-wrap:wrap; padding:16px; gap:12px; border:1px solid var(--sie-line); border-radius:8px; background:white; box-shadow:none; }
 .sie-curso .filtro-group { min-width:0; flex:1 1 150px; display:flex; flex-direction:column; align-items:stretch; gap:6px; }

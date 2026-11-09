@@ -1,5 +1,6 @@
 /* Horario semanal habitual. Los feriados y cambios excepcionales no se deducen. */
 const Horarios = (() => {
+  const temporizadores = new WeakMap();
   const dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
   const nombres = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
   const normalizar = valor => String(valor ?? '').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -56,6 +57,7 @@ const Horarios = (() => {
   async function montar(curso, id = 'horarios-contenido') {
     const cont = document.getElementById(id);
     if (!cont) return;
+    clearInterval(temporizadores.get(cont));
     cont.setAttribute('aria-busy', 'true');
     cont.replaceChildren(el('p', 'estado', 'Cargando horario…'));
     let semana;
@@ -82,6 +84,7 @@ const Horarios = (() => {
     const resumen = el('div', 'horarios-resumen');
     resumen.setAttribute('aria-live', 'polite');
     const controles = el('div', 'horarios-controles');
+    controles.setAttribute('role', 'group');
     controles.setAttribute('aria-label', 'Seleccionar día');
     const botones = nombres.map((nombre, i) => {
       const boton = el('button', 'horarios-boton', nombre.slice(0, 3));
@@ -94,9 +97,13 @@ const Horarios = (() => {
     const alternar = el('button', 'horarios-boton', 'Ver semana');
     alternar.type = 'button';
     alternar.onclick = () => { vistaSemana = !vistaSemana; pintar(); };
-    controles.append(alternar);
+    const herramientas = el('div', 'horarios-herramientas');
+    const hoy = el('button', 'horarios-boton', 'Ir a hoy');
+    hoy.type = 'button';
+    hoy.onclick = () => { seleccionado = reloj().dia; vistaSemana = false; pintar(); };
+    herramientas.append(hoy, alternar);
     const lista = el('div', 'horarios-lista');
-    cont.replaceChildren(resumen, controles, lista, el('p', 'horarios-nota', 'Hora de Paraguay · Horario habitual; no contempla feriados ni cambios excepcionales.'));
+    cont.replaceChildren(resumen, controles, herramientas, lista, el('p', 'horarios-nota', 'Hora de Paraguay · Horario habitual; no contempla feriados ni cambios excepcionales.'));
     function pintar() {
       const ahora = reloj(), { actual, siguiente } = estado(semana, ahora);
       const textoActual = actual ? (actual.tipo === 'libre' ? `Sin clases hasta ${hora(actual.fin)}` : `${actual.materia} · hasta ${hora(actual.fin)}`) : (semana[ahora.dia]?.length ? 'Fuera del horario de clases' : 'Hoy no hay clases');
@@ -107,7 +114,14 @@ const Horarios = (() => {
         if (siguiente.salto === 0 && (!actual || actual.tipo === 'libre')) textoSiguiente = `Sin clases hasta ${hora(siguiente.inicio)} · ${siguiente.materia}`;
       }
       const texto = `Ahora: ${textoActual}\nSiguiente: ${textoSiguiente}`;
-      if (resumen.textContent !== texto) resumen.textContent = texto;
+      if (resumen.dataset.estado !== texto) {
+        resumen.dataset.estado = texto;
+        const presente = el('div', 'horarios-presente');
+        presente.append(el('span', 'horarios-etiqueta', 'Ahora · horario habitual'), el('strong', '', textoActual));
+        const proximo = el('div', 'horarios-proximo');
+        proximo.append(el('span', 'horarios-etiqueta', 'Próxima clase'), el('span', '', textoSiguiente));
+        resumen.replaceChildren(presente, proximo);
+      }
       botones.forEach((b, i) => {
         b.setAttribute('aria-pressed', String(!vistaSemana && seleccionado === i));
         b.classList.toggle('es-hoy', i === ahora.dia);
@@ -116,11 +130,18 @@ const Horarios = (() => {
       alternar.textContent = vistaSemana ? 'Ver día' : 'Ver semana';
       lista.classList.toggle('vista-semana', vistaSemana);
       lista.replaceChildren();
+      if (!vistaSemana && seleccionado > 4) {
+        lista.append(el('p', 'no-data', 'Hoy no hay clases programadas. Elegí un día para ver su horario.'));
+      }
       semana.forEach((bloques, d) => {
         if (!vistaSemana && d !== seleccionado) return;
         const columna = el('section', 'horarios-dia');
         columna.classList.toggle('es-hoy', d === ahora.dia);
-        columna.append(el('h4', '', nombres[d] + (d === ahora.dia ? ' · Hoy' : '')));
+        const cabecera = el('div', 'horarios-dia-cabecera');
+        cabecera.append(el('h4', '', nombres[d] + (d === ahora.dia ? ' · Hoy' : '')));
+        const clases = bloques.filter(b => b.tipo === 'clase').length;
+        cabecera.append(el('span', 'horarios-cantidad', `${clases} ${clases === 1 ? 'clase' : 'clases'}`));
+        columna.append(cabecera);
         if (!bloques.length) columna.append(el('p', '', 'Sin clases programadas'));
         let turnoAnterior;
         bloques.forEach(b => {
@@ -132,8 +153,19 @@ const Horarios = (() => {
           const bloque = el('article', `horarios-bloque tipo-${b.tipo}`);
           const activo = d === ahora.dia && b.inicio <= ahora.minuto && ahora.minuto < b.fin;
           if (activo) { bloque.classList.add('es-actual'); bloque.setAttribute('aria-current', 'true'); }
-          bloque.append(el('div', 'horarios-hora', `${hora(b.inicio)}–${hora(b.fin)}${activo ? ' · Ahora' : ''}`), el('strong', '', b.materia));
-          if (b.profesor && b.tipo === 'clase') bloque.append(el('div', 'horarios-profesor', b.profesor));
+          const horas = el('div', 'horarios-hora');
+          horas.append(el('span', '', hora(b.inicio)), el('span', 'horarios-fin', hora(b.fin)));
+          const detalle = el('div', 'horarios-detalle');
+          detalle.append(el('strong', '', b.materia));
+          if (b.profesor && b.tipo === 'clase') detalle.append(el('div', 'horarios-profesor', b.profesor));
+          if (activo) {
+            detalle.append(el('span', 'horarios-en-curso', `En curso · ${b.fin - ahora.minuto} min restantes`));
+            const progreso = el('progress', 'horarios-progreso');
+            progreso.max = b.fin - b.inicio; progreso.value = ahora.minuto - b.inicio;
+            progreso.setAttribute('aria-label', 'Tiempo transcurrido del bloque');
+            detalle.append(progreso);
+          } else detalle.append(el('span', 'horarios-duracion', `${b.fin - b.inicio} min`));
+          bloque.append(horas, detalle);
           columna.append(bloque);
         });
         lista.append(columna);
@@ -142,6 +174,7 @@ const Horarios = (() => {
     pintar();
     // Actualiza el estado con la hora actual sin consultar Sheets cada minuto.
     const timer = setInterval(() => { if (cont.isConnected) pintar(); else clearInterval(timer); }, 30000);
+    temporizadores.set(cont, timer);
   }
   return { montar, preparar, reloj, estado, minutos, hora };
 })();

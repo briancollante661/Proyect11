@@ -1,0 +1,49 @@
+/* Agenda responsive; mantiene las horas y datos originales. */
+.horarios-resumen { display:grid; gap:18px; padding:22px; background:#f0e9f5; border:1px solid #dfd2e8; border-radius:14px; color:#34233f; white-space:normal; }
+.horarios-presente,.horarios-proximo { display:flex; flex-direction:column; gap:7px; min-width:0; overflow-wrap:anywhere; line-height:1.5; }
+.horarios-presente strong { font-size:1.15rem; font-weight:650; }
+.horarios-etiqueta { font-size:.75rem; font-weight:650; color:#6e527e; letter-spacing:.04em; }
+.horarios-proximo { padding-top:14px; border-top:1px solid #d9cbe3; font-size:.9rem; }
+.horarios-controles { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:4px; margin:24px 0 12px; padding:5px; background:#eeeaf1; border-radius:12px; }
+.horarios-boton { min-height:44px; padding:10px 12px; border:1px solid #ded7e4; border-radius:8px; background:#fff; color:#54435e; font:inherit; font-size:.9rem; font-weight:550; cursor:pointer; transition:background .15s,color .15s; }
+.horarios-controles .horarios-boton { padding:10px 2px; border:0; background:transparent; position:relative; }
+.horarios-boton:hover { background:#f3edf7; }
+.horarios-boton[aria-pressed=true] { background:#59217c; color:#fff; }
+.horarios-boton.es-hoy { text-decoration:none; }
+.horarios-boton.es-hoy::after { content:''; position:absolute; width:4px; height:4px; bottom:4px; left:calc(50% - 2px); border-radius:50%; background:currentColor; }
+.horarios-herramientas { display:flex; justify-content:space-between; gap:12px; margin-bottom:24px; }
+.horarios-herramientas .horarios-boton { background:transparent; border:0; padding:8px 4px; color:#59217c; text-decoration:underline; text-underline-offset:4px; }
+.horarios-lista { display:grid; gap:20px; }
+.horarios-lista.vista-semana { grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); align-items:start; overflow:visible; }
+.horarios-dia { min-width:0; padding:20px; border:1px solid #e4dfe8; border-radius:12px; background:white; }
+.horarios-dia.es-hoy { border-color:#d9c6e6; }
+.horarios-dia-cabecera { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:20px; }
+.horarios-dia h4 { margin:0; font-size:1.15rem; }
+.horarios-cantidad { color:#756a7b; font-size:.8rem; white-space:nowrap; }
+.horarios-turno { margin:20px 0 12px; color:#756a7b; font-size:.75rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; }
+.horarios-bloque { display:grid; grid-template-columns:52px minmax(0,1fr); gap:14px; margin:0; padding:16px 0; border:0; border-radius:0; background:transparent; color:#342b3d; overflow-wrap:anywhere; }
+.horarios-bloque + .horarios-bloque { border-top:1px solid #f0edf3; }
+.horarios-hora { display:flex; flex-direction:column; gap:5px; font-size:.85rem; font-variant-numeric:tabular-nums; padding-top:3px; font-weight:650; }
+.horarios-fin { color:#857b8d; font-weight:400; font-size:.75rem; }
+.horarios-detalle { border-left:3px solid #d9c6e6; padding:2px 0 4px 14px; min-width:0; }
+.horarios-detalle strong { display:block; font-size:1rem; font-weight:600; line-height:1.4; margin:0; }
+.horarios-profesor { font-size:.82rem; line-height:1.5; color:#756a7b; margin-top:4px; }
+.horarios-duracion { display:block; font-size:.72rem; color:#756a7b; margin-top:7px; }
+.horarios-bloque.tipo-recreo,.horarios-bloque.tipo-libre { background:transparent; border:0; }
+.tipo-recreo .horarios-detalle { border-color:#8cb6a1; }
+.tipo-recreo .horarios-detalle strong { color:#3d6e55; font-size:.9rem; }
+.tipo-libre .horarios-detalle { border-left:2px dashed #d5ceda; }
+.tipo-libre .horarios-detalle strong { font-size:.9rem; color:#756a7b; font-weight:400; }
+.horarios-bloque.es-actual { box-shadow:none; border:0; }
+.es-actual .horarios-detalle { border-color:#59217c; background:#f5f0f8; padding:12px 14px; border-radius:0 8px 8px 0; }
+.horarios-en-curso { display:block; color:#59217c; font-size:.75rem; font-weight:600; margin-top:10px; }
+.horarios-progreso { display:block; width:100%; height:5px; border:0; border-radius:4px; overflow:hidden; margin-top:10px; accent-color:#59217c; }
+.horarios-progreso::-webkit-progress-bar { background:#e4d8eb; }
+.horarios-progreso::-webkit-progress-value { background:#59217c; }
+.horarios-nota { font-size:.75rem; line-height:1.6; margin-top:18px; color:#756a7b; }
+@media(min-width:768px) {
+ .horarios-resumen { grid-template-columns:1fr 1fr; gap:28px; }
+ .horarios-proximo { border-top:0; border-left:1px solid #d9cbe3; padding:0 0 0 24px; }
+ .horarios-controles { max-width:540px; }
+}
+@media(max-width:359px) { .horarios-dia { padding:16px 12px; } .horarios-bloque { gap:8px; } }
