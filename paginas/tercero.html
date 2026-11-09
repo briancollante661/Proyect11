@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="../estilos.css">
 <link rel="stylesheet" href="../horarios.css">
 <link rel="stylesheet" href="../horarios-agenda.css">
-<link rel="stylesheet" href="../interfaz.css?v=4"></head>
+<link rel="stylesheet" href="../interfaz.css?v=5"></head>
 <body class="sie-curso">
 
 <!-- ── NAVBAR MORADA INSTITUCIONAL ── -->
@@ -122,8 +122,8 @@
           <button class="btn-limpiar" onclick="limpiarFiltros()">Limpiar filtros</button>
         </div>
 
-        <div id="tareas-contenido">
-          <div class="estado"><div class="spinner"></div>Cargando tareas...</div>
+        <div id="tareas-contenido" aria-busy="true">
+          <div class="estado" role="status">Cargando tareas...</div>
         </div>
       </section>
 
@@ -140,8 +140,8 @@
 
         </div>
 
-        <div id="horarios-contenido">
-          <div class="estado"><div class="spinner"></div>Cargando horario...</div>
+        <div id="horarios-contenido" aria-busy="true">
+          <div class="estado" role="status">Cargando horario...</div>
         </div>
       </section>
 
@@ -158,8 +158,8 @@
 
         </div>
 
-        <div id="avisos-contenido">
-          <div class="estado"><div class="spinner"></div>Cargando avisos...</div>
+        <div id="avisos-contenido" aria-busy="true">
+          <div class="estado" role="status">Cargando avisos...</div>
         </div>
       </section>
 
@@ -185,8 +185,8 @@
   <img id="lightbox-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
 </div>
 
-<script src="../config.js"></script>
-<script src="../horarios.js"></script>
+<script src="../config.js?v=2"></script>
+<script src="../horarios.js?v=2"></script>
 <script>
 const CURSO = "tercero";
 let todasTareas = [];
@@ -330,11 +330,13 @@ function limpiarFiltros() {
 
 async function cargarTareas() {
   const cont = document.getElementById("tareas-contenido");
+  mostrarCargando(cont, 'Cargando tareas…');
   try {
     const filas = await cargarHoja(SHEETS_CONFIG.tareas.spreadsheetId, SHEETS_CONFIG.tareas.hoja);
     todasTareas = filas.filter(f=>(f["Curso"]||"").toLowerCase()===CURSO);
     poblarMaterias(todasTareas);
     cont.innerHTML = renderTareas(todasTareas);
+    cont.setAttribute('aria-busy', 'false');
   } catch(e) {
     mostrarErrorLectura(cont, "las tareas", cargarTareas);
   }

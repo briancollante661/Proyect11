@@ -44,6 +44,11 @@ nav.sie-navbar { box-shadow:none; border-radius:0; background:var(--sie-purple);
 .sie-curso .tarea-meta-fecha { margin-left:auto; }
 .sie-curso .tarea-meta-sep { display:none; }
 .sie-curso .no-data { padding:28px 20px; background:#fff; border:1px dashed #dcd3e3; border-radius:12px; line-height:1.6; color:var(--sie-muted); }
+.sie-curso .estado { position:relative; min-height:160px; padding:20px; border:1px solid var(--sie-line); border-radius:12px; background:#fff; color:transparent; overflow:hidden; text-align:left; }
+.sie-curso .estado::before { content:""; display:block; height:96px; background:linear-gradient(#ebe6f0 0 0) 0 0/42% 20px,linear-gradient(#ebe6f0 0 0) 0 42px/68% 14px,linear-gradient(#ebe6f0 0 0) 0 76px/85% 14px; background-repeat:no-repeat; animation:sie-skeleton 1.5s ease-in-out infinite; }
+.sie-curso #horarios-contenido .estado { min-height:230px; }
+.sie-curso #horarios-contenido .estado::before { height:170px; background:linear-gradient(#ebe6f0 0 0) 0 0/50% 20px,linear-gradient(#ebe6f0 0 0) 0 42px/72% 14px,linear-gradient(#ebe6f0 0 0) 0 86px/36% 18px,linear-gradient(#ebe6f0 0 0) 0 130px/86% 14px; background-repeat:no-repeat; }
+@keyframes sie-skeleton { 50% { opacity:.45; } }
 .sie-curso .tarea-img-descarga { position:static; width:auto; height:auto; min-height:44px; display:inline-flex; gap:8px; padding:10px 12px; border-radius:6px; background:var(--sie-purple); color:white; font-size:.85rem; }
 .sie-curso .filtros-bar { flex-wrap:wrap; padding:16px; gap:12px; border:1px solid var(--sie-line); border-radius:8px; background:white; box-shadow:none; }
 .sie-curso .filtro-group { min-width:0; flex:1 1 150px; display:flex; flex-direction:column; align-items:stretch; gap:6px; }

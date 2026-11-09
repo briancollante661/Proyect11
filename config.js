@@ -46,8 +46,19 @@ async function cargarHoja(spreadsheetId, nombreHoja) {
 }
 
 // Solo texto controlado: los detalles técnicos no se insertan en la página.
+function mostrarCargando(cont, mensaje) {
+  if (!cont) return;
+  const estado = document.createElement('div');
+  estado.className = 'estado';
+  estado.setAttribute('role', 'status');
+  estado.textContent = mensaje;
+  cont.setAttribute('aria-busy', 'true');
+  cont.replaceChildren(estado);
+}
+
 function mostrarErrorLectura(cont, recurso, reintentar) {
   if (!cont) return;
+  cont.setAttribute('aria-busy', 'false');
   const caja = document.createElement('div');
   caja.className = 'error-box';
   caja.setAttribute('role', 'status');
@@ -119,6 +130,7 @@ function esc(s) {
 async function cargarAvisosCurso(curso, contenedorId) {
   const cont = document.getElementById(contenedorId);
   if (!cont) return;
+  mostrarCargando(cont, 'Cargando avisos…');
   const TIPOS = { evento: "Evento", cambio_horario: "Cambio de horario", otro: "Aviso" };
   const fmt = (iso) => new Date(iso.slice(0, 10) + "T00:00:00")
     .toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" });
@@ -136,6 +148,7 @@ async function cargarAvisosCurso(curso, contenedorId) {
                    (!f.vigente_hasta || f.vigente_hasta >= hoy))
       .sort((a, b) => b.publicado_en.localeCompare(a.publicado_en));
 
+    cont.setAttribute('aria-busy', 'false');
     cont.textContent = "";
     if (!filas.length) {
       cont.appendChild(crear("div", "no-data", "No hay avisos por ahora."));

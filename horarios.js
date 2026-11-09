@@ -58,8 +58,7 @@ const Horarios = (() => {
     const cont = document.getElementById(id);
     if (!cont) return;
     clearInterval(temporizadores.get(cont));
-    cont.setAttribute('aria-busy', 'true');
-    cont.replaceChildren(el('p', 'estado', 'Cargando horario…'));
+    mostrarCargando(cont, 'Cargando horario…');
     let semana;
     try {
       const cfg = SHEETS_CONFIG.horarios;
