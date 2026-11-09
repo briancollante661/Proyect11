@@ -116,7 +116,22 @@ body.pagina-profesores .aviso-activo-card { border-radius:0; box-shadow:none; }
 .pagina-login .auth-card-header { margin-bottom:24px; }
 .pagina-login .auth-card-header h1 { font-size:1.6rem; }
 @media(min-width:768px) {
- .sie-curso .course-page-wrapper { width:100%; }
+ .sie-curso .course-page-wrapper { width:100%; font-size:1.125rem; }
+ .sie-curso .course-hero-title { font-size:2.75rem; }
+ .sie-curso .section-tabs button { font-size:1.1rem; }
+ .sie-curso .panel-header-title { font-size:1.4rem; }
+ .sie-curso .filtro-group label { font-size:.95rem; }
+ .sie-curso .filtro-group input,.sie-curso .filtro-group select,.sie-curso .btn-limpiar { font-size:1rem; }
+ .sie-curso .tarea-titulo { font-size:1.4rem; }
+ .sie-curso .tarea-meta-materia,.sie-curso .tarea-meta-fecha,.sie-curso .tarea-detalle summary,.sie-curso .tarea-desc { font-size:1rem; }
+ .sie-curso .estado,.sie-curso .no-data { font-size:1rem; }
+ .sie-curso .aviso-fecha { font-size:.9rem; }
+ .sie-curso .aviso-titulo { font-size:1.25rem; }
+ .sie-curso .aviso-desc { font-size:1rem; }
+ .sie-curso .horarios-etiqueta,.sie-curso .horarios-turno,.sie-curso .horarios-nota { font-size:.9rem; }
+ .sie-curso .horarios-presente strong,.sie-curso .horarios-dia h4 { font-size:1.3rem; }
+ .sie-curso .horarios-proximo,.sie-curso .horarios-boton,.sie-curso .horarios-hora,.sie-curso .horarios-detalle strong { font-size:1rem; }
+ .sie-curso .horarios-cantidad,.sie-curso .horarios-fin,.sie-curso .horarios-profesor,.sie-curso .horarios-duracion,.sie-curso .horarios-en-curso { font-size:.9rem; }
  .section-tabs button { flex:0 1 160px; }
  #docente-menu { display:none; }
  #docente-nav,#docente-nav.abierto { display:flex; position:static; border:0; border-right:1px solid var(--sie-line); border-radius:0; padding:0 20px 0 0; box-shadow:none; background:transparent; }
