@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
+<!DOCTYPE html><html lang="es"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Panel de Profesores — CEDM Santa Teresa de Ávila | SIE</title>
 <link rel="icon" type="image/png" href="imagenes/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="estilos.css">
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
@@ -973,18 +971,15 @@
   }
 </style>
 <link rel="stylesheet" href="roles.css">
-</head>
+<link rel="stylesheet" href="interfaz.css"></head>
 <body class="pagina-profesores">
 
   <!-- Lienzo ambiental con destellos SIE -->
-  <div class="ambient-canvas" aria-hidden="true">
-    <div class="ambient-glow-top"></div>
-    <div class="ambient-glow-bottom"></div>
-  </div>
+
 
   <!-- ── 1. BARRA SUPERIOR INSTITUCIONAL ── -->
   <header class="profesores-header">
-    <div class="header-inner">
+    <div class="header-inner"><button type="button" id="docente-menu" aria-controls="docente-nav" aria-expanded="false">☰ Menú</button>
       <div class="header-left">
         <!-- Retorno al Inicio -->
         <a href="index.html" class="nav-return-btn" id="link-volver">
@@ -995,7 +990,7 @@
           <span>Volver al inicio</span>
         </a>
 
-        <div class="header-brand-divider" aria-hidden="true"></div>
+
 
         <!-- Identidad Institucional -->
         <div class="header-institution">
@@ -1004,17 +999,14 @@
           </div>
           <div class="header-titles">
             <span class="inst-subtitle">Centro Escolar Santa Teresa de Ávila</span>
-            <span class="inst-title">SIE &bull; Gestión Docente</span>
+            <span class="inst-title">SIE · Panel docente</span>
           </div>
         </div>
       </div>
 
       <!-- Estado y Logout -->
       <div class="header-right">
-        <div class="user-status-pill">
-          <span class="status-beacon" aria-hidden="true"></span>
-          <span>Docente Autenticado</span>
-        </div>
+
 
         <button type="button" class="btn-logout" onclick="cerrarSesion()" id="btn-logout" aria-label="Cerrar sesión activa">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1029,132 +1021,14 @@
   </header>
 
   <!-- ── 2. ÁREA PRINCIPAL CON DISTRIBUCIÓN RESPONSIVE ── -->
-  <main class="profesores-main">
-    <div class="profesores-container">
-
-      <!-- ══════════════════════════════════════════════════════════
-           COLUMNA IZQUIERDA EN ESCRITORIO:
-           PUBLICAR AVISO + AVISOS ACTIVOS
-           ══════════════════════════════════════════════════════════ -->
-      <section class="col-avisos" aria-label="Gestión de Comunicados y Avisos">
-        
-        <!-- Tarjeta 1: Formulario Publicar Aviso -->
-        <div class="panel-card panel-publicar-aviso">
-          <div class="panel-header">
-            <!-- Icono Unificado: Fondo Morado Sólido + Símbolo Campana Blanco -->
-            <div class="panel-icon-badge badge-aviso" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-              </svg>
-            </div>
-            <div class="panel-header-text">
-              <span class="panel-eyebrow">Comunicación Oficial</span>
-              <h2>Publicar aviso</h2>
-              <p>Difundí comunicados generales, eventos o cambios de horario</p>
-            </div>
-          </div>
-
-          <!-- FORMULARIO DE AVISOS (IDs funcionales intactos) -->
-          <form id="form-aviso">
-            <div class="form-row-2">
-              <div class="campo">
-                <label for="aviso-curso">Destinatarios / Curso</label>
-                <select id="aviso-curso" required>
-                  <option value="">Seleccioná un curso</option>
-                  <option value="general">General (todos los cursos)</option>
-                  <option value="primero">Primero</option>
-                  <option value="segundo">Segundo</option>
-                  <option value="tercero">Tercero</option>
-                </select>
-              </div>
-
-              <div class="campo">
-                <label for="aviso-tipo">Tipo de aviso</label>
-                <select id="aviso-tipo" required>
-                  <option value="evento">Evento</option>
-                  <option value="cambio_horario">Cambio de horario</option>
-                  <option value="otro">Otro</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="campo">
-              <label for="aviso-titulo">Título del aviso</label>
-              <input type="text" id="aviso-titulo" maxlength="100" required>
-            </div>
-
-            <div class="campo">
-              <label for="aviso-descripcion">Descripción del comunicado</label>
-              <textarea id="aviso-descripcion" maxlength="1000" required></textarea>
-            </div>
-
-            <div class="form-row-2">
-              <div class="campo">
-                <label for="aviso-fecha-evento">Fecha del evento (opcional)</label>
-                <input type="date" id="aviso-fecha-evento">
-              </div>
-
-              <div class="campo">
-                <label for="aviso-vigente">Vigente hasta (opcional)</label>
-                <input type="date" id="aviso-vigente">
-              </div>
-            </div>
-
-            <button type="submit" class="btn-enviar btn-aviso" id="btn-aviso">
-              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-              </svg>
-              <span>Publicar aviso</span>
-            </button>
-            <div class="estado-msg" id="estado-aviso"></div>
-          </form>
-        </div>
-
-        <!-- Tarjeta 2: Avisos Activos en la Plataforma -->
-        <div class="panel-card panel-avisos-activos">
-          <div class="panel-header">
-            <div class="panel-icon-badge badge-activos" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-              </svg>
-            </div>
-            <div class="panel-header-text">
-              <span class="panel-eyebrow">Publicaciones Activas</span>
-              <h2>Avisos activos</h2>
-              <p>Consultá y administrá los comunicados actualmente en línea</p>
-            </div>
-          </div>
-
-          <div class="estado-msg" id="estado-retiro"></div>
-          <div id="lista-avisos" class="lista-avisos-container">Cargando avisos...</div>
-        </div>
-
-      </section>
-
-      <!-- ══════════════════════════════════════════════════════════
-           COLUMNA DERECHA EN ESCRITORIO:
-           PANEL DE PROFESORES (FORMULARIO PRINCIPAL DE TAREAS)
-           ══════════════════════════════════════════════════════════ -->
-      <section class="col-tareas" aria-label="Panel de Profesores - Publicación de Tareas">
-        
-        <div class="panel-card panel-tareas">
+  <main class="profesores-main"><nav id="docente-nav" aria-label="Panel docente"><button type="button" data-seccion="tareas" aria-current="page">Tareas</button><button type="button" data-seccion="avisos">Avisos</button><button type="button" data-seccion="permisos" hidden="">Permisos</button><a href="index.html">Volver al inicio</a></nav><div class="docente-contenido"><h1 id="docente-titulo" tabindex="-1">Tareas</h1><div class="section-tabs" id="docente-vistas" aria-label="Vista de publicaciones"><button type="button" data-vista="publicar" aria-pressed="true">Publicar</button><button type="button" data-vista="publicadas" aria-pressed="false">Publicadas</button></div><section id="docente-tareas"><div class="panel-card panel-tareas" data-panel-vista="publicar">
           <div class="panel-header">
             <!-- Icono Unificado: Fondo Morado Sólido + Símbolo Libro Blanco -->
-            <div class="panel-icon-badge badge-tarea" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-              </svg>
-            </div>
+
             <div class="panel-header-text">
-              <span class="panel-eyebrow">Gestión Académica</span>
-              <h2>Panel de Profesores</h2>
-              <p>Publicación de tareas, consignas y archivos para los cursos</p>
+
+              <h2>Publicar tarea</h2>
+
             </div>
           </div>
 
@@ -1163,7 +1037,7 @@
             <div class="form-row-2">
               <div class="campo">
                 <label for="curso">Curso</label>
-                <select id="curso" required>
+                <select id="curso" required="">
                   <option value="">Seleccioná un curso</option>
                   <option value="Primero">Primero</option>
                   <option value="Segundo">Segundo</option>
@@ -1173,7 +1047,7 @@
 
               <div class="campo">
                 <label for="materia">Materia</label>
-                <select id="materia" required disabled>
+                <select id="materia" required="" disabled="">
                   <option value="">Seleccioná primero un curso</option>
                 </select>
               </div>
@@ -1181,7 +1055,7 @@
 
             <div class="campo">
               <label for="titulo">Título de la tarea</label>
-              <input type="text" id="titulo" required>
+              <input type="text" id="titulo" required="">
             </div>
 
             <div class="campo">
@@ -1191,14 +1065,14 @@
 
             <div class="campo">
               <label for="entrega">Fecha de entrega</label>
-              <input type="date" id="entrega" required>
+              <input type="date" id="entrega" required="">
             </div>
 
             <!-- Área de Archivos con Lista Interactiva y Botón de Quitar -->
             <div class="campo campo-archivo">
               <label for="archivo">Archivos adjuntos (opcional)</label>
               <div class="file-upload-box">
-                <input type="file" id="archivo" accept=".pdf,.docx,.xlsx,.pptx,.jpg,.jpeg,.jfif,.png,.gif,.webp" multiple>
+                <input type="file" id="archivo" accept=".pdf,.docx,.xlsx,.pptx,.jpg,.jpeg,.jfif,.png,.gif,.webp" multiple="">
                 <div class="file-upload-visual" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -1223,12 +1097,10 @@
             </button>
             <div class="estado-msg" id="estado-msg"></div>
           </form>
-        </div>
-
-        <div class="panel-card panel-avisos-activos" aria-labelledby="tareas-activas-titulo">
+        </div><div class="panel-card panel-avisos-activos" aria-labelledby="tareas-activas-titulo" data-panel-vista="publicadas" hidden="">
           <div class="panel-header">
             <div class="panel-header-text">
-              <span class="panel-eyebrow">Publicaciones activas</span>
+
               <h2 id="tareas-activas-titulo">Tareas activas</h2>
               <p>Retirá las tareas que administrás. Al retirarlas, desaparecen de la página del curso. Los enlaces a adjuntos que ya se compartieron pueden seguir funcionando.</p>
             </div>
@@ -1238,12 +1110,85 @@
             <button id="actualizar-tareas-activas" type="button">Actualizar lista</button>
             <div id="lista-tareas-activas" class="lista-avisos-container"></div>
           </fieldset>
-        </div>
+        </div></section><section id="docente-avisos" hidden=""><div class="panel-card panel-publicar-aviso" data-panel-vista="publicar">
+          <div class="panel-header">
+            <!-- Icono Unificado: Fondo Morado Sólido + Símbolo Campana Blanco -->
 
-      </section>
+            <div class="panel-header-text">
 
-    </div>
-  <section id="gestion-roles" hidden aria-labelledby="roles-titulo">
+              <h2>Publicar aviso</h2>
+
+            </div>
+          </div>
+
+          <!-- FORMULARIO DE AVISOS (IDs funcionales intactos) -->
+          <form id="form-aviso">
+            <div class="form-row-2">
+              <div class="campo">
+                <label for="aviso-curso">Destinatarios / Curso</label>
+                <select id="aviso-curso" required="">
+                  <option value="">Seleccioná un curso</option>
+                  <option value="general">General (todos los cursos)</option>
+                  <option value="primero">Primero</option>
+                  <option value="segundo">Segundo</option>
+                  <option value="tercero">Tercero</option>
+                </select>
+              </div>
+
+              <div class="campo">
+                <label for="aviso-tipo">Tipo de aviso</label>
+                <select id="aviso-tipo" required="">
+                  <option value="evento">Evento</option>
+                  <option value="cambio_horario">Cambio de horario</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="campo">
+              <label for="aviso-titulo">Título del aviso</label>
+              <input type="text" id="aviso-titulo" maxlength="100" required="">
+            </div>
+
+            <div class="campo">
+              <label for="aviso-descripcion">Descripción del comunicado</label>
+              <textarea id="aviso-descripcion" maxlength="1000" required=""></textarea>
+            </div>
+
+            <div class="form-row-2">
+              <div class="campo">
+                <label for="aviso-fecha-evento">Fecha del evento (opcional)</label>
+                <input type="date" id="aviso-fecha-evento">
+              </div>
+
+              <div class="campo">
+                <label for="aviso-vigente">Vigente hasta (opcional)</label>
+                <input type="date" id="aviso-vigente">
+              </div>
+            </div>
+
+            <button type="submit" class="btn-enviar btn-aviso" id="btn-aviso">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+              <span>Publicar aviso</span>
+            </button>
+            <div class="estado-msg" id="estado-aviso"></div>
+          </form>
+        </div><div class="panel-card panel-avisos-activos" data-panel-vista="publicadas" hidden="">
+          <div class="panel-header">
+
+            <div class="panel-header-text">
+
+              <h2>Avisos activos</h2>
+
+            </div>
+          </div>
+
+          <div class="estado-msg" id="estado-retiro"></div>
+          <div id="lista-avisos" class="lista-avisos-container">Cargando avisos...</div>
+        </div></section><section id="docente-permisos" hidden=""><section id="gestion-roles" hidden="" aria-labelledby="roles-titulo">
     <h2 id="roles-titulo">Gestión de roles y acceso</h2>
     <p id="roles-perfil"></p>
     <p>Administrá las cuentas registradas en permisos. Los cambios se aplican a las siguientes solicitudes y quedan registrados.</p>
@@ -1254,8 +1199,7 @@
     </div>
     <p id="roles-estado" role="status" aria-live="polite"></p>
     <div id="roles-lista"></div>
-  </section>
-  </main>
+  </section></section></div></main>
 
   <!-- ── 3. LÓGICA JAVASCRIPT FUNCIONAL PRESERVADA Y POTENCIADA ── -->
   <script>
@@ -1778,7 +1722,8 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
 
   cargarAvisosActivos();
   </script>
-<script src="roles.js"></script>
+<script src="docente-nav.js"></script><script src="roles.js"></script>
 <script src="tareas-activas.js"></script>
-</body>
-</html>
+
+
+</body></html>

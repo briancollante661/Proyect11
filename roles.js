@@ -7,6 +7,10 @@
   const filtro = document.getElementById('roles-buscar');
   const resumen = document.getElementById('roles-perfil');
   let cuentas = [], operando = false, secuencia = 0;
+  function autorizar(valor) {
+    cont.hidden = !valor;
+    document.dispatchEvent(new CustomEvent('sie-permisos', { detail: { autorizado: valor } }));
+  }
   function crear(tag, texto, clase) {
     const nodo = document.createElement(tag);
     if (texto !== undefined) nodo.textContent = texto;
@@ -114,18 +118,19 @@
   filtro.addEventListener('input', pintar);
   async function iniciar() {
     if (operando) return;
-    cont.hidden = false; bloquear(true); estado.textContent = 'Comprobando permisos…';
+    autorizar(false); bloquear(true); estado.textContent = 'Comprobando permisos…';
     cuentas = []; lista.replaceChildren();
     try {
       const data = await solicitar('sesion.perfil');
       resumen.textContent = `${data.perfil.nombre} · ${etiquetas[data.perfil.rol]}`;
-      if (!data.gestionarRoles) { cont.hidden = true; return; }
+      if (!data.gestionarRoles) return;
+      autorizar(true);
       bloquear(false); await cargar();
     } catch(e) { estado.textContent = mensaje(e); }
     finally { bloquear(false); }
   }
   firebase.auth().onAuthStateChanged(user => {
     if (user?.emailVerified) iniciar();
-    else { ++secuencia; cuentas = []; lista.replaceChildren(); cont.hidden = true; }
+    else { ++secuencia; cuentas = []; lista.replaceChildren(); autorizar(false); }
   });
 })();
