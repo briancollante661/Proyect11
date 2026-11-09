@@ -1,6 +1,8 @@
 /* Shared, mobile-first presentation layer. Functional IDs remain unchanged. */
 :root { --sie-purple:#59217c; --sie-ink:#292333; --sie-muted:#665e70; --sie-line:#e4dfe8; }
 body { background:#faf9fb!important; color:var(--sie-ink); }
+body.sie-inicio,body.sie-curso { display:flex; flex-direction:column; min-height:100vh; min-height:100dvh; }
+body.sie-inicio>footer,body.sie-curso>footer { margin-top:auto; }
 body::before { display:none; }
 [hidden] { display:none!important; }
 *,*::before,*::after { box-sizing:border-box; }
