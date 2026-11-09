@@ -101,13 +101,13 @@
         <div class="panel-header-bar">
           <div class="panel-header-left">
 
-            <h3 class="panel-header-title" id="title-panel-tareas">Entregas y actividades</h3>
+            <h3 class="panel-header-title" id="title-panel-tareas">Tareas del curso</h3>
           </div>
 
         </div>
 
         <!-- Barra de Filtros -->
-        <details class="filtros-desplegables"><summary>Filtrar tareas</summary><div class="filtros-bar">
+        <div class="filtros-bar">
           <div class="filtro-group">
             <label for="filtro-fecha">Fecha de entrega</label>
             <input type="date" id="filtro-fecha" onchange="filtrarTareas()">
@@ -120,7 +120,7 @@
             </select>
           </div>
           <button class="btn-limpiar" onclick="limpiarFiltros()">Limpiar filtros</button>
-        </div></details>
+        </div>
 
         <div id="tareas-contenido">
           <div class="estado"><div class="spinner"></div>Cargando tareas...</div>
@@ -284,8 +284,8 @@ function renderArchivo(urlRaw) {
   return html;
 }
 
-function renderTareas(filas, mensajeVacio = 'No hay tareas publicadas por ahora.') {
-  if (!filas.length) return `<div class="no-data">${mensajeVacio}</div>`;
+function renderTareas(filas) {
+  if (!filas.length) return '<div class="no-data">No hay tareas para mostrar.</div>';
   return filas.map((f,i) => `
     <div class="tarea-card" style="animation-delay:${i*0.06}s">
       <div class="tarea-acento"></div>
@@ -293,7 +293,7 @@ function renderTareas(filas, mensajeVacio = 'No hay tareas publicadas por ahora.
         <div class="tarea-meta">
           <span class="tarea-meta-materia">${esc(f["Materia(Primero)"] || "—")}</span>
           <div class="tarea-meta-sep"></div>
-          <span class="tarea-meta-fecha">Entrega · ${esc(fmtFecha(f["Entrega"]) || "—")}</span>
+          <span class="tarea-meta-fecha">Entrega: ${esc(f["Entrega"] || "—")}</span>
         </div>
         <div class="tarea-titulo">${esc(f["Titulo"] || "(sin título)")}</div>
         <details class="tarea-detalle"><summary>Ver detalle y adjuntos</summary><div class="tarea-desc">${esc(f["Descripcion"] || "")}</div>
@@ -319,7 +319,7 @@ function filtrarTareas() {
   let fil = todasTareas;
   if (fecha)   fil = fil.filter(f => normFecha(f["Entrega"]) === fecha);
   if (materia) fil = fil.filter(f => f["Materia(Primero)"] === materia);
-  document.getElementById("tareas-contenido").innerHTML = renderTareas(fil, 'No hay tareas con esos filtros.');
+  document.getElementById("tareas-contenido").innerHTML = renderTareas(fil);
 }
 
 function limpiarFiltros() {
