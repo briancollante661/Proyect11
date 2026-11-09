@@ -1433,13 +1433,45 @@
 // PUBLICAR TAREAS
 let envioPendiente = null;
 
-async function solicitarTarea(payload) {
-  const respuesta = await fetch(APPS_SCRIPT_URL, {
-    method: "POST",
-    headers: { "Content-Type": "text/plain;charset=utf-8" },
-    body: JSON.stringify(payload)
-  });
-  return respuesta.json();
+async function solicitarPublicacion(payload, esperaMs) {
+  const controller = new AbortController();
+  let timer;
+  try {
+    const limite = new Promise((_, reject) => {
+      timer = setTimeout(() => {
+        controller.abort();
+        reject(new Error("Tiempo de espera agotado"));
+      }, esperaMs);
+    });
+    const solicitud = (async () => {
+      const respuesta = await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        signal: controller.signal,
+        body: JSON.stringify(payload)
+      });
+      if (!respuesta.ok) throw new Error("Respuesta HTTP inesperada");
+      const data = await respuesta.json();
+      if (typeof data?.ok !== "boolean") throw new Error("Respuesta inválida");
+      return data;
+    })();
+    return await Promise.race([solicitud, limite]);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function mensajeRechazoPublicacion(codigo, recurso) {
+  switch (codigo) {
+    case "SIN_PERMISO":
+      return "No tenés permiso para publicar " + recurso + ".";
+    case "VALIDACION":
+      return "Revisá los datos de " + recurso + " y volvé a intentarlo.";
+    case "LIMITE":
+      return "El servidor no pudo procesar la solicitud ahora. Intentá más tarde.";
+    default:
+      return "";
+  }
 }
 
 document.getElementById("form-tarea").addEventListener("submit", async (e) => {
@@ -1452,16 +1484,19 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
   msg.textContent = "";
   btn.disabled = true;
   btn.textContent = "Subiendo...";
+  let mensajeError = "No se pudo preparar el envío de la tarea. Intentá de nuevo.";
 
   try {
     const archivos = archivosSeleccionados.slice();
 
     if (archivos.length > MAX_ARCHIVOS_TAREA) {
-      throw new Error("Máximo 10 archivos por tarea.");
+      mensajeError = "Máximo 10 archivos por tarea.";
+      throw new Error(mensajeError);
     }
 
     if (archivos.some(f => f.size < 1 || f.size > MAX_BYTES_ARCHIVO_TAREA)) {
-      throw new Error("Cada archivo debe pesar entre 1 byte y 10 MB.");
+      mensajeError = "Cada archivo debe pesar entre 1 byte y 10 MB.";
+      throw new Error(mensajeError);
     }
 
     const datos = {
@@ -1498,39 +1533,43 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
       const indice = envio.subidos;
       const archivo = archivos[indice];
       btn.textContent = `Subiendo adjunto ${indice + 1} de ${archivos.length}…`;
-      const subida = await solicitarTarea({
+      mensajeError = "No pudimos confirmar la subida del adjunto. Conservá los mismos archivos y volvé a intentarlo.";
+      const subida = await solicitarPublicacion({
         accion: "tareas.adjuntar",
         idToken,
         datos: { solicitudId, indice, archivo: { nombre: archivo.name, base64: await archivoABase64(archivo) } }
-      });
+      }, 90000);
       if (subida.codigo === "NO_AUTORIZADO") {
         window.location.href = "login.html";
         return;
       }
-      if (subida.ok !== true) throw new Error(subida.error || "No se pudo subir el adjunto.");
+      if (!subida.ok) {
+        mensajeError = mensajeRechazoPublicacion(subida.codigo, "la tarea") || mensajeError;
+        throw new Error(mensajeError);
+      }
       envio.subidos++;
     }
 
     btn.textContent = "Publicando tarea…";
-    let data;
-    try {
-      data = await solicitarTarea({
-        accion: "tareas.publicar",
-        idToken,
-        datos: datosPublicacion
-      });
-    } catch {
-      data = await solicitarTarea({
+    mensajeError = "No pudimos confirmar la publicación. Revisá la página del curso. Si reintentás, conservá los mismos datos y archivos en esta pestaña.";
+    let data = await solicitarPublicacion({
+      accion: "tareas.publicar",
+      idToken,
+      datos: datosPublicacion
+    }, envioDirecto && archivos.length ? 90000 : 25000).catch(() => null);
+
+    if (!data || data.codigo === "INTERNO") {
+      const confirmacion = await solicitarPublicacion({
         accion: "tareas.confirmar",
         idToken,
         datos: { solicitudId }
-      }).catch(() => null);
-      if (data?.confirmada !== true) {
-        throw new Error("No se pudo confirmar el envío. Revisá si aparece en Tareas. Si reintentás, conservá los mismos datos.");
+      }, 25000).catch(() => null);
+      if (confirmacion?.codigo === "NO_AUTORIZADO") {
+        window.location.href = "login.html";
+        return;
       }
-      // Si el servidor confirma el registro, la operación fue exitosa
-      // aunque se haya perdido la respuesta del primer POST.
-      data = { ok: true, confirmada: true };
+      if (confirmacion?.ok !== true || confirmacion.confirmada !== true) throw new Error(mensajeError);
+      data = { ok: true };
     }
 
     if (data.ok === true) {
@@ -1550,11 +1589,14 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
         return;
       }
 
-      throw new Error(data.error || "Error desconocido");
+      mensajeError = data.codigo === "NO_ENCONTRADO"
+        ? "Ese envío corresponde a una tarea que ya fue retirada."
+        : mensajeRechazoPublicacion(data.codigo, "la tarea") || mensajeError;
+      throw new Error(mensajeError);
     }
-  } catch (err) {
+  } catch {
     msg.className = "estado-msg error";
-    msg.textContent = "Ocurrió un error al subir la tarea: " + err.message;
+    msg.textContent = mensajeError;
   } finally {
     btn.disabled = false;
     btn.textContent = "Subir tarea";
@@ -1572,6 +1614,7 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
     msg.textContent = "";
     btn.disabled = true;
     btn.textContent = "Publicando...";
+    let mensajeError = "No se pudo preparar el envío del aviso. Intentá de nuevo.";
 
     try {
       const payload = {
@@ -1587,13 +1630,8 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
         }
       };
 
-      const resp = await fetch(APPS_SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload)
-      });
-
-      const data = await resp.json();
+      mensajeError = "No pudimos confirmar la publicación. Verificá si ya aparece en los avisos activos antes de volver a enviarlo.";
+      const data = await solicitarPublicacion(payload, 25000);
 
       if (data.ok === true) {
         msg.className = "estado-msg ok";
@@ -1607,11 +1645,12 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
           return;
         }
 
-        throw new Error(data.error || "Error desconocido");
+        mensajeError = mensajeRechazoPublicacion(data.codigo, "el aviso") || mensajeError;
+        throw new Error(mensajeError);
       }
-    } catch (err) {
+    } catch {
       msg.className = "estado-msg error";
-      msg.textContent = "Ocurrió un error al publicar el aviso: " + err.message;
+      msg.textContent = mensajeError;
     } finally {
       btn.disabled = false;
       btn.textContent = "Publicar aviso";
