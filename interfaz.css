@@ -70,6 +70,10 @@ body.pagina-profesores .profesores-main { max-width:1180px; margin:auto; padding
 #docente-nav button,#docente-nav a { padding:12px 16px; text-align:left; background:transparent; color:var(--sie-muted); border:0; border-radius:6px; font-weight:600; text-decoration:none; }
 #docente-nav [aria-current=page] { background:#eee5f4; color:var(--sie-purple); }
 #docente-nav a { margin-top:24px; font-size:.85rem; }
+#docente-nav a + a { margin-top:0; }
+.footer-legal { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:14px; }
+.footer-legal a { display:inline-flex; align-items:center; min-height:44px; color:var(--sie-purple); font-size:.8rem; font-weight:600; text-decoration:underline; text-underline-offset:3px; }
+.auth-card-footer .footer-legal { margin-top:12px; }
 .docente-contenido { min-width:0; max-width:820px; }
 #docente-titulo { font-size:1.8rem; margin:0 0 20px; }
 body.pagina-profesores .panel-card { padding:22px; border:1px solid var(--sie-line); border-radius:10px; box-shadow:none; overflow:visible; }
