@@ -1225,6 +1225,21 @@
           </form>
         </div>
 
+        <div class="panel-card panel-avisos-activos" aria-labelledby="tareas-activas-titulo">
+          <div class="panel-header">
+            <div class="panel-header-text">
+              <span class="panel-eyebrow">Publicaciones activas</span>
+              <h2 id="tareas-activas-titulo">Tareas activas</h2>
+              <p>Retirá las tareas que administrás. Al retirarlas, desaparecen de la página del curso. Los enlaces a adjuntos que ya se compartieron pueden seguir funcionando.</p>
+            </div>
+          </div>
+          <div class="estado-msg" id="estado-retiro-tarea" role="status"></div>
+          <fieldset id="acciones-retiro-tarea" style="border:0;padding:0;min-width:0">
+            <button id="actualizar-tareas-activas" type="button">Actualizar lista</button>
+            <div id="lista-tareas-activas" class="lista-avisos-container"></div>
+          </fieldset>
+        </div>
+
       </section>
 
     </div>
@@ -1522,6 +1537,7 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
       envioPendiente = null;
       msg.className = "estado-msg ok";
       msg.textContent = "✓ Tarea subida correctamente.";
+      document.dispatchEvent(new Event("tarea-publicada"));
 
       document.getElementById("form-tarea").reset();
       archivosSeleccionados = [];
@@ -1724,5 +1740,6 @@ document.getElementById("form-tarea").addEventListener("submit", async (e) => {
   cargarAvisosActivos();
   </script>
 <script src="roles.js"></script>
+<script src="tareas-activas.js"></script>
 </body>
 </html>
