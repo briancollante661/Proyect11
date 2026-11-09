@@ -1,0 +1,130 @@
+/* Shared, mobile-first presentation layer. Functional IDs remain unchanged. */
+:root { --sie-purple:#59217c; --sie-ink:#292333; --sie-muted:#665e70; --sie-line:#e4dfe8; }
+body { background:#faf9fb!important; color:var(--sie-ink); }
+body::before { display:none; }
+[hidden] { display:none!important; }
+*,*::before,*::after { box-sizing:border-box; }
+button,input,select,textarea { font:inherit; }
+button,a,input,select,textarea,summary { touch-action:manipulation; }
+button,select,input:not([type=checkbox]),summary { min-height:44px; }
+:focus-visible { outline:3px solid #8754ad!important; outline-offset:3px; }
+button { cursor:pointer; }
+p,h1,h2,h3,a,summary { overflow-wrap:anywhere; }
+.section-tabs,nav.section-tabs { display:flex; gap:4px; border-bottom:1px solid var(--sie-line); margin:0 0 24px; padding:0; background:transparent; border-radius:0; box-shadow:none; position:static; width:100%; height:auto; justify-content:flex-start; }
+.section-tabs button { flex:1; padding:12px 16px; border:0; border-bottom:3px solid transparent; background:transparent; color:var(--sie-muted); font-weight:600; }
+.section-tabs button[aria-pressed=true] { color:var(--sie-purple); border-bottom-color:var(--sie-purple); background:#f2edf6; }
+nav.sie-navbar { box-shadow:none; border-radius:0; background:var(--sie-purple); }
+.sie-curso .course-page-wrapper { max-width:1040px; padding:24px 16px 48px; }
+.sie-curso .course-hero-card { padding:0; margin:0 0 20px; background:none; border:0; box-shadow:none; min-height:0; }
+.sie-curso .course-hero-title { font-size:clamp(1.75rem,4vw,2.5rem); line-height:1.2; }
+.sie-curso .quick-access-grid { display:block; }
+.sie-curso .panel-academico { padding:0; margin:0; border:0; border-radius:0; background:transparent; box-shadow:none; animation:none; }
+.sie-curso .panel-header-bar { margin:0 0 18px; padding:0; border:0; }
+.sie-curso .panel-header-title { font-size:1.15rem; font-weight:650; }
+.sie-curso .tarea-card { border:0; border-bottom:1px solid var(--sie-line); border-radius:0; box-shadow:none; background:transparent; margin:0; animation:none; opacity:1; }
+.sie-curso .tarea-card:hover { transform:none; box-shadow:none; }
+.sie-curso .tarea-acento { display:none; }
+.sie-curso .tarea-body { padding:22px 0; display:flex; flex-direction:column; gap:10px; min-width:0; }
+.sie-curso .tarea-titulo { order:-1; margin:0; font-size:1.2rem; }
+.sie-curso .tarea-meta { margin:0; flex-wrap:wrap; gap:8px; }
+.sie-curso .tarea-meta-fecha { color:var(--sie-ink); }
+.sie-curso .tarea-meta { background:transparent; border:0; padding:0; border-radius:0; }
+.sie-curso .tarea-meta-materia,.sie-curso .tarea-meta-fecha { font-size:.85rem; letter-spacing:0; text-transform:none; }
+.tarea-detalle summary { display:flex; align-items:center; width:fit-content; color:var(--sie-purple); font-weight:600; cursor:pointer; }
+.tarea-detalle summary::before { content:'＋'; margin-right:8px; }
+.tarea-detalle[open] summary::before { content:'−'; }
+.tarea-desc { overflow-wrap:anywhere; white-space:pre-wrap; }
+.sie-curso .tarea-img-descarga { position:static; width:auto; height:auto; min-height:44px; display:inline-flex; gap:8px; padding:10px 12px; border-radius:6px; background:var(--sie-purple); color:white; font-size:.85rem; }
+.sie-curso .filtros-bar { flex-wrap:wrap; padding:16px; gap:12px; border:1px solid var(--sie-line); border-radius:8px; background:white; box-shadow:none; }
+.sie-curso .filtro-group { min-width:0; flex:1 1 150px; display:flex; flex-direction:column; align-items:stretch; gap:6px; }
+.sie-curso .filtro-group label { font-size:.8rem; letter-spacing:0; text-transform:none; color:var(--sie-muted); }
+.filtro-group input,.filtro-group select { width:100%; max-width:100%; min-width:0; }
+.sie-curso .filtros-sep { display:none; }
+.lightbox-close { border:0; background:#fff; color:#292333; width:44px; height:44px; border-radius:50%; }
+body.pagina-profesores .header-inner { padding:12px 16px; gap:8px; max-width:1180px; }
+body.pagina-profesores .header-left { gap:8px; min-width:0; }
+body.pagina-profesores .nav-return-btn { display:none; }
+body.pagina-profesores .header-crest { box-shadow:none; }
+body.pagina-profesores .inst-title { font-size:.95rem; }
+body.pagina-profesores .btn-logout { min-height:44px; padding:8px 10px; border-radius:6px; box-shadow:none; white-space:nowrap; }
+#docente-menu { background:white; border:1px solid var(--sie-line); border-radius:6px; padding:8px 10px; color:var(--sie-purple); white-space:nowrap; }
+body.pagina-profesores .profesores-main { max-width:1180px; margin:auto; padding:24px 16px 60px; display:grid; grid-template-columns:minmax(0,1fr); gap:24px; z-index:auto; }
+#docente-nav { display:none; background:transparent; border-radius:0; box-shadow:none; margin:0; width:auto; height:auto; align-items:stretch; }
+#docente-nav.abierto { display:flex; position:fixed; top:69px; left:12px; right:12px; z-index:600; padding:12px; border:1px solid var(--sie-line); box-shadow:0 12px 24px #29233320; background:white; border-radius:8px; }
+#docente-nav { flex-direction:column; align-self:start; gap:6px; }
+#docente-nav button,#docente-nav a { padding:12px 16px; text-align:left; background:transparent; color:var(--sie-muted); border:0; border-radius:6px; font-weight:600; text-decoration:none; }
+#docente-nav [aria-current=page] { background:#eee5f4; color:var(--sie-purple); }
+#docente-nav a { margin-top:24px; font-size:.85rem; }
+.docente-contenido { min-width:0; max-width:820px; }
+#docente-titulo { font-size:1.8rem; margin:0 0 20px; }
+body.pagina-profesores .panel-card { padding:22px; border:1px solid var(--sie-line); border-radius:10px; box-shadow:none; overflow:visible; }
+body.pagina-profesores .panel-card::before { display:none; }
+body.pagina-profesores .panel-header { border:0; padding:0; margin-bottom:22px; }
+body.pagina-profesores .campo label { font-size:.85rem; letter-spacing:0; text-transform:none; font-weight:600; }
+body.pagina-profesores .campo input,body.pagina-profesores .campo select,body.pagina-profesores .campo textarea { background-color:white; box-shadow:none; font-size:1rem; min-height:46px; transform:none; }
+body.pagina-profesores .campo textarea { min-height:120px; }
+body.pagina-profesores form { gap:20px; }
+body.pagina-profesores .campo { margin:0; }
+body.pagina-profesores .btn-enviar { background:var(--sie-purple); box-shadow:none; min-height:48px; border-radius:7px; }
+body.pagina-profesores .file-upload-box { background:#faf9fb; box-shadow:none; padding:20px 12px; }
+body.pagina-profesores .file-upload-box:focus-within { outline:3px solid #8754ad; }
+body.pagina-profesores .btn-remove-file { min-width:44px; min-height:44px; }
+body.pagina-profesores #gestion-roles { margin:0; padding:22px; border-radius:10px; }
+body.pagina-profesores .roles-herramientas>* { max-width:100%; min-width:0; }
+body.pagina-profesores #roles-buscar { width:100%; }
+body.pagina-profesores .aviso-activo-card { border-radius:0; box-shadow:none; }
+.sie-inicio .hero-container { min-height:0; padding:36px 24px 20px; max-width:1100px; display:block; }
+.sie-inicio .hero-left { max-width:none; }
+.sie-inicio .hero-title { font-size:clamp(1.8rem,4vw,2.7rem); margin-bottom:12px; }
+.sie-inicio .hero-left>p { margin:0; font-size:1rem; }
+.sie-inicio .cursos-section-container,.sie-inicio .avisos-card-container { max-width:1100px; margin:24px auto 40px; padding:0 24px; }
+.sie-inicio .cursos-header { margin-bottom:16px; }
+.sie-inicio .cursos-main-title { font-size:1.2rem; }
+.sie-inicio .curso-horizontal-card { padding:24px; border-radius:10px; box-shadow:none; background:white; border:1px solid var(--sie-line); }
+.sie-inicio .curso-circle-btn { background:transparent; color:var(--sie-purple); }
+.sie-inicio .avisos-double-card { box-shadow:none; border:1px solid var(--sie-line); border-radius:10px; }
+.sie-inicio .avisos-info-col { background:white; padding:24px; }
+.sie-inicio .avisos-main-title { font-size:1.3rem; }
+.sie-inicio .avisos-icon-badge { display:none; }
+.sie-inicio .aviso-item-card { box-shadow:none; border-radius:0; border:0; border-bottom:1px solid var(--sie-line); }
+.pagina-login .portal-wrapper { padding:24px 16px; min-height:100vh; }
+.pagina-login .portal-stage { display:flex; flex-direction:column; max-width:460px; gap:24px; margin:0 auto; }
+.pagina-login .stage-intro { display:block; padding:0; width:100%; }
+.pagina-login .portal-wrapper { justify-content:flex-start; align-items:center; }
+.pagina-login .return-nav { min-height:44px; background:transparent; color:var(--sie-purple); box-shadow:none; padding:8px 0; margin:0; }
+.pagina-login .institution-badge { animation:none; }
+.pagina-login #submit-btn { background:var(--sie-purple); box-shadow:none; }
+.sie-inicio .t-purple { color:var(--sie-purple); }
+.pagina-login .institution-badge { margin:20px 0 0; }
+.pagina-login .stage-auth { width:100%; }
+.pagina-login .auth-card { padding:28px; border-radius:12px; box-shadow:none; border:1px solid var(--sie-line); }
+.pagina-login .auth-card::before { display:none; }
+.pagina-login .auth-card-header { margin-bottom:24px; }
+.pagina-login .auth-card-header h1 { font-size:1.6rem; }
+@media(min-width:768px) {
+ .section-tabs button { flex:0 1 160px; }
+ #docente-menu { display:none; }
+ #docente-nav,#docente-nav.abierto { display:flex; position:static; border:0; border-right:1px solid var(--sie-line); border-radius:0; padding:0 20px 0 0; box-shadow:none; background:transparent; }
+ body.pagina-profesores .profesores-main { grid-template-columns:180px minmax(0,1fr); padding-top:36px; gap:36px; }
+}
+@media(max-width:767px) {
+ body.pagina-profesores .inst-subtitle,body.pagina-profesores .header-crest { display:none; }
+ body.pagina-profesores .inst-title { font-size:0; }
+ body.pagina-profesores .inst-title::after { content:'SIE'; font-size:1rem; }
+ body.pagina-profesores .header-inner { gap:6px; flex-direction:row; align-items:center; }
+ body.pagina-profesores .panel-card,body.pagina-profesores #gestion-roles { padding:18px 14px; }
+ body.pagina-profesores .form-row-2 { grid-template-columns:minmax(0,1fr); }
+ .sie-inicio .cursos-row-grid { grid-template-columns:1fr; gap:10px; }
+ .sie-inicio .curso-horizontal-card { padding:16px 20px; }
+ .sie-inicio .hero-container { padding:24px 16px 8px; }
+ .sie-inicio .cursos-section-container,.sie-inicio .avisos-card-container { padding:0 16px; }
+ .sie-curso .nav-inst-sub,.sie-curso .nav-brand-divider,.sie-curso .nav-sie-acronym { display:none; }
+ .sie-curso .nav-inst-main { font-size:.75rem; max-width:150px; white-space:normal; overflow:visible; }
+ .sie-curso .nav-left { gap:7px; min-width:0; }
+ .sie-curso .nav-crest-wrap { width:30px; height:34px; }
+ .sie-curso .sie-navbar { padding:10px 12px; gap:8px; }
+ .sie-curso .nav-mobile-actions { gap:6px; }
+ .sie-curso .nav-mobile-home-btn { padding:8px; min-height:44px; }
+ footer { flex-wrap:wrap; gap:12px; }
+}
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; scroll-behavior:auto!important; transition:none!important; } }
