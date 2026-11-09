@@ -1537,7 +1537,7 @@
 
 <!-- ── 6. MODAL EXPANDIDO DE TODOS LOS AVISOS & FILTROS ── -->
 <div class="modal-avisos-backdrop" id="modal-todos-avisos" onclick="cerrarModalAvisos(event)">
-  <div class="modal-avisos-dialog" onclick="event.stopPropagation()">
+  <div class="modal-avisos-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-avisos-titulo" onclick="event.stopPropagation()">
     <div class="modal-avisos-header">
       <div class="modal-header-left">
         <div class="avisos-icon-badge" style="width: 42px; height: 42px; margin-bottom: 0;">
@@ -1546,9 +1546,12 @@
             <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
           </svg>
         </div>
-        <div class="modal-avisos-title">Tablón de Avisos Generales</div>
+        <div class="modal-avisos-title" id="modal-avisos-titulo">Tablón de Avisos Generales</div>
       </div>
-      <button class="modal-close-btn" onclick="cerrarModalAvisos()">×</button>
+      <div class="modal-avisos-actions">
+        <button type="button" id="btn-ver-todos-avisos" hidden onclick="abrirModalAvisos()" aria-label="Ver todos los avisos">Ver todos</button>
+        <button type="button" class="modal-close-btn" onclick="cerrarModalAvisos()" aria-label="Cerrar avisos">×</button>
+      </div>
     </div>
 
     <!-- Barra de Filtro de Fechas -->
@@ -1636,14 +1639,8 @@ function renderAvisosRecientes(filas) {
 
   const top3 = filas.slice(0, 3);
   container.innerHTML = top3.map((f, i) => {
-    const urlOriginal = urlImagenSegura(f["Imagen"] || "");
-    const urlImgGrande = urlImagenThumb(urlOriginal, 1600);
-    const clickHandler = urlOriginal
-      ? `data-lightbox="${escHtml(urlImgGrande)}"`
-      : `data-open-avisos="true"`;
-
     return `
-      <div class="aviso-item-card" ${clickHandler} title="${escHtml(f["Titulo"] || "Ver aviso")}">
+      <button type="button" class="aviso-item-card" data-aviso-indice="${i}" aria-label="Ver aviso: ${escHtml(f["Titulo"] || "Sin título")}">
         <div class="aviso-item-left">
           <div class="aviso-item-cal-badge">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1667,7 +1664,7 @@ function renderAvisosRecientes(filas) {
             <polyline points="9 18 15 12 9 6"/>
           </svg>
         </div>
-      </div>`;
+      </button>`;
   }).join("");
 }
 
@@ -1743,18 +1740,43 @@ async function cargarAvisos() {
 
 // Delegación sin JavaScript embebido en atributos construidos desde datos externos.
 document.addEventListener("click", (ev) => {
-  const el = ev.target.closest("[data-lightbox], [data-open-avisos]");
+  const el = ev.target.closest("[data-lightbox], [data-aviso-indice]");
   if (!el) return;
   if (el.dataset.lightbox) abrirLightbox(el.dataset.lightbox);
-  else if (el.dataset.openAvisos) abrirModalAvisos();
-});
+  else if (el.dataset.avisoIndice !== undefined) abrirAvisoReciente(Number(el.dataset.avisoIndice));
+}, true);
 
 // ── Control del Modal de Avisos y Lightbox ──
+let focoAntesDeAvisos = null;
+
+function abrirAvisoReciente(indice) {
+  if (!Number.isInteger(indice) || !todosAvisos[indice]) return;
+  const modal = document.getElementById("modal-todos-avisos");
+  modal.classList.add("aviso-unico");
+  document.getElementById("modal-avisos-titulo").textContent = "Aviso";
+  document.getElementById("btn-ver-todos-avisos").hidden = false;
+  document.querySelector(".modal-filter-bar").hidden = true;
+  document.getElementById("avisos-grid").innerHTML = renderAvisos([todosAvisos[indice]]);
+  mostrarModalAvisos();
+}
+
 function abrirModalAvisos() {
   const modal = document.getElementById("modal-todos-avisos");
+  modal.classList.remove("aviso-unico");
+  document.getElementById("modal-avisos-titulo").textContent = "Tablón de Avisos Generales";
+  document.getElementById("btn-ver-todos-avisos").hidden = true;
+  document.querySelector(".modal-filter-bar").hidden = false;
+  limpiarFiltro();
+  mostrarModalAvisos();
+}
+
+function mostrarModalAvisos() {
+  const modal = document.getElementById("modal-todos-avisos");
   if (modal) {
+    if (!modal.classList.contains("active")) focoAntesDeAvisos = document.activeElement;
     modal.classList.add("active");
     document.body.style.overflow = "hidden";
+    modal.querySelector(".modal-close-btn").focus();
   }
 }
 
@@ -1766,8 +1788,15 @@ function cerrarModalAvisos(event) {
   if (modal) {
     modal.classList.remove("active");
     document.body.style.overflow = "";
+    if (focoAntesDeAvisos?.isConnected) focoAntesDeAvisos.focus();
   }
 }
+
+document.addEventListener("keydown", event => {
+  if (event.key !== "Escape") return;
+  if (document.getElementById("lightbox").classList.contains("active")) cerrarLightbox();
+  else if (document.getElementById("modal-todos-avisos").classList.contains("active")) cerrarModalAvisos();
+});
 
 function abrirLightbox(url) {
   document.getElementById("lightbox-img").src = url;

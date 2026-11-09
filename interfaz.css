@@ -95,6 +95,10 @@ body.pagina-profesores .aviso-activo-card { border-radius:0; box-shadow:none; }
 .sie-inicio .avisos-main-title { font-size:1.3rem; }
 .sie-inicio .avisos-icon-badge { display:none; }
 .sie-inicio .aviso-item-card { box-shadow:none; border-radius:0; border:0; border-bottom:1px solid var(--sie-line); }
+.sie-inicio button.aviso-item-card { width:100%; font:inherit; text-align:left; }
+.sie-inicio .modal-avisos-actions { display:flex; align-items:center; gap:12px; }
+.sie-inicio #btn-ver-todos-avisos { border:0; background:transparent; color:var(--sie-purple); font-weight:600; padding:8px; white-space:nowrap; }
+.sie-inicio .modal-avisos-backdrop.aviso-unico .avisos-grid { grid-template-columns:minmax(0,1fr); max-width:640px; margin:auto; }
 .pagina-login .portal-wrapper { padding:24px 16px; min-height:100vh; }
 .pagina-login .portal-stage { display:flex; flex-direction:column; max-width:460px; gap:24px; margin:0 auto; }
 .pagina-login .stage-intro { display:block; padding:0; width:100%; }
