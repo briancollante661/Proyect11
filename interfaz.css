@@ -116,6 +116,7 @@ body.pagina-profesores .aviso-activo-card { border-radius:0; box-shadow:none; }
 .pagina-login .auth-card-header { margin-bottom:24px; }
 .pagina-login .auth-card-header h1 { font-size:1.6rem; }
 @media(min-width:768px) {
+ .sie-curso .course-page-wrapper { width:100%; }
  .section-tabs button { flex:0 1 160px; }
  #docente-menu { display:none; }
  #docente-nav,#docente-nav.abierto { display:flex; position:static; border:0; border-right:1px solid var(--sie-line); border-radius:0; padding:0 20px 0 0; box-shadow:none; background:transparent; }
