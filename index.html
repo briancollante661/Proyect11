@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
+<!DOCTYPE html><html lang="es"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CEDM Santa Teresa de Ávila — SIE</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="imagenes/logo.png">
 <style>
   :root {
@@ -1337,8 +1335,8 @@
     }
   }
 </style>
-</head>
-<body>
+<link rel="stylesheet" href="interfaz.css"></head>
+<body class="sie-inicio">
 
 <!-- ── 1. NAVBAR MORADA INSTITUCIONAL ── -->
 <div class="header-nav-wrap">
@@ -1371,14 +1369,7 @@
       <a href="index.html" class="nav-mobile-home-btn active" aria-label="Página de inicio">
         <span>Inicio</span>
       </a>
-      <button 
-        type="button" 
-        class="nav-hamburger-btn" 
-        id="nav-hamburger-btn" 
-        aria-label="Abrir menú de cursos" 
-        aria-expanded="false" 
-        aria-controls="nav-mobile-menu"
-      >
+      <button type="button" class="nav-hamburger-btn" id="nav-hamburger-btn" aria-label="Abrir menú de cursos" aria-expanded="false" aria-controls="nav-mobile-menu">
         <span class="hamburger-bar bar-1"></span>
         <span class="hamburger-bar bar-2"></span>
         <span class="hamburger-bar bar-3"></span>
@@ -1387,12 +1378,7 @@
   </nav>
 
   <!-- Menú Desplegable Flotante Compacto (Sin oscurecer la pantalla) -->
-  <div 
-    class="nav-mobile-dropdown" 
-    id="nav-mobile-menu" 
-    role="region" 
-    aria-label="Menú de cursos y profesores"
-  >
+  <div class="nav-mobile-dropdown" id="nav-mobile-menu" role="region" aria-label="Menú de cursos y profesores">
     <div class="mobile-menu-inner">
       <a href="paginas/primero.html" class="mobile-nav-link">
         <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1430,122 +1416,28 @@
 <section class="hero-container">
   <!-- Lado Izquierdo: Textos -->
   <div class="hero-left">
-    <div class="hero-eyebrow">
-      SIE &mdash; SISTEMA DE INFORMACIÓN ESCOLAR
-    </div>
-    <h1 class="hero-title">
-      <span class="t-dark">CDEM</span>
-      <span class="t-purple">Santa Teresa de Ávila</span>
-    </h1>
-  
+
+    <h1 class="hero-title"><span class="t-purple">Santa Teresa de Ávila</span></h1>
+
   </div>
 
   <!-- Lado Derecho: Logotipo + Órbitas + Destellos -->
-  <div class="hero-right">
-    <div class="hero-visual-stage">
-      <!-- Órbitas elípticas animadas -->
-      <div class="orbit-ring orbit-ring-1"></div>
-      <div class="orbit-ring orbit-ring-2"></div>
 
-      <!-- Destello Superior Izquierdo -->
-      <svg class="sparkle-icon sparkle-top" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/>
-      </svg>
-
-      <!-- Logotipo Oficial del SIE -->
-      <div class="hero-logo-box">
-        <img src="imagenes/logo.png" alt="Logo Oficial SIE">
-      </div>
-
-      <!-- Destello Inferior Derecho -->
-      <svg class="sparkle-icon sparkle-bottom" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/>
-      </svg>
-    </div>
-  </div>
-</section>
-
-<!-- ── 3. ONDAS ORGÁNICAS FLUIDAS DE TRANSICIÓN ── -->
-<div class="ambient-waves-wrap" aria-hidden="true">
-  <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-    <path d="M0 45C220 95 440 10 720 55C1000 100 1220 20 1440 60V120H0V45Z" fill="#F0E8F6" fill-opacity="0.6"/>
-    <path d="M0 65C280 20 520 85 800 45C1080 5 1280 75 1440 50V120H0V65Z" fill="#EADFF3" fill-opacity="0.45"/>
-  </svg>
-</div>
-
-<!-- ── 4. SECCIÓN: AVISOS GENERALES (DOS COLUMNAS) ── -->
-<section class="avisos-card-container">
-  <div class="avisos-double-card">
-    
-    <!-- Columna Izquierda: Presentación y Botón Explorar -->
-    <div class="avisos-info-col">
-      <div class="avisos-icon-badge">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="m3 11 18-5v12L3 14v-3z"/>
-          <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
-        </svg>
-      </div>
-      <h2 class="avisos-main-title">Avisos generales</h2>
-      <div class="avisos-subtitle-tag">COMUNICADOS PARA TODA LA INSTITUCIÓN</div>
-      <p class="avisos-desc-text">
-        Revisá los comunicados más importantes del Centro Escolar y mantenete al día con las novedades.
-      </p>
-      <button class="btn-explorar-avisos" onclick="abrirModalAvisos()">
-        Explorar más avisos
-        <span class="arrow-icon">&rarr;</span>
-      </button>
-    </div>
-
-    <!-- Columna Derecha: Avisos Recientes (Lista de 3) -->
-    <div class="avisos-recientes-col">
-      <div class="recientes-header-row">
-        <div class="recientes-title-wrap">
-          <span class="recientes-clock-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/>
-              <polyline points="12 6 12 12 16 14"/>
-            </svg>
-          </span>
-          <span class="recientes-title-text">Avisos recientes</span>
-        </div>
-        <span class="recientes-dots-icon">&bull;&bull;&bull;</span>
-      </div>
-
-      <!-- Contenedor dinámico de los 3 avisos recientes -->
-      <div class="recientes-list-wrap" id="recientes-list-wrap">
-        <div class="estado"><div class="spinner"></div>Cargando avisos recientes...</div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ── 5. SECCIÓN: ACCESO POR CURSO ── -->
-<section class="cursos-section-container">
+</section><section class="cursos-section-container">
   <div class="cursos-header">
-    <div class="cursos-icon-badge">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-      </svg>
-    </div>
-    <h2 class="cursos-main-title">Acceso por curso</h2>
-    <div class="cursos-subtitle-tag">CONSULTÁ LA INFORMACIÓN DE TU CURSO</div>
+
+    <h2 class="cursos-main-title">Elegí tu curso</h2>
+
   </div>
 
   <div class="cursos-row-grid">
     <!-- Tarjeta 1.° Curso -->
     <a href="paginas/primero.html" class="curso-horizontal-card">
       <div class="curso-card-left">
-        <div class="curso-cap-badge">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-          </svg>
-        </div>
+
         <div class="curso-card-texts">
-          <div class="curso-card-title">1.&deg; Curso</div>
-          <div class="curso-card-sub">Horarios, tareas y avisos de 1.&deg; Curso.</div>
+          <div class="curso-card-title">Primero</div>
+
         </div>
       </div>
       <div class="curso-circle-btn">
@@ -1559,15 +1451,10 @@
     <!-- Tarjeta 2.° Curso -->
     <a href="paginas/segundo.html" class="curso-horizontal-card">
       <div class="curso-card-left">
-        <div class="curso-cap-badge">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-          </svg>
-        </div>
+
         <div class="curso-card-texts">
-          <div class="curso-card-title">2.&deg; Curso</div>
-          <div class="curso-card-sub">Horarios, tareas y avisos de 2.&deg; Curso.</div>
+          <div class="curso-card-title">Segundo</div>
+
         </div>
       </div>
       <div class="curso-circle-btn">
@@ -1581,15 +1468,10 @@
     <!-- Tarjeta 3.° Curso -->
     <a href="paginas/tercero.html" class="curso-horizontal-card">
       <div class="curso-card-left">
-        <div class="curso-cap-badge">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-          </svg>
-        </div>
+
         <div class="curso-card-texts">
-          <div class="curso-card-title">3.&deg; Curso</div>
-          <div class="curso-card-sub">Horarios, tareas y avisos de 3.&deg; Curso.</div>
+          <div class="curso-card-title">Tercero</div>
+
         </div>
       </div>
       <div class="curso-circle-btn">
@@ -1602,6 +1484,57 @@
   </div>
 </section>
 
+<!-- ── 3. ONDAS ORGÁNICAS FLUIDAS DE TRANSICIÓN ── -->
+
+
+<!-- ── 4. SECCIÓN: AVISOS GENERALES (DOS COLUMNAS) ── -->
+<section class="avisos-card-container">
+  <div class="avisos-double-card">
+
+    <!-- Columna Izquierda: Presentación y Botón Explorar -->
+    <div class="avisos-info-col">
+      <div class="avisos-icon-badge">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m3 11 18-5v12L3 14v-3z"></path>
+          <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
+        </svg>
+      </div>
+      <h2 class="avisos-main-title">Avisos generales</h2>
+
+
+      <button class="btn-explorar-avisos" onclick="abrirModalAvisos()">
+        Explorar más avisos
+        <span class="arrow-icon">→</span>
+      </button>
+    </div>
+
+    <!-- Columna Derecha: Avisos Recientes (Lista de 3) -->
+    <div class="avisos-recientes-col">
+      <div class="recientes-header-row">
+        <div class="recientes-title-wrap">
+          <span class="recientes-clock-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </span>
+          <span class="recientes-title-text">Avisos recientes</span>
+        </div>
+
+      </div>
+
+      <!-- Contenedor dinámico de los 3 avisos recientes -->
+      <div class="recientes-list-wrap" id="recientes-list-wrap">
+        <div class="estado"><div class="spinner"></div>Cargando avisos recientes...</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── 5. SECCIÓN: ACCESO POR CURSO ── -->
+
+
 <!-- ── 6. MODAL EXPANDIDO DE TODOS LOS AVISOS & FILTROS ── -->
 <div class="modal-avisos-backdrop" id="modal-todos-avisos" onclick="cerrarModalAvisos(event)">
   <div class="modal-avisos-dialog" onclick="event.stopPropagation()">
@@ -1609,13 +1542,13 @@
       <div class="modal-header-left">
         <div class="avisos-icon-badge" style="width: 42px; height: 42px; margin-bottom: 0;">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="m3 11 18-5v12L3 14v-3z"/>
-            <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
+            <path d="m3 11 18-5v12L3 14v-3z"></path>
+            <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
           </svg>
         </div>
         <div class="modal-avisos-title">Tablón de Avisos Generales</div>
       </div>
-      <button class="modal-close-btn" onclick="cerrarModalAvisos()">&times;</button>
+      <button class="modal-close-btn" onclick="cerrarModalAvisos()">×</button>
     </div>
 
     <!-- Barra de Filtro de Fechas -->
@@ -1643,12 +1576,12 @@
     <div class="footer-icon"><img src="imagenes/insignia.png" alt="CEDM"></div>
     <div class="footer-name">CEDM Santa Teresa de Ávila</div>
   </div>
-  <div class="footer-copy">&copy; 2026 &mdash; Todos los derechos reservados</div>
+  <div class="footer-copy">© 2026 — Todos los derechos reservados</div>
 </footer>
 
 <!-- ── 8. LIGHTBOX DE IMÁGENES ── -->
 <div class="lightbox-overlay" id="lightbox" onclick="cerrarLightbox()">
-  <span class="lightbox-close" onclick="cerrarLightbox()">&times;</span>
+  <span class="lightbox-close" onclick="cerrarLightbox()">×</span>
   <img id="lightbox-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
 </div>
 
@@ -1898,5 +1831,6 @@ if (mobileMenu) {
 // Carga inicial
 cargarAvisos();
 </script>
-</body>
-</html>
+
+
+</body></html>

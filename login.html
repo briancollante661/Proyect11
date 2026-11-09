@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
+<!DOCTYPE html><html lang="es"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Acceso Profesores — CEDM Santa Teresa de Ávila | SIE</title>
 <link rel="icon" type="image/png" href="imagenes/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <style>
   /* ═══════════════════════════════════════════════════════════════
      SIE — SISTEMA DE INFORMACIÓN ESCOLAR
@@ -970,67 +968,19 @@
   .auth-reset-btn:focus-visible { outline:2px solid #59217C; outline-offset:4px; border-radius:4px; }
   #info { margin-top:10px; color:#573C72; font-size:.82rem; line-height:1.5; }
 </style>
-</head>
+<link rel="stylesheet" href="interfaz.css"></head>
 <body class="pagina-login">
 
   <!-- Lienzo Ambiental y Gráfica SIE -->
-  <div class="ambient-canvas" aria-hidden="true">
-    <div class="ambient-glow-1"></div>
-    <div class="ambient-glow-2"></div>
-    
-    <!-- Sistema Orbital SIE -->
-    <div class="ambient-orbits">
-      <div class="orbit-ring">
-        <div class="orbit-node"></div>
-      </div>
-      <div class="orbit-ring orbit-ring-inner">
-        <div class="orbit-node" style="top:auto; bottom:-4px;"></div>
-      </div>
-    </div>
 
-    <!-- Destellos Característicos SIE (Estrellitas de cuatro puntas) -->
-    <svg class="ambient-sparkle s1" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/>
-    </svg>
-    <svg class="ambient-sparkle s2" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/>
-    </svg>
-    <svg class="ambient-sparkle s3" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/>
-    </svg>
-    <svg class="ambient-sparkle s4" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/>
-    </svg>
-    <svg class="ambient-sparkle s5" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/>
-    </svg>
-    <svg class="ambient-sparkle s6" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/>
-    </svg>
-    <svg class="ambient-sparkle s7" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/>
-    </svg>
-    <svg class="ambient-sparkle s8" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/>
-    </svg>
-    <svg class="ambient-sparkle s9" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/>
-    </svg>
-    <svg class="ambient-sparkle s10" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/>
-    </svg>
-    <svg class="ambient-sparkle s11" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C12 6.627 6.627 12 0 12c6.627 0 12 5.373 12 12 0-6.627 5.373-12 12-12-6.627 0-12-5.373-12-12z"/>
-    </svg>
-  </div>
 
   <!-- Contenedor Maestro -->
   <div class="portal-wrapper">
     <main class="portal-stage">
-      
+
       <!-- Lado Izquierdo: Atrio Institucional -->
       <section class="stage-intro" aria-label="Información Institucional CEDM">
-        
+
         <!-- Enlace de regreso al Inicio -->
         <a href="index.html" class="return-nav" id="back-link">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1052,54 +1002,24 @@
         </div>
 
         <!-- Pilares de Gestión (Posicionados directamente bajo el encabezado) -->
-        <div class="feature-pillars">
-          <div class="pillar-card">
-            <div class="pillar-icon-wrap" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-              </svg>
-            </div>
-            <div class="pillar-content">
-              <h3>Publicación de Tareas</h3>
-              <p>Actualización directa para 1°, 2° y 3° Curso con enlaces y adjuntos.</p>
-            </div>
-          </div>
 
-          <div class="pillar-card">
-            <div class="pillar-icon-wrap" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>
-            </div>
-            <div class="pillar-content">
-              <h3>Horarios y Calendario</h3>
-              <p>Mantené la grilla horaria y eventos escolares siempre al día.</p>
-            </div>
-          </div>
-        </div>
 
       </section>
 
       <!-- Lado Derecho: Consola de Autenticación (Card) -->
       <section class="stage-auth" aria-label="Formulario de Acceso de Profesores">
         <div class="auth-card">
-          
+
           <!-- Encabezado de la Tarjeta -->
           <div class="auth-card-header">
-            <div class="auth-logo-badge">
-              <img src="imagenes/logo.png" alt="Logotipo Oficial SIE">
-            </div>
-            <h1>Acceso Profesores</h1>
+
+            <h1>Acceso docente</h1>
             <p>Ingresá tus credenciales docentes para ingresar al panel de gestión.</p>
           </div>
 
           <!-- Formulario Obligatorio (IDs funcionales intactos) -->
-          <form id="login-form" novalidate>
-            
+          <form id="login-form" novalidate="">
+
             <!-- Campo Correo -->
             <div class="field-group">
               <label for="email" class="field-label">
@@ -1112,14 +1032,7 @@
                     <polyline points="22,6 12,13 2,6"></polyline>
                   </svg>
                 </span>
-                <input 
-                  type="email" 
-                  id="email" 
-                  required 
-                  autocomplete="username" 
-                  placeholder="ejemplo@santateresa.edu"
-                  spellcheck="false"
-                >
+                <input type="email" id="email" required="" autocomplete="username" placeholder="ejemplo@santateresa.edu" spellcheck="false">
               </div>
             </div>
 
@@ -1135,20 +1048,8 @@
                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                   </svg>
                 </span>
-                <input 
-                  type="password" 
-                  id="password" 
-                  required 
-                  autocomplete="current-password" 
-                  placeholder="••••••••••••"
-                >
-                <button 
-                  type="button" 
-                  class="toggle-password-btn" 
-                  id="toggle-password" 
-                  aria-label="Mostrar contraseña"
-                  tabindex="-1"
-                >
+                <input type="password" id="password" required="" autocomplete="current-password" placeholder="••••••••••••">
+                <button type="button" class="toggle-password-btn" id="toggle-password" aria-label="Mostrar contraseña">
                   <svg id="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M2 10.5C5.5 15.5 18.5 15.5 22 10.5"></path>
                     <path d="M12 14.25v3.75"></path>
@@ -1225,7 +1126,7 @@
       togglePasswordBtn.addEventListener('click', () => {
         const isPassword = passwordInput.type === 'password';
         passwordInput.type = isPassword ? 'text' : 'password';
-        
+
         // Animación de parpadeo del párpado
         eyeIcon.classList.remove('blinking');
         void eyeIcon.offsetWidth;
@@ -1260,7 +1161,7 @@
     // Envío del Formulario
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
+
       errorBox.textContent = '';
       errorBox.classList.remove('active');
       submitBtn.disabled = true;
@@ -1317,20 +1218,21 @@
       switch (code) {
         case 'auth/email-not-verified':
           return 'Tu correo todavía no está verificado. Contactá al administrador para habilitar tu cuenta.';
-        case 'auth/invalid-email': 
+        case 'auth/invalid-email':
           return 'El correo electrónico no es válido.';
         case 'auth/user-not-found':
         case 'auth/wrong-password':
-        case 'auth/invalid-credential': 
+        case 'auth/invalid-credential':
           return 'Correo o contraseña incorrectos.';
-        case 'auth/too-many-requests': 
+        case 'auth/too-many-requests':
           return 'Demasiados intentos. Probá de nuevo en unos minutos.';
         case 'auth/network-request-failed':
           return 'Problema de conexión a internet. Verificá tu red.';
-        default: 
+        default:
           return 'No se pudo iniciar sesión. Verificá los datos o probá de nuevo.';
       }
     }
   </script>
-</body>
-</html>
+
+
+</body></html>
