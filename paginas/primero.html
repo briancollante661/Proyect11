@@ -407,10 +407,14 @@ function renderArchivo(urlRaw) {
     imagenes.forEach(item => {
       const urlImg = item.url.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1000");
       const urlImgGrande = item.url.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1600");
+      const urlDescarga = new URL(item.url);
+      if (urlDescarga.origin === "https://drive.google.com" && urlDescarga.pathname === "/uc" && urlDescarga.searchParams.has("id")) {
+        urlDescarga.searchParams.set("export", "download");
+      }
       html += `
         <div class="tarea-img-wrap">
           <img class="tarea-img-preview" src="${esc(urlImg)}" alt="Imagen adjunta" data-tarea-imagen="${esc(urlImgGrande)}" tabindex="0" role="button" onerror="this.style.display='none'">
-          <a class="tarea-img-descarga" href="${esc(urlImgGrande)}" target="_blank" rel="noopener noreferrer" download onclick="event.stopPropagation()" title="Descargar imagen">
+          <a class="tarea-img-descarga" href="${esc(urlDescarga.href)}" target="_blank" rel="noopener noreferrer" download onclick="event.stopPropagation()" title="Descargar imagen">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
               <polyline points="7 10 12 15 17 10"/>
