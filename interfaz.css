@@ -1154,3 +1154,71 @@ body.pagina-profesores .aviso-activo-card {
 .nav-mobile-actions a.nav-profesor-destacado:hover {
   background: rgba(255,255,255,.22) !important;
 }
+
+/* Diseño exclusivo para móviles: sección "Elegí tu curso" y tarjetas de acceso */
+@media (max-width: 767px) {
+  .sie-inicio .cursos-section-container {
+    width: 100%;
+    max-width: 420px;
+    margin: 16px auto 32px;
+    padding: 0 20px;
+  }
+
+  .sie-inicio .cursos-header {
+    text-align: center;
+    margin-bottom: 18px;
+  }
+
+  .sie-inicio .cursos-main-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--sie-purple);
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sie-inicio .cursos-main-title::after {
+    content: '';
+    width: 36px;
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #a664be, #59217c);
+  }
+
+  .sie-inicio .cursos-row-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .sie-inicio .curso-horizontal-card {
+    padding: 18px 20px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #ffffff 0%, #f9f4fd 100%);
+    border: 1px solid rgba(166, 100, 190, 0.28);
+    border-left: 5px solid var(--sie-purple);
+    box-shadow: 0 6px 18px rgba(89, 33, 124, 0.09);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .sie-inicio .curso-horizontal-card:active {
+    transform: scale(0.98);
+    box-shadow: 0 3px 10px rgba(89, 33, 124, 0.14);
+  }
+
+  .sie-inicio .curso-card-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #292333;
+  }
+
+  .sie-inicio .curso-circle-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7b35a8 0%, #59217c 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 10px rgba(89, 33, 124, 0.25);
+  }
+}
