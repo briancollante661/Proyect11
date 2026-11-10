@@ -1141,3 +1141,16 @@ body.pagina-profesores .aviso-activo-card {
   border: 0;
   padding: 0;
 }
+
+/* Profesores en inicio: mismo blanco transparente que el cuadro de botones */
+.nav-links a.nav-profesor-destacado,
+.nav-mobile-actions a.nav-profesor-destacado {
+  background: rgba(255,255,255,.12) !important;
+  border: 1px solid rgba(255,255,255,.22) !important;
+  color: #fff !important;
+  box-shadow: none !important;
+}
+.nav-links a.nav-profesor-destacado:hover,
+.nav-mobile-actions a.nav-profesor-destacado:hover {
+  background: rgba(255,255,255,.22) !important;
+}
