@@ -1,1642 +1,1876 @@
-<!DOCTYPE html><html lang="es"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CEDM Santa Teresa de Ávila — SIE</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="imagenes/logo.png">
-<style>
-  :root {
-    /* ── Paleta Obligatoria SIE ── */
-    --morado-principal:  #59217C;
-    --lila-principal:    #A664BE;
-    --morado-secundario: #573C72;
-    --malva:             #926D92;
-    --azul-texto:        #202040;
-
-    /* ── Fondos Modo Claro ── */
-    --fondo-base:        #F8F5FC;
-    --blanco:            #FFFFFF;
-    --lila-suave:        #F0E8F6;
-    --lila-tenue:        #EADFF3;
-
-    /* ── Bordes y Sombras ── */
-    --borde:             rgba(87, 60, 114, 0.12);
-    --borde-suave:       rgba(87, 60, 114, 0.08);
-    --sombra-card:       0 10px 30px rgba(89, 33, 124, 0.06);
-    --sombra-hover:      0 16px 38px rgba(89, 33, 124, 0.12);
-    --sombra-pill:       0 4px 14px rgba(89, 33, 124, 0.22);
-  }
-
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--fondo-base);
-    color: var(--azul-texto);
-    min-height: 100vh;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    position: relative;
-  }
-
-  /* ── 1. NAVBAR MORADA INSTITUCIONAL CON BORDES CURVOS ── */
-  .header-nav-wrap {
-    position: sticky;
-    top: 0;
-    z-index: 500;
-    width: 100%;
-    background: transparent;
-  }
-
-  nav.sie-navbar {
-    width: 100%;
-    height: 74px;
-    background: linear-gradient(135deg, #59217C 0%, #4D186E 100%);
-    border-radius: 0 0 26px 26px;
-    box-shadow: 0 8px 24px rgba(89, 33, 124, 0.22);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 44px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .nav-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .nav-crest-wrap {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: #FFFFFF;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    padding: 3px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    flex-shrink: 0;
-  }
-
-  .nav-crest-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  .nav-inst-titles {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-  }
-
-  .nav-inst-main {
-    color: #FFFFFF;
-    font-size: 0.94rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    line-height: 1.1;
-  }
-
-  .nav-inst-sub {
-    color: rgba(255, 255, 255, 0.72);
-    font-size: 0.62rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-
-  .nav-brand-divider {
-    width: 1px;
-    height: 26px;
-    background: rgba(255, 255, 255, 0.35);
-    margin: 0 10px;
-  }
-
-  .nav-sie-acronym {
-    color: #FFFFFF;
-    font-size: 1.35rem;
-    font-weight: 800;
-    letter-spacing: 0.04em;
-    line-height: 1;
-  }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .nav-links a {
-    color: rgba(255, 255, 255, 0.88);
-    text-decoration: none;
-    font-size: 0.84rem;
-    font-weight: 500;
-    padding: 8px 18px;
-    border-radius: 9999px;
-    transition: all 0.22s ease;
-  }
-
-  .nav-links a:hover {
-    color: #FFFFFF;
-    background: rgba(255, 255, 255, 0.14);
-    transform: translateY(-1px);
-  }
-
-  .nav-links a.active {
-    background: rgba(255, 255, 255, 0.24);
-    color: #FFFFFF;
-    font-weight: 600;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-  }
-
-  /* Componentes de Navegación Móvil (Ocultos al 100% en escritorio y pantallas grandes) */
-  .nav-mobile-actions,
-  .nav-mobile-dropdown {
-    display: none !important;
-  }
-
-  /* ── 2. HERO PRINCIPAL (COMPOSICIÓN ASIMÉTRICA) ── */
-  .hero-container {
-    position: relative;
-    max-width: 1140px;
-    margin: 0 auto;
-    padding: 60px 24px 40px;
-    display: grid;
-    grid-template-columns: 1.18fr 0.82fr;
-    align-items: center;
-    gap: 40px;
-    z-index: 2;
-  }
-
-  /* Columna Izquierda: Textos */
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    animation: titleEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--morado-principal);
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-  }
-
-  .hero-eyebrow::after {
-    content: '';
-    display: inline-block;
-    width: 38px;
-    height: 1.5px;
-    background: var(--morado-principal);
-    opacity: 0.6;
-  }
-
-  .hero-title {
-    font-size: clamp(2.4rem, 4.4vw, 3.6rem);
-    font-weight: 800;
-    line-height: 1.08;
-    margin-bottom: 22px;
-    letter-spacing: -0.025em;
-  }
-
-  .hero-title .t-dark {
-    display: block;
-    color: var(--azul-texto);
-  }
-
-  .hero-title .t-purple {
-    display: block;
-    color: var(--lila-principal);
-  }
-
-  .hero-description {
-    color: var(--morado-secundario);
-    font-size: 1.05rem;
-    line-height: 1.6;
-    max-width: 480px;
-    font-weight: 400;
-  }
-
-  /* Columna Derecha: Logotipo & Órbitas Visuales */
-  .hero-right {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    min-height: 340px;
-  }
-
-  .hero-visual-stage {
-    position: relative;
-    width: 320px;
-    height: 320px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Órbitas elípticas animadas */
-  .orbit-ring {
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-  }
-
-  .orbit-ring-1 {
-    width: 320px;
-    height: 170px;
-    border: 2px solid rgba(166, 100, 190, 0.38);
-    transform: rotate(-24deg);
-    animation: orbitPulse 8s ease-in-out infinite;
-  }
-
-  .orbit-ring-2 {
-    width: 280px;
-    height: 140px;
-    border: 1.5px dashed rgba(166, 100, 190, 0.28);
-    transform: rotate(-20deg);
-    animation: orbitPulse 8s 2s ease-in-out infinite reverse;
-  }
-
-  /* Destellos (4-point stars) */
-  .sparkle-icon {
-    position: absolute;
-    pointer-events: none;
-    z-index: 3;
-    animation: sparkleTwinkle 3.2s ease-in-out infinite;
-  }
-
-  .sparkle-top {
-    top: 36px;
-    left: 44px;
-    width: 22px;
-    height: 22px;
-    color: var(--morado-principal);
-  }
-
-  .sparkle-bottom {
-    bottom: 50px;
-    right: 36px;
-    width: 18px;
-    height: 18px;
-    color: var(--lila-principal);
-    animation-delay: 1.6s;
-  }
-
-  /* Contenedor del logotipo central */
-  .hero-logo-box {
-    position: relative;
-    z-index: 2;
-    width: 180px;
-    height: auto;
-    animation: logoEnter 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards, floatGentle 5s 1s ease-in-out infinite;
-  }
-
-  .hero-logo-box img {
-    width: 100%;
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 12px 28px rgba(89, 33, 124, 0.12));
-    transition: transform 0.3s ease;
-  }
-
-  .hero-logo-box img:hover {
-    transform: scale(1.04);
-  }
-
-  /* ── 3. ONDAS AMBIENTALES DE FONDO ── */
-  .ambient-waves-wrap {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
-    margin-top: -30px;
-    margin-bottom: 24px;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .ambient-waves-wrap svg {
-    display: block;
-    width: 100%;
-    height: auto;
-    min-height: 80px;
-  }
-
-  /* ── 4. SECCIÓN: AVISOS GENERALES (DOS COLUMNAS) ── */
-  .avisos-card-container {
-    max-width: 1140px;
-    margin: 0 auto 52px;
-    padding: 0 24px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .avisos-double-card {
-    background: var(--blanco);
-    border-radius: 24px;
-    border: 1px solid var(--borde-suave);
-    box-shadow: var(--sombra-card);
-    padding: 38px 42px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    align-items: start;
-    transition: box-shadow 0.3s ease;
-  }
-
-  .avisos-double-card:hover {
-    box-shadow: var(--sombra-hover);
-  }
-
-  /* Columna Izquierda: Información de avisos */
-  .avisos-info-col {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .avisos-icon-badge {
-    width: 58px;
-    height: 58px;
-    border-radius: 16px;
-    background: var(--lila-suave);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--morado-principal);
-    margin-bottom: 18px;
-  }
-
-  .avisos-main-title {
-    font-size: 1.85rem;
-    font-weight: 800;
-    color: var(--azul-texto);
-    line-height: 1.15;
-    margin-bottom: 4px;
-    letter-spacing: -0.015em;
-  }
-
-  .avisos-subtitle-tag {
-    font-size: 0.66rem;
-    font-weight: 700;
-    color: var(--lila-principal);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .avisos-desc-text {
-    color: var(--morado-secundario);
-    font-size: 0.94rem;
-    line-height: 1.6;
-    margin-bottom: 28px;
-    max-width: 420px;
-  }
-
-  .btn-explorar-avisos {
-    align-self: flex-start;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: var(--morado-principal);
-    color: #FFFFFF;
-    font-size: 0.88rem;
-    font-weight: 600;
-    padding: 12px 28px;
-    border-radius: 9999px;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    box-shadow: var(--sombra-pill);
-    transition: all 0.25s ease;
-  }
-
-  .btn-explorar-avisos:hover {
-    background: var(--lila-principal);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(89, 33, 124, 0.32);
-  }
-
-  .btn-explorar-avisos .arrow-icon {
-    transition: transform 0.22s ease;
-  }
-
-  .btn-explorar-avisos:hover .arrow-icon {
-    transform: translateX(4px);
-  }
-
-  /* Columna Derecha: Avisos Recientes */
-  .avisos-recientes-col {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .recientes-header-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 18px;
-  }
-
-  .recientes-title-wrap {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .recientes-clock-icon {
-    color: var(--morado-principal);
-    display: flex;
-    align-items: center;
-  }
-
-  .recientes-title-text {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--azul-texto);
-    letter-spacing: -0.01em;
-  }
-
-  .recientes-dots-icon {
-    color: var(--malva);
-    font-size: 1.4rem;
-    letter-spacing: 2px;
-    line-height: 1;
-    opacity: 0.7;
-    cursor: default;
-  }
-
-  /* Lista de Avisos Recientes */
-  .recientes-list-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .aviso-item-card {
-    background: var(--fondo-base);
-    border: 1px solid var(--borde-suave);
-    border-radius: 14px;
-    padding: 14px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 14px;
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.22s ease;
-  }
-
-  .aviso-item-card:hover {
-    background: #FFFFFF;
-    border-color: var(--lila-principal);
-    transform: translateX(4px);
-    box-shadow: 0 6px 18px rgba(89, 33, 124, 0.08);
-  }
-
-  .aviso-item-left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    min-width: 0;
-  }
-
-  .aviso-item-cal-badge {
-    width: 42px;
-    height: 42px;
-    border-radius: 10px;
-    background: #FFFFFF;
-    border: 1px solid var(--borde-suave);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--morado-principal);
-    flex-shrink: 0;
-  }
-
-  .aviso-item-texts {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    min-width: 0;
-  }
-
-  .aviso-item-title {
-    font-size: 0.94rem;
-    font-weight: 700;
-    color: var(--azul-texto);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1.25;
-  }
-
-  .aviso-item-date {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.78rem;
-    color: var(--malva);
-    font-weight: 500;
-  }
-
-  .aviso-item-chevron {
-    color: var(--malva);
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-    transition: transform 0.2s ease, color 0.2s ease;
-  }
-
-  .aviso-item-card:hover .aviso-item-chevron {
-    color: var(--morado-principal);
-    transform: translateX(3px);
-  }
-
-  /* ── 5. SECCIÓN: ACCESO POR CURSO ── */
-  .cursos-section-container {
-    max-width: 1140px;
-    margin: 0 auto 70px;
-    padding: 0 24px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .cursos-header {
-    margin-bottom: 24px;
-  }
-
-  .cursos-icon-badge {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    background: var(--lila-suave);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--morado-principal);
-    margin-bottom: 12px;
-  }
-
-  .cursos-main-title {
-    font-size: 1.85rem;
-    font-weight: 800;
-    color: var(--azul-texto);
-    line-height: 1.15;
-    margin-bottom: 4px;
-    letter-spacing: -0.015em;
-  }
-
-  .cursos-subtitle-tag {
-    font-size: 0.66rem;
-    font-weight: 700;
-    color: var(--lila-principal);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-
-  .cursos-row-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-
-  .curso-horizontal-card {
-    background: var(--blanco);
-    border: 1px solid var(--borde-suave);
-    border-radius: 18px;
-    padding: 22px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    text-decoration: none;
-    box-shadow: 0 6px 20px rgba(89, 33, 124, 0.04);
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .curso-horizontal-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--lila-principal);
-    box-shadow: var(--sombra-hover);
-  }
-
-  .curso-card-left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    min-width: 0;
-  }
-
-  .curso-cap-badge {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: var(--lila-suave);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--morado-principal);
-    flex-shrink: 0;
-    transition: transform 0.25s ease;
-  }
-
-  .curso-horizontal-card:hover .curso-cap-badge {
-    transform: scale(1.06);
-  }
-
-  .curso-card-texts {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .curso-card-title {
-    font-size: 1.15rem;
-    font-weight: 800;
-    color: var(--azul-texto);
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-  }
-
-  .curso-card-sub {
-    font-size: 0.82rem;
-    color: var(--morado-secundario);
-    line-height: 1.35;
-  }
-
-  .curso-circle-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--lila-suave);
-    color: var(--morado-principal);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    transition: all 0.25s ease;
-  }
-
-  .curso-horizontal-card:hover .curso-circle-btn {
-    background: var(--morado-principal);
-    color: #FFFFFF;
-    transform: scale(1.06);
-  }
-
-  .curso-horizontal-card:hover .curso-circle-btn svg {
-    transform: translateX(2px);
-  }
-
-  /* ── 6. MODAL EXPANDIDO DE TODOS LOS AVISOS & FILTROS ── */
-  .modal-avisos-backdrop {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    background: rgba(32, 32, 64, 0.65);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    animation: fadeIn 0.25s ease forwards;
-  }
-
-  .modal-avisos-backdrop.active {
-    display: flex;
-  }
-
-  .modal-avisos-dialog {
-    background: var(--blanco);
-    width: 100%;
-    max-width: 900px;
-    max-height: 88vh;
-    border-radius: 24px;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    border: 1px solid var(--borde);
-    animation: dialogEnter 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  .modal-avisos-header {
-    padding: 24px 32px 18px;
-    border-bottom: 1px solid var(--borde-suave);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--fondo-base);
-  }
-
-  .modal-header-left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .modal-avisos-title {
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: var(--azul-texto);
-  }
-
-  .modal-close-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: none;
-    background: var(--lila-suave);
-    color: var(--morado-principal);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    transition: all 0.2s ease;
-  }
-
-  .modal-close-btn:hover {
-    background: var(--morado-principal);
-    color: #FFFFFF;
-  }
-
-  .modal-filter-bar {
-    padding: 14px 32px;
-    background: var(--blanco);
-    border-bottom: 1px solid var(--borde-suave);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .filtro-wrapper {
-    display: inline-flex;
-    align-items: center;
-    background: var(--fondo-base);
-    border: 1px solid var(--borde);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .filtro-label {
-    padding: 0 12px;
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--malva);
-    font-weight: 600;
-    border-right: 1px solid var(--borde);
-    height: 36px;
-    display: flex;
-    align-items: center;
-  }
-
-  .filtro-wrapper input[type="date"] {
-    background: transparent;
-    border: none;
-    color: var(--azul-texto);
-    font-family: inherit;
-    font-size: 0.82rem;
-    padding: 0 12px;
-    height: 36px;
-    outline: none;
-    cursor: pointer;
-    color-scheme: light;
-  }
-
-  .btn-reset {
-    background: var(--lila-suave);
-    border: none;
-    border-left: 1px solid var(--borde);
-    color: var(--morado-principal);
-    font-family: inherit;
-    font-size: 0.74rem;
-    font-weight: 600;
-    padding: 0 14px;
-    height: 36px;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  .btn-reset:hover {
-    background: var(--morado-principal);
-    color: #FFFFFF;
-  }
-
-  .modal-avisos-scroll {
-    padding: 24px 32px 36px;
-    overflow-y: auto;
-    flex: 1;
-  }
-
-  /* Grid interna de avisos en el modal */
-  .avisos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 18px;
-  }
-
-  .aviso-card {
-    background: var(--blanco);
-    border: 1px solid var(--borde-suave);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 14px rgba(89, 33, 124, 0.05);
-    transition: transform 0.22s ease, border-color 0.22s ease;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .aviso-card:hover {
-    transform: translateY(-3px);
-    border-color: var(--lila-principal);
-  }
-
-  .aviso-img {
-    width: 100%;
-    max-height: 180px;
-    object-fit: cover;
-    border-bottom: 1px solid var(--borde-suave);
-    cursor: zoom-in;
-  }
-
-  .aviso-body {
-    padding: 16px 18px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-
-  .aviso-fecha {
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--malva);
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-
-  .aviso-titulo {
-    font-size: 0.96rem;
-    font-weight: 700;
-    color: var(--azul-texto);
-    line-height: 1.3;
-    margin-bottom: 6px;
-  }
-
-  .aviso-desc {
-    font-size: 0.82rem;
-    color: var(--morado-secundario);
-    line-height: 1.5;
-  }
-
-  /* Estados */
-  .estado {
-    text-align: center;
-    padding: 36px 20px;
-    color: var(--malva);
-    font-size: 0.88rem;
-  }
-
-  .spinner {
-    width: 28px; height: 28px;
-    border: 3px solid rgba(89, 33, 124, 0.12);
-    border-top-color: var(--morado-principal);
-    border-radius: 50%;
-    animation: spin 0.75s linear infinite;
-    margin: 0 auto 12px;
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .no-data {
-    text-align: center;
-    padding: 36px 20px;
-    color: var(--malva);
-    font-size: 0.88rem;
-  }
-
-  .error-box {
-    background: rgba(239, 68, 68, 0.06);
-    border: 1px solid rgba(239, 68, 68, 0.25);
-    border-radius: 10px;
-    padding: 16px 20px;
-    color: #b91c1c;
-    font-size: 0.85rem;
-    line-height: 1.5;
-  }
-
-  /* ── 7. FOOTER ── */
-  footer {
-    position: relative;
-    z-index: 1;
-    padding: 28px 44px;
-    border-top: 1px solid var(--borde-suave);
-    background: #FFFFFF;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  .footer-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .footer-icon {
-    width: 28px; height: 28px;
-    border-radius: 6px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--lila-suave);
-  }
-
-  .footer-icon img {
-    width: 100%; height: 100%;
-    object-fit: contain;
-  }
-
-  .footer-name {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--azul-texto);
-  }
-
-  .footer-copy {
-    font-size: 0.72rem;
-    color: var(--malva);
-  }
-
-  /* ── 8. LIGHTBOX DE IMÁGENES ── */
-  .lightbox-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(32, 32, 64, 0.82);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: 2000;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-  }
-
-  .lightbox-overlay.active { display: flex; }
-
-  .lightbox-overlay img {
-    max-width: 90vw;
-    max-height: 85vh;
-    object-fit: contain;
-    border-radius: 14px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
-  }
-
-  .lightbox-close {
-    position: fixed;
-    top: 20px; right: 24px;
-    color: #FFFFFF;
-    font-size: 2rem;
-    line-height: 1;
-    cursor: pointer;
-    z-index: 2001;
-    background: rgba(255, 255, 255, 0.2);
-    width: 42px; height: 42px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.2s ease;
-  }
-
-  .lightbox-close:hover {
-    background: rgba(255, 255, 255, 0.35);
-  }
-
-  /* ── 9. KEYFRAMES & ANIMACIONES OBLIGATORIAS ── */
-  @keyframes titleEnter {
-    from { opacity: 0; transform: translateY(22px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes logoEnter {
-    from { opacity: 0; transform: scale(0.9) translateY(18px); }
-    to   { opacity: 1; transform: scale(1) translateY(0); }
-  }
-
-  @keyframes floatGentle {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-8px); }
-  }
-
-  @keyframes orbitPulse {
-    0%, 100% { transform: rotate(-24deg) scale(1); opacity: 0.55; }
-    50%      { transform: rotate(-24deg) scale(1.03); opacity: 0.85; }
-  }
-
-  @keyframes sparkleTwinkle {
-    0%, 100% { transform: scale(1); opacity: 0.85; }
-    50%      { transform: scale(1.3) rotate(15deg); opacity: 1; }
-  }
-
-  @keyframes dialogEnter {
-    from { opacity: 0; transform: scale(0.96) translateY(12px); }
-    to   { opacity: 1; transform: scale(1) translateY(0); }
-  }
-
-  /* ── 10. RESPONSIVE DESIGN ── */
-  @media (max-width: 980px) {
-    nav.sie-navbar { padding: 0 24px; }
-    .hero-container {
-      grid-template-columns: 1fr;
-      text-align: center;
-      padding: 44px 20px 24px;
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CEDM Santa Teresa de Ávila — SIE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet">
+  <link rel="icon" type="image/png" href="imagenes/logo.png">
+  <style>
+    :root {
+      /* ── Paleta Obligatoria SIE ── */
+      --morado-principal: #59217C;
+      --lila-principal: #A664BE;
+      --morado-secundario: #573C72;
+      --malva: #926D92;
+      --azul-texto: #202040;
+
+      /* ── Fondos Modo Claro ── */
+      --fondo-base: #F8F5FC;
+      --blanco: #FFFFFF;
+      --lila-suave: #F0E8F6;
+      --lila-tenue: #EADFF3;
+
+      /* ── Bordes y Sombras ── */
+      --borde: rgba(87, 60, 114, 0.12);
+      --borde-suave: rgba(87, 60, 114, 0.08);
+      --sombra-card: 0 10px 30px rgba(89, 33, 124, 0.06);
+      --sombra-hover: 0 16px 38px rgba(89, 33, 124, 0.12);
+      --sombra-pill: 0 4px 14px rgba(89, 33, 124, 0.22);
     }
-    .hero-eyebrow { justify-content: center; }
-    .hero-description { margin: 0 auto; }
-    .hero-right { min-height: 280px; }
-    .avisos-double-card {
-      grid-template-columns: 1fr;
-      gap: 36px;
-      padding: 30px 24px;
-    }
-    .cursos-row-grid {
-      grid-template-columns: 1fr;
-      gap: 14px;
-    }
-  }
 
-  /* Rango Tablets / Pantallas medianas (721px a 980px): navegación horizontal compacta y cómoda */
-  @media (max-width: 980px) and (min-width: 721px) {
-    nav.sie-navbar { padding: 0 20px; }
-    .nav-links { gap: 4px; }
-    .nav-links a { padding: 7px 12px; font-size: 0.80rem; }
-    .nav-brand-divider { margin: 0 8px; }
-  }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  /* ── MENÚ HAMBURGUESA MODERNO Y COMPACTO SIE PARA CELULARES (<= 720px) ── */
-  @media (max-width: 720px) {
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--fondo-base);
+      color: var(--azul-texto);
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      position: relative;
+    }
+
+    /* ── 1. NAVBAR MORADA INSTITUCIONAL CON BORDES CURVOS ── */
+    .header-nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      width: 100%;
+      background: transparent;
+    }
+
     nav.sie-navbar {
-      height: 64px;
-      padding: 0 16px;
-      border-radius: 0 0 20px 20px;
-    }
-
-    /* Ocultar navegación horizontal de escritorio en celulares */
-    .nav-links {
-      display: none !important;
-    }
-
-    /* Acciones móviles a la derecha: Botón Inicio + Botón Hamburguesa */
-    .nav-mobile-actions {
-      display: flex !important;
+      width: 100%;
+      height: 74px;
+      background: linear-gradient(135deg, #59217C 0%, #4D186E 100%);
+      border-radius: 0 0 26px 26px;
+      box-shadow: 0 8px 24px rgba(89, 33, 124, 0.22);
+      display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: space-between;
+      padding: 0 44px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-crest-wrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 3px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
       flex-shrink: 0;
     }
 
-    /* Botón Inicio visible siempre en la barra móvil */
-    .nav-mobile-home-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 7px 14px;
-      border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.14);
-      border: 1px solid rgba(255, 255, 255, 0.20);
-      color: #FFFFFF;
-      text-decoration: none;
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      transition: all 0.2s ease;
-      height: 38px;
+    .nav-crest-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
-    .nav-mobile-home-btn:hover,
-    .nav-mobile-home-btn:active {
-      background: rgba(255, 255, 255, 0.28);
+    .nav-inst-titles {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .nav-inst-main {
+      color: #FFFFFF;
+      font-size: 0.94rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+
+    .nav-inst-sub {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .nav-brand-divider {
+      width: 1px;
+      height: 26px;
+      background: rgba(255, 255, 255, 0.35);
+      margin: 0 10px;
+    }
+
+    .nav-sie-acronym {
+      color: #FFFFFF;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.88);
+      text-decoration: none;
+      font-size: 0.84rem;
+      font-weight: 500;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      transition: all 0.22s ease;
+    }
+
+    .nav-links a:hover {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.14);
       transform: translateY(-1px);
     }
 
-    .nav-mobile-home-btn.active {
-      background: rgba(255, 255, 255, 0.26);
-      font-weight: 700;
+    .nav-links a.active {
+      background: rgba(255, 255, 255, 0.24);
+      color: #FFFFFF;
+      font-weight: 600;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
     }
 
-    /* Botón Hamburguesa Móvil */
-    .nav-hamburger-btn {
-      display: flex !important;
+    /* Componentes de Navegación Móvil (Ocultos al 100% en escritorio y pantallas grandes) */
+    .nav-mobile-actions,
+    .nav-mobile-dropdown {
+      display: none !important;
+    }
+
+    /* ── 2. HERO PRINCIPAL (COMPOSICIÓN ASIMÉTRICA) ── */
+    .hero-container {
       position: relative;
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      color: #FFFFFF;
-      cursor: pointer;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 60px 24px 40px;
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      align-items: center;
+      gap: 40px;
+      z-index: 2;
+    }
+
+    /* Columna Izquierda: Textos */
+    .hero-left {
+      display: flex;
       flex-direction: column;
+      animation: titleEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--morado-principal);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero-eyebrow::after {
+      content: '';
+      display: inline-block;
+      width: 38px;
+      height: 1.5px;
+      background: var(--morado-principal);
+      opacity: 0.6;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 4.4vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.08;
+      margin-bottom: 22px;
+      letter-spacing: -0.025em;
+    }
+
+    .hero-title .t-dark {
+      display: block;
+      color: var(--azul-texto);
+    }
+
+    .hero-title .t-purple {
+      display: block;
+      color: var(--lila-principal);
+    }
+
+    .hero-description {
+      color: var(--morado-secundario);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      max-width: 480px;
+      font-weight: 400;
+    }
+
+    /* Columna Derecha: Logotipo & Órbitas Visuales */
+    .hero-right {
+      display: flex;
       align-items: center;
       justify-content: center;
-      gap: 5px;
-      padding: 0;
-      flex-shrink: 0;
-      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      position: relative;
+      min-height: 340px;
     }
 
-    .nav-hamburger-btn:hover {
-      background: rgba(255, 255, 255, 0.20);
-      transform: scale(1.03);
+    .hero-visual-stage {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .nav-hamburger-btn:active {
-      transform: scale(0.94);
-    }
-
-    /* Barras animadas de la hamburguesa hacia X */
-    .hamburger-bar {
-      display: block;
-      width: 19px;
-      height: 2px;
-      background: #FFFFFF;
-      border-radius: 2px;
-      transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
-      transform-origin: center;
-    }
-
-    .nav-hamburger-btn.is-open .bar-1 {
-      transform: translateY(7px) rotate(45deg);
-    }
-
-    .nav-hamburger-btn.is-open .bar-2 {
-      opacity: 0;
-      transform: scaleX(0);
-    }
-
-    .nav-hamburger-btn.is-open .bar-3 {
-      transform: translateY(-7px) rotate(-45deg);
-    }
-
-    /* ── MENÚ DESPLEGABLE COMPACTO Y FLOTANTE (Sin oscurecer ni tapar la pantalla) ── */
-    .nav-mobile-dropdown {
-      display: block !important;
+    /* Órbitas elípticas animadas */
+    .orbit-ring {
       position: absolute;
-      top: calc(100% + 8px);
-      right: 14px;
-      width: 220px;
-      max-width: calc(100vw - 28px);
-      background: linear-gradient(155deg, #59217C 0%, #47186A 100%);
-      border-radius: 18px;
-      box-shadow: 0 14px 34px rgba(32, 32, 64, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.16);
-      padding: 7px;
-      z-index: 520;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-8px) scale(0.96);
-      transform-origin: top right;
-      transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.22s ease;
+      border-radius: 50%;
       pointer-events: none;
     }
 
-    .nav-mobile-dropdown.is-open {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0) scale(1);
-      pointer-events: auto;
+    .orbit-ring-1 {
+      width: 320px;
+      height: 170px;
+      border: 2px solid rgba(166, 100, 190, 0.38);
+      transform: rotate(-24deg);
+      animation: orbitPulse 8s ease-in-out infinite;
     }
 
-    .mobile-menu-inner {
+    .orbit-ring-2 {
+      width: 280px;
+      height: 140px;
+      border: 1.5px dashed rgba(166, 100, 190, 0.28);
+      transform: rotate(-20deg);
+      animation: orbitPulse 8s 2s ease-in-out infinite reverse;
+    }
+
+    /* Destellos (4-point stars) */
+    .sparkle-icon {
+      position: absolute;
+      pointer-events: none;
+      z-index: 3;
+      animation: sparkleTwinkle 3.2s ease-in-out infinite;
+    }
+
+    .sparkle-top {
+      top: 36px;
+      left: 44px;
+      width: 22px;
+      height: 22px;
+      color: var(--morado-principal);
+    }
+
+    .sparkle-bottom {
+      bottom: 50px;
+      right: 36px;
+      width: 18px;
+      height: 18px;
+      color: var(--lila-principal);
+      animation-delay: 1.6s;
+    }
+
+    /* Contenedor del logotipo central */
+    .hero-logo-box {
+      position: relative;
+      z-index: 2;
+      width: 180px;
+      height: auto;
+      animation: logoEnter 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards, floatGentle 5s 1s ease-in-out infinite;
+    }
+
+    .hero-logo-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 12px 28px rgba(89, 33, 124, 0.12));
+      transition: transform 0.3s ease;
+    }
+
+    .hero-logo-box img:hover {
+      transform: scale(1.04);
+    }
+
+    /* ── 3. ONDAS AMBIENTALES DE FONDO ── */
+    .ambient-waves-wrap {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      margin-top: -30px;
+      margin-bottom: 24px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .ambient-waves-wrap svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      min-height: 80px;
+    }
+
+    /* ── 4. SECCIÓN: AVISOS GENERALES (DOS COLUMNAS) ── */
+    .avisos-card-container {
+      max-width: 1140px;
+      margin: 0 auto 52px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .avisos-double-card {
+      background: var(--blanco);
+      border-radius: 24px;
+      border: 1px solid var(--borde-suave);
+      box-shadow: var(--sombra-card);
+      padding: 38px 42px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .avisos-double-card:hover {
+      box-shadow: var(--sombra-hover);
+    }
+
+    /* Columna Izquierda: Información de avisos */
+    .avisos-info-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .avisos-icon-badge {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: var(--lila-suave);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--morado-principal);
+      margin-bottom: 18px;
+    }
+
+    .avisos-main-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--azul-texto);
+      line-height: 1.15;
+      margin-bottom: 4px;
+      letter-spacing: -0.015em;
+    }
+
+    .avisos-subtitle-tag {
+      font-size: 0.66rem;
+      font-weight: 700;
+      color: var(--lila-principal);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .avisos-desc-text {
+      color: var(--morado-secundario);
+      font-size: 0.94rem;
+      line-height: 1.6;
+      margin-bottom: 28px;
+      max-width: 420px;
+    }
+
+    .btn-explorar-avisos {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--morado-principal);
+      color: #FFFFFF;
+      font-size: 0.88rem;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 9999px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: var(--sombra-pill);
+      transition: all 0.25s ease;
+    }
+
+    .btn-explorar-avisos:hover {
+      background: var(--lila-principal);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(89, 33, 124, 0.32);
+    }
+
+    .btn-explorar-avisos .arrow-icon {
+      transition: transform 0.22s ease;
+    }
+
+    .btn-explorar-avisos:hover .arrow-icon {
+      transform: translateX(4px);
+    }
+
+    /* Columna Derecha: Avisos Recientes */
+    .avisos-recientes-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .recientes-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+
+    .recientes-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .recientes-clock-icon {
+      color: var(--morado-principal);
+      display: flex;
+      align-items: center;
+    }
+
+    .recientes-title-text {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--azul-texto);
+      letter-spacing: -0.01em;
+    }
+
+    .recientes-dots-icon {
+      color: var(--malva);
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      line-height: 1;
+      opacity: 0.7;
+      cursor: default;
+    }
+
+    /* Lista de Avisos Recientes */
+    .recientes-list-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .aviso-item-card {
+      background: var(--fondo-base);
+      border: 1px solid var(--borde-suave);
+      border-radius: 14px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.22s ease;
+    }
+
+    .aviso-item-card:hover {
+      background: #FFFFFF;
+      border-color: var(--lila-principal);
+      transform: translateX(4px);
+      box-shadow: 0 6px 18px rgba(89, 33, 124, 0.08);
+    }
+
+    .aviso-item-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .aviso-item-cal-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: #FFFFFF;
+      border: 1px solid var(--borde-suave);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--morado-principal);
+      flex-shrink: 0;
+    }
+
+    .aviso-item-texts {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .aviso-item-title {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: var(--azul-texto);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.25;
+    }
+
+    .aviso-item-date {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: var(--malva);
+      font-weight: 500;
+    }
+
+    .aviso-item-chevron {
+      color: var(--malva);
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .aviso-item-card:hover .aviso-item-chevron {
+      color: var(--morado-principal);
+      transform: translateX(3px);
+    }
+
+    /* ── 5. SECCIÓN: ACCESO POR CURSO ── */
+    .cursos-section-container {
+      max-width: 1140px;
+      margin: 0 auto 70px;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cursos-header {
+      margin-bottom: 24px;
+    }
+
+    .cursos-icon-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--lila-suave);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--morado-principal);
+      margin-bottom: 12px;
+    }
+
+    .cursos-main-title {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--azul-texto);
+      line-height: 1.15;
+      margin-bottom: 4px;
+      letter-spacing: -0.015em;
+    }
+
+    .cursos-subtitle-tag {
+      font-size: 0.66rem;
+      font-weight: 700;
+      color: var(--lila-principal);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .cursos-row-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .curso-horizontal-card {
+      background: var(--blanco);
+      border: 1px solid var(--borde-suave);
+      border-radius: 18px;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(89, 33, 124, 0.04);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .curso-horizontal-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--lila-principal);
+      box-shadow: var(--sombra-hover);
+    }
+
+    .curso-card-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .curso-cap-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--lila-suave);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--morado-principal);
+      flex-shrink: 0;
+      transition: transform 0.25s ease;
+    }
+
+    .curso-horizontal-card:hover .curso-cap-badge {
+      transform: scale(1.06);
+    }
+
+    .curso-card-texts {
       display: flex;
       flex-direction: column;
       gap: 2px;
     }
 
-    .mobile-nav-link {
+    .curso-card-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--azul-texto);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .curso-card-sub {
+      font-size: 0.82rem;
+      color: var(--morado-secundario);
+      line-height: 1.35;
+    }
+
+    .curso-circle-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--lila-suave);
+      color: var(--morado-principal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+    }
+
+    .curso-horizontal-card:hover .curso-circle-btn {
+      background: var(--morado-principal);
+      color: #FFFFFF;
+      transform: scale(1.06);
+    }
+
+    .curso-horizontal-card:hover .curso-circle-btn svg {
+      transform: translateX(2px);
+    }
+
+    /* ── 6. MODAL EXPANDIDO DE TODOS LOS AVISOS & FILTROS ── */
+    .modal-avisos-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(32, 32, 64, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      animation: fadeIn 0.25s ease forwards;
+    }
+
+    .modal-avisos-backdrop.active {
+      display: flex;
+    }
+
+    .modal-avisos-dialog {
+      background: var(--blanco);
+      width: 100%;
+      max-width: 900px;
+      max-height: 88vh;
+      border-radius: 24px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid var(--borde);
+      animation: dialogEnter 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .modal-avisos-header {
+      padding: 24px 32px 18px;
+      border-bottom: 1px solid var(--borde-suave);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--fondo-base);
+    }
+
+    .modal-header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .modal-avisos-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--azul-texto);
+    }
+
+    .modal-close-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: var(--lila-suave);
+      color: var(--morado-principal);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      transition: all 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      background: var(--morado-principal);
+      color: #FFFFFF;
+    }
+
+    .modal-filter-bar {
+      padding: 14px 32px;
+      background: var(--blanco);
+      border-bottom: 1px solid var(--borde-suave);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .filtro-wrapper {
+      display: inline-flex;
+      align-items: center;
+      background: var(--fondo-base);
+      border: 1px solid var(--borde);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .filtro-label {
+      padding: 0 12px;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--malva);
+      font-weight: 600;
+      border-right: 1px solid var(--borde);
+      height: 36px;
+      display: flex;
+      align-items: center;
+    }
+
+    .filtro-wrapper input[type="date"] {
+      background: transparent;
+      border: none;
+      color: var(--azul-texto);
+      font-family: inherit;
+      font-size: 0.82rem;
+      padding: 0 12px;
+      height: 36px;
+      outline: none;
+      cursor: pointer;
+      color-scheme: light;
+    }
+
+    .btn-reset {
+      background: var(--lila-suave);
+      border: none;
+      border-left: 1px solid var(--borde);
+      color: var(--morado-principal);
+      font-family: inherit;
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 0 14px;
+      height: 36px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-reset:hover {
+      background: var(--morado-principal);
+      color: #FFFFFF;
+    }
+
+    .modal-avisos-scroll {
+      padding: 24px 32px 36px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    /* Grid interna de avisos en el modal */
+    .avisos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 18px;
+    }
+
+    .aviso-card {
+      background: var(--blanco);
+      border: 1px solid var(--borde-suave);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(89, 33, 124, 0.05);
+      transition: transform 0.22s ease, border-color 0.22s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .aviso-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--lila-principal);
+    }
+
+    .aviso-img {
+      width: 100%;
+      max-height: 180px;
+      object-fit: cover;
+      border-bottom: 1px solid var(--borde-suave);
+      cursor: zoom-in;
+    }
+
+    .aviso-body {
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .aviso-fecha {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--malva);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .aviso-titulo {
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: var(--azul-texto);
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .aviso-desc {
+      font-size: 0.82rem;
+      color: var(--morado-secundario);
+      line-height: 1.5;
+    }
+
+    /* Estados */
+    .estado {
+      text-align: center;
+      padding: 36px 20px;
+      color: var(--malva);
+      font-size: 0.88rem;
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 3px solid rgba(89, 33, 124, 0.12);
+      border-top-color: var(--morado-principal);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 36px 20px;
+      color: var(--malva);
+      font-size: 0.88rem;
+    }
+
+    .error-box {
+      background: rgba(239, 68, 68, 0.06);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: 10px;
+      padding: 16px 20px;
+      color: #b91c1c;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    /* ── 7. FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 28px 44px;
+      border-top: 1px solid var(--borde-suave);
+      background: #FFFFFF;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-left {
       display: flex;
       align-items: center;
       gap: 10px;
-      min-height: 42px;
-      padding: 9px 13px;
-      border-radius: 12px;
-      color: rgba(255, 255, 255, 0.90);
-      text-decoration: none;
-      font-size: 0.88rem;
+    }
+
+    .footer-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--lila-suave);
+    }
+
+    .footer-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .footer-name {
+      font-size: 0.82rem;
       font-weight: 600;
-      letter-spacing: -0.01em;
-      transition: all 0.18s ease;
+      color: var(--azul-texto);
     }
 
-    .mobile-nav-link:hover,
-    .mobile-nav-link:focus-visible {
+    .footer-copy {
+      font-size: 0.72rem;
+      color: var(--malva);
+    }
+
+    /* ── 8. LIGHTBOX DE IMÁGENES ── */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(32, 32, 64, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .lightbox-overlay.active {
+      display: flex;
+    }
+
+    .lightbox-overlay img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 14px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 24px;
       color: #FFFFFF;
-      background: rgba(255, 255, 255, 0.15);
-      transform: translateX(3px);
-      outline: none;
+      font-size: 2rem;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 2001;
+      background: rgba(255, 255, 255, 0.2);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease;
     }
 
-    .mobile-nav-link:active {
-      transform: scale(0.98);
+    .lightbox-close:hover {
+      background: rgba(255, 255, 255, 0.35);
     }
 
-    .mobile-nav-link.active {
-      background: rgba(255, 255, 255, 0.22);
-      color: #FFFFFF;
-      font-weight: 700;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    /* ── 9. KEYFRAMES & ANIMACIONES OBLIGATORIAS ── */
+    @keyframes titleEnter {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    .mobile-nav-icon {
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
-      color: var(--lila-principal);
-      transition: transform 0.2s ease, color 0.2s ease;
+    @keyframes logoEnter {
+      from {
+        opacity: 0;
+        transform: scale(0.9) translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
     }
 
-    .mobile-nav-link:hover .mobile-nav-icon {
-      transform: scale(1.14);
-      color: #FFFFFF;
+    @keyframes floatGentle {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
     }
 
-    .mobile-nav-docente {
-      margin-top: 3px;
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
-      padding-top: 8px;
+    @keyframes orbitPulse {
+
+      0%,
+      100% {
+        transform: rotate(-24deg) scale(1);
+        opacity: 0.55;
+      }
+
+      50% {
+        transform: rotate(-24deg) scale(1.03);
+        opacity: 0.85;
+      }
     }
 
-    .nav-inst-sub { display: none; }
-    .nav-inst-main { font-size: 0.82rem; white-space: nowrap; }
-    .nav-sie-acronym { font-size: 1.15rem; }
-    .hero-title { font-size: 2.2rem; }
-    .hero-visual-stage { width: 260px; height: 260px; }
-    .orbit-ring-1 { width: 260px; height: 140px; }
-    .orbit-ring-2 { width: 220px; height: 110px; }
-    .hero-logo-box { width: 145px; }
-    .avisos-card-container, .cursos-section-container { padding: 0 16px; }
-    .modal-avisos-header, .modal-filter-bar, .modal-avisos-scroll { padding-left: 18px; padding-right: 18px; }
-    footer { padding: 22px 18px; }
-  }
+    @keyframes sparkleTwinkle {
 
-  @media (max-width: 420px) {
-    nav.sie-navbar { padding: 0 12px; height: 60px; }
-    .nav-mobile-actions { gap: 6px; }
-    .nav-mobile-home-btn { padding: 6px 12px; font-size: 0.78rem; height: 36px; }
-    .nav-hamburger-btn { width: 38px; height: 38px; }
-    .nav-brand-divider { margin: 0 6px; }
-    .nav-inst-main { font-size: 0.74rem; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .nav-sie-acronym { font-size: 1.05rem; }
-    .nav-crest-wrap { width: 34px; height: 34px; }
-    .nav-mobile-dropdown { right: 10px; width: 200px; }
-  }
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.85;
+      }
 
-  /* Ajuste de precisión para pantallas ultracompactas (320px - 340px) */
-  @media (max-width: 340px) {
-    nav.sie-navbar { padding: 0 8px; height: 58px; }
-    .nav-mobile-actions { gap: 5px; }
-    .nav-mobile-home-btn { padding: 5px 9px; font-size: 0.74rem; height: 34px; }
-    .nav-hamburger-btn { width: 34px; height: 34px; border-radius: 9px; }
-    .nav-crest-wrap { width: 30px; height: 30px; padding: 2px; }
-    .nav-brand-divider { margin: 0 4px; height: 18px; }
-    .nav-inst-titles { max-width: 95px; }
-    .nav-inst-main { font-size: 0.68rem; max-width: 95px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .nav-sie-acronym { font-size: 0.95rem; }
-    .nav-mobile-dropdown { right: 8px; width: 190px; }
-    .mobile-nav-link { min-height: 38px; padding: 7px 10px; font-size: 0.84rem; }
-  }
-
-  /* Reducción de movimiento */
-  @media (prefers-reduced-motion: reduce) {
-    * {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
+      50% {
+        transform: scale(1.3) rotate(15deg);
+        opacity: 1;
+      }
     }
-  }
-</style>
-<link rel="stylesheet" href="interfaz.css?v=6"></head>
+
+    @keyframes dialogEnter {
+      from {
+        opacity: 0;
+        transform: scale(0.96) translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    /* ── 10. RESPONSIVE DESIGN ── */
+    @media (max-width: 980px) {
+      nav.sie-navbar {
+        padding: 0 24px;
+      }
+
+      .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 44px 20px 24px;
+      }
+
+      .hero-eyebrow {
+        justify-content: center;
+      }
+
+      .hero-description {
+        margin: 0 auto;
+      }
+
+      .hero-right {
+        min-height: 280px;
+      }
+
+      .avisos-double-card {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding: 30px 24px;
+      }
+
+      .cursos-row-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+    }
+
+    /* Rango Tablets / Pantallas medianas (721px a 980px): navegación horizontal compacta y cómoda */
+    @media (max-width: 980px) and (min-width: 721px) {
+      nav.sie-navbar {
+        padding: 0 20px;
+      }
+
+      .nav-links {
+        gap: 4px;
+      }
+
+      .nav-links a {
+        padding: 7px 12px;
+        font-size: 0.80rem;
+      }
+
+      .nav-brand-divider {
+        margin: 0 8px;
+      }
+    }
+
+    /* ── MENÚ HAMBURGUESA MODERNO Y COMPACTO SIE PARA CELULARES (<= 720px) ── */
+    @media (max-width: 720px) {
+      nav.sie-navbar {
+        height: 64px;
+        padding: 0 16px;
+        border-radius: 0 0 20px 20px;
+      }
+
+      /* Ocultar navegación horizontal de escritorio en celulares */
+      .nav-links {
+        display: none !important;
+      }
+
+      /* Acciones móviles a la derecha: Botón Inicio + Botón Hamburguesa */
+      .nav-mobile-actions {
+        display: flex !important;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+
+      /* Botón Inicio visible siempre en la barra móvil */
+      .nav-mobile-home-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 7px 14px;
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.14);
+        border: 1px solid rgba(255, 255, 255, 0.20);
+        color: #FFFFFF;
+        text-decoration: none;
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        transition: all 0.2s ease;
+        height: 38px;
+      }
+
+      .nav-mobile-home-btn:hover,
+      .nav-mobile-home-btn:active {
+        background: rgba(255, 255, 255, 0.28);
+        transform: translateY(-1px);
+      }
+
+      .nav-mobile-home-btn.active {
+        background: rgba(255, 255, 255, 0.26);
+        font-weight: 700;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      }
+
+      /* Botón Hamburguesa Móvil */
+      .nav-hamburger-btn {
+        display: flex !important;
+        position: relative;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        color: #FFFFFF;
+        cursor: pointer;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        padding: 0;
+        flex-shrink: 0;
+        transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      }
+
+      .nav-hamburger-btn:hover {
+        background: rgba(255, 255, 255, 0.20);
+        transform: scale(1.03);
+      }
+
+      .nav-hamburger-btn:active {
+        transform: scale(0.94);
+      }
+
+      /* Barras animadas de la hamburguesa hacia X */
+      .hamburger-bar {
+        display: block;
+        width: 19px;
+        height: 2px;
+        background: #FFFFFF;
+        border-radius: 2px;
+        transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+        transform-origin: center;
+      }
+
+      .nav-hamburger-btn.is-open .bar-1 {
+        transform: translateY(7px) rotate(45deg);
+      }
+
+      .nav-hamburger-btn.is-open .bar-2 {
+        opacity: 0;
+        transform: scaleX(0);
+      }
+
+      .nav-hamburger-btn.is-open .bar-3 {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+
+      /* ── MENÚ DESPLEGABLE COMPACTO Y FLOTANTE (Sin oscurecer ni tapar la pantalla) ── */
+      .nav-mobile-dropdown {
+        display: block !important;
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 14px;
+        width: 220px;
+        max-width: calc(100vw - 28px);
+        background: linear-gradient(155deg, #59217C 0%, #47186A 100%);
+        border-radius: 18px;
+        box-shadow: 0 14px 34px rgba(32, 32, 64, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.16);
+        padding: 7px;
+        z-index: 520;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px) scale(0.96);
+        transform-origin: top right;
+        transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.22s ease;
+        pointer-events: none;
+      }
+
+      .nav-mobile-dropdown.is-open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+      }
+
+      .mobile-menu-inner {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .mobile-nav-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 42px;
+        padding: 9px 13px;
+        border-radius: 12px;
+        color: rgba(255, 255, 255, 0.90);
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        transition: all 0.18s ease;
+      }
+
+      .mobile-nav-link:hover,
+      .mobile-nav-link:focus-visible {
+        color: #FFFFFF;
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateX(3px);
+        outline: none;
+      }
+
+      .mobile-nav-link:active {
+        transform: scale(0.98);
+      }
+
+      .mobile-nav-link.active {
+        background: rgba(255, 255, 255, 0.22);
+        color: #FFFFFF;
+        font-weight: 700;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      }
+
+      .mobile-nav-icon {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+        color: var(--lila-principal);
+        transition: transform 0.2s ease, color 0.2s ease;
+      }
+
+      .mobile-nav-link:hover .mobile-nav-icon {
+        transform: scale(1.14);
+        color: #FFFFFF;
+      }
+
+      .mobile-nav-docente {
+        margin-top: 3px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        padding-top: 8px;
+      }
+
+      .nav-inst-sub {
+        display: none;
+      }
+
+      .nav-inst-main {
+        font-size: 0.82rem;
+        white-space: nowrap;
+      }
+
+      .nav-sie-acronym {
+        font-size: 1.15rem;
+      }
+
+      .hero-title {
+        font-size: 2.2rem;
+      }
+
+      .hero-visual-stage {
+        width: 260px;
+        height: 260px;
+      }
+
+      .orbit-ring-1 {
+        width: 260px;
+        height: 140px;
+      }
+
+      .orbit-ring-2 {
+        width: 220px;
+        height: 110px;
+      }
+
+      .hero-logo-box {
+        width: 145px;
+      }
+
+      .avisos-card-container,
+      .cursos-section-container {
+        padding: 0 16px;
+      }
+
+      .modal-avisos-header,
+      .modal-filter-bar,
+      .modal-avisos-scroll {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      footer {
+        padding: 22px 18px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      nav.sie-navbar {
+        padding: 0 12px;
+        height: 60px;
+      }
+
+      .nav-mobile-actions {
+        gap: 6px;
+      }
+
+      .nav-mobile-home-btn {
+        padding: 6px 12px;
+        font-size: 0.78rem;
+        height: 36px;
+      }
+
+      .nav-hamburger-btn {
+        width: 38px;
+        height: 38px;
+      }
+
+      .nav-brand-divider {
+        margin: 0 6px;
+      }
+
+      .nav-inst-main {
+        font-size: 0.74rem;
+        max-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .nav-sie-acronym {
+        font-size: 1.05rem;
+      }
+
+      .nav-crest-wrap {
+        width: 34px;
+        height: 34px;
+      }
+
+      .nav-mobile-dropdown {
+        right: 10px;
+        width: 200px;
+      }
+    }
+
+    /* Ajuste de precisión para pantallas ultracompactas (320px - 340px) */
+    @media (max-width: 340px) {
+      nav.sie-navbar {
+        padding: 0 8px;
+        height: 58px;
+      }
+
+      .nav-mobile-actions {
+        gap: 5px;
+      }
+
+      .nav-mobile-home-btn {
+        padding: 5px 9px;
+        font-size: 0.74rem;
+        height: 34px;
+      }
+
+      .nav-hamburger-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
+      }
+
+      .nav-crest-wrap {
+        width: 30px;
+        height: 30px;
+        padding: 2px;
+      }
+
+      .nav-brand-divider {
+        margin: 0 4px;
+        height: 18px;
+      }
+
+      .nav-inst-titles {
+        max-width: 95px;
+      }
+
+      .nav-inst-main {
+        font-size: 0.68rem;
+        max-width: 95px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .nav-sie-acronym {
+        font-size: 0.95rem;
+      }
+
+      .nav-mobile-dropdown {
+        right: 8px;
+        width: 190px;
+      }
+
+      .mobile-nav-link {
+        min-height: 38px;
+        padding: 7px 10px;
+        font-size: 0.84rem;
+      }
+    }
+
+    /* Reducción de movimiento */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="interfaz.css?v=6">
+</head>
+
 <body class="sie-inicio">
 
-<!-- ── 1. NAVBAR MORADA INSTITUCIONAL ── -->
-<div class="header-nav-wrap">
-  <nav class="sie-navbar" aria-label="Navegación principal">
-    <div class="nav-left">
-      <div class="nav-crest-wrap">
-        <img src="imagenes/insignia.png" alt="Insignia CEDM">
-      </div>
-      <div class="nav-inst-titles">
-  <div class="nav-inst-sub">CDEM</div>
-  <div class="nav-inst-main">Santa Teresa de Ávila</div>
-</div>
-
-<div class="nav-brand-divider"></div>
-
-<div class="nav-sie-acronym">SIE</div>
-</div>
-
-    <!-- Enlaces Horizontales de Escritorio (Visibles exclusivamente en Escritorio y Tablets) -->
-    <div class="nav-links">
-      <a href="paginas/primero.html">1° Curso</a>
-      <a href="paginas/segundo.html">2° Curso</a>
-      <a href="paginas/tercero.html">3° Curso</a>
-      <a href="profesores.html">Profesores</a>
-    </div>
-
-    <!-- Acciones Móviles (Visibles exclusivamente en celulares: Inicio + Menú Hamburguesa) -->
-    <div class="nav-mobile-actions">
-      <button type="button" class="nav-hamburger-btn" id="nav-hamburger-btn" aria-label="Abrir menú de cursos" aria-expanded="false" aria-controls="nav-mobile-menu">
-        <span class="hamburger-bar bar-1"></span>
-        <span class="hamburger-bar bar-2"></span>
-        <span class="hamburger-bar bar-3"></span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- Menú Desplegable Flotante Compacto (Sin oscurecer la pantalla) -->
-  <div class="nav-mobile-dropdown" id="nav-mobile-menu" role="region" aria-label="Menú de cursos y profesores">
-    <div class="mobile-menu-inner">
-      <a href="paginas/primero.html" class="mobile-nav-link">
-        <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-        </svg>
-        <span>1.º Curso</span>
-      </a>
-      <a href="paginas/segundo.html" class="mobile-nav-link">
-        <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-        </svg>
-        <span>2.º Curso</span>
-      </a>
-      <a href="paginas/tercero.html" class="mobile-nav-link">
-        <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-        </svg>
-        <span>3.º Curso</span>
-      </a>
-      <a href="profesores.html" class="mobile-nav-link mobile-nav-docente">
-        <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
-        </svg>
-        <span>Profesores</span>
-      </a>
-    </div>
-  </div>
-</div>
-
-<!-- ── 2. HERO PRINCIPAL (COMPOSICIÓN ASIMÉTRICA) ── -->
-<section class="hero-container">
-  <!-- Lado Izquierdo: Textos -->
-  <div class="hero-left">
-
-    <h1 class="hero-title"><span class="t-purple" style="display:block">CDEM</span><span class="t-purple">Santa Teresa de Ávila</span></h1>
-
-  </div>
-
-  <!-- Lado Derecho: Logotipo + Órbitas + Destellos -->
-
-</section><section class="cursos-section-container">
-  <div class="cursos-header">
-
-    <h2 class="cursos-main-title">Elegí tu curso</h2>
-
-  </div>
-
-  <div class="cursos-row-grid">
-    <!-- Tarjeta 1.° Curso -->
-    <a href="paginas/primero.html" class="curso-horizontal-card">
-      <div class="curso-card-left">
-
-        <div class="curso-card-texts">
-          <div class="curso-card-title">Primero</div>
-
+  <!-- ── 1. NAVBAR MORADA INSTITUCIONAL ── -->
+  <div class="header-nav-wrap">
+    <nav class="sie-navbar" aria-label="Navegación principal">
+      <div class="nav-left">
+        <div class="nav-crest-wrap">
+          <img src="imagenes/insignia.png" alt="Insignia CEDM">
         </div>
-      </div>
-      <div class="curso-circle-btn">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
-        </svg>
-      </div>
-    </a>
-
-    <!-- Tarjeta 2.° Curso -->
-    <a href="paginas/segundo.html" class="curso-horizontal-card">
-      <div class="curso-card-left">
-
-        <div class="curso-card-texts">
-          <div class="curso-card-title">Segundo</div>
-
-        </div>
-      </div>
-      <div class="curso-circle-btn">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
-        </svg>
-      </div>
-    </a>
-
-    <!-- Tarjeta 3.° Curso -->
-    <a href="paginas/tercero.html" class="curso-horizontal-card">
-      <div class="curso-card-left">
-
-        <div class="curso-card-texts">
-          <div class="curso-card-title">Tercero</div>
-
-        </div>
-      </div>
-      <div class="curso-circle-btn">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
-        </svg>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- ── 3. ONDAS ORGÁNICAS FLUIDAS DE TRANSICIÓN ── -->
-
-
-<!-- ── 4. SECCIÓN: AVISOS GENERALES (DOS COLUMNAS) ── -->
-<section class="avisos-card-container">
-  <div class="avisos-double-card">
-
-    <!-- Columna Izquierda: Presentación y Botón Explorar -->
-    <div class="avisos-info-col">
-      <div class="avisos-icon-badge">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="m3 11 18-5v12L3 14v-3z"></path>
-          <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
-        </svg>
-      </div>
-      <h2 class="avisos-main-title">Avisos generales</h2>
-
-
-      <button class="btn-explorar-avisos" onclick="abrirModalAvisos()">
-        Explorar más avisos
-        <span class="arrow-icon">→</span>
-      </button>
-    </div>
-
-    <!-- Columna Derecha: Avisos Recientes (Lista de 3) -->
-    <div class="avisos-recientes-col">
-      <div class="recientes-header-row">
-        <div class="recientes-title-wrap">
-          <span class="recientes-clock-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <polyline points="12 6 12 12 16 14"></polyline>
-            </svg>
-          </span>
-          <span class="recientes-title-text">Avisos recientes</span>
+        <div class="nav-inst-titles">
+          <div class="nav-inst-sub">CDEM</div>
+          <div class="nav-inst-main">Santa Teresa de Ávila</div>
         </div>
 
+        <div class="nav-brand-divider"></div>
+
+        <div class="nav-sie-acronym">SIE</div>
       </div>
 
-      <!-- Contenedor dinámico de los 3 avisos recientes -->
-      <div class="recientes-list-wrap" id="recientes-list-wrap">
-        <div class="estado"><div class="spinner"></div>Cargando avisos recientes...</div>
+      <!-- Enlaces Horizontales de Escritorio (Visibles exclusivamente en Escritorio y Tablets) -->
+      <div class="nav-links">
+        <a href="profesores.html" class="nav-profesor-destacado">Profesores</a>
+      </div>
+
+      <!-- Acciones Móviles (en inicio solo se muestra el botón destacado de Profesores) -->
+      <div class="nav-mobile-actions">
+        <a href="profesores.html" class="nav-profesor-destacado">Profesores</a>
+      </div>
+    </nav>
+
+    <!-- Menú Desplegable Flotante Compacto (Sin oscurecer la pantalla) -->
+    <div class="nav-mobile-dropdown" id="nav-mobile-menu" role="region" aria-label="Menú de cursos y profesores">
+      <div class="mobile-menu-inner">
+        <a href="paginas/primero.html" class="mobile-nav-link">
+          <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span>1.º Curso</span>
+        </a>
+        <a href="paginas/segundo.html" class="mobile-nav-link">
+          <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span>2.º Curso</span>
+        </a>
+        <a href="paginas/tercero.html" class="mobile-nav-link">
+          <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span>3.º Curso</span>
+        </a>
+        <a href="profesores.html" class="mobile-nav-link mobile-nav-docente">
+          <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span>Profesores</span>
+        </a>
       </div>
     </div>
-
   </div>
-</section>
 
-<!-- ── 5. SECCIÓN: ACCESO POR CURSO ── -->
+  <!-- ── 2. HERO PRINCIPAL (COMPOSICIÓN ASIMÉTRICA) ── -->
+  <section class="hero-container">
+    <!-- Lado Izquierdo: Textos -->
+    <div class="hero-left">
+
+      <img src="imagenes/logo.png" alt="Logo SIE" style="display:block; margin:0 auto 16px; width:120px; height:auto;">
+      <h1 class="hero-title"
+        style="font-family:'Segoe UI Black','Segoe UI','Arial Black',system-ui,sans-serif; font-weight:900;"><span
+          class="t-purple" style="display:block">Centro Educativo Departamental
+          Municipal</span> <span class="t-purple" style="display:block; text-align:center">Santa Teresa
+          de Ávila</span></h1>
+
+    </div>
+
+    <!-- Lado Derecho: Logotipo + Órbitas + Destellos -->
+
+  </section>
+  <section class="cursos-section-container">
+    <div class="cursos-header">
+
+      <h2 class="cursos-main-title">Elegí tu curso</h2>
+
+    </div>
+
+    <div class="cursos-row-grid">
+      <!-- Tarjeta 1.° Curso -->
+      <a href="paginas/primero.html" class="curso-horizontal-card">
+        <div class="curso-card-left">
+
+          <div class="curso-card-texts">
+            <div class="curso-card-title">Primero</div>
+
+          </div>
+        </div>
+        <div class="curso-circle-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Tarjeta 2.° Curso -->
+      <a href="paginas/segundo.html" class="curso-horizontal-card">
+        <div class="curso-card-left">
+
+          <div class="curso-card-texts">
+            <div class="curso-card-title">Segundo</div>
+
+          </div>
+        </div>
+        <div class="curso-circle-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </div>
+      </a>
+
+      <!-- Tarjeta 3.° Curso -->
+      <a href="paginas/tercero.html" class="curso-horizontal-card">
+        <div class="curso-card-left">
+
+          <div class="curso-card-texts">
+            <div class="curso-card-title">Tercero</div>
+
+          </div>
+        </div>
+        <div class="curso-circle-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── 3. ONDAS ORGÁNICAS FLUIDAS DE TRANSICIÓN ── -->
 
 
-<!-- ── 6. MODAL EXPANDIDO DE TODOS LOS AVISOS & FILTROS ── -->
-<div class="modal-avisos-backdrop" id="modal-todos-avisos" onclick="cerrarModalAvisos(event)">
-  <div class="modal-avisos-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-avisos-titulo" onclick="event.stopPropagation()">
-    <div class="modal-avisos-header">
-      <div class="modal-header-left">
-        <div class="avisos-icon-badge" style="width: 42px; height: 42px; margin-bottom: 0;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <!-- ── 4. SECCIÓN: AVISOS GENERALES (DOS COLUMNAS) ── -->
+  <section class="avisos-card-container">
+    <div class="avisos-double-card">
+
+      <!-- Columna Izquierda: Presentación y Botón Explorar -->
+      <div class="avisos-info-col">
+        <div class="avisos-icon-badge">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
             <path d="m3 11 18-5v12L3 14v-3z"></path>
             <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
           </svg>
         </div>
-        <div class="modal-avisos-title" id="modal-avisos-titulo">Tablón de Avisos Generales</div>
-      </div>
-      <div class="modal-avisos-actions">
-        <button type="button" id="btn-ver-todos-avisos" hidden onclick="abrirModalAvisos()" aria-label="Ver todos los avisos">Ver todos</button>
-        <button type="button" class="modal-close-btn" onclick="cerrarModalAvisos()" aria-label="Cerrar avisos">×</button>
-      </div>
-    </div>
+        <h2 class="avisos-main-title">Avisos generales</h2>
 
-    <!-- Barra de Filtro de Fechas -->
-    <div class="modal-filter-bar">
-      <div class="filtro-wrapper">
-        <div class="filtro-label">Filtrar por fecha</div>
-        <input type="date" id="filtro-input" onchange="filtrarAvisos()">
-        <button class="btn-reset" onclick="limpiarFiltro()">Limpiar</button>
-      </div>
-      <div style="font-size:0.8rem; color:var(--malva);" id="contador-avisos"></div>
-    </div>
 
-    <!-- Grid completa de Avisos -->
-    <div class="modal-avisos-scroll">
-      <div class="avisos-grid" id="avisos-grid">
-        <div class="estado"><div class="spinner"></div>Cargando avisos...</div>
+        <button class="btn-explorar-avisos" onclick="abrirModalAvisos()">
+          Explorar más avisos
+          <span class="arrow-icon">→</span>
+        </button>
+      </div>
+
+      <!-- Columna Derecha: Avisos Recientes (Lista de 3) -->
+      <div class="avisos-recientes-col">
+        <div class="recientes-header-row">
+          <div class="recientes-title-wrap">
+            <span class="recientes-clock-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </span>
+            <span class="recientes-title-text">Avisos recientes</span>
+          </div>
+
+        </div>
+
+        <!-- Contenedor dinámico de los 3 avisos recientes -->
+        <div class="recientes-list-wrap" id="recientes-list-wrap">
+          <div class="estado">
+            <div class="spinner"></div>Cargando avisos recientes...
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── 5. SECCIÓN: ACCESO POR CURSO ── -->
+
+
+  <!-- ── 6. MODAL EXPANDIDO DE TODOS LOS AVISOS & FILTROS ── -->
+  <div class="modal-avisos-backdrop" id="modal-todos-avisos" onclick="cerrarModalAvisos(event)">
+    <div class="modal-avisos-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-avisos-titulo"
+      onclick="event.stopPropagation()">
+      <div class="modal-avisos-header">
+        <div class="modal-header-left">
+          <div class="avisos-icon-badge" style="width: 42px; height: 42px; margin-bottom: 0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m3 11 18-5v12L3 14v-3z"></path>
+              <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
+            </svg>
+          </div>
+          <div class="modal-avisos-title" id="modal-avisos-titulo">Tablón de Avisos Generales</div>
+        </div>
+        <div class="modal-avisos-actions">
+          <button type="button" id="btn-ver-todos-avisos" hidden onclick="abrirModalAvisos()"
+            aria-label="Ver todos los avisos">Ver todos</button>
+          <button type="button" class="modal-close-btn" onclick="cerrarModalAvisos()"
+            aria-label="Cerrar avisos">×</button>
+        </div>
+      </div>
+
+      <!-- Barra de Filtro de Fechas -->
+      <div class="modal-filter-bar">
+        <div class="filtro-wrapper">
+          <div class="filtro-label">Filtrar por fecha</div>
+          <input type="date" id="filtro-input" onchange="filtrarAvisos()">
+          <button class="btn-reset" onclick="limpiarFiltro()">Limpiar</button>
+        </div>
+        <div style="font-size:0.8rem; color:var(--malva);" id="contador-avisos"></div>
+      </div>
+
+      <!-- Grid completa de Avisos -->
+      <div class="modal-avisos-scroll">
+        <div class="avisos-grid" id="avisos-grid">
+          <div class="estado">
+            <div class="spinner"></div>Cargando avisos...
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ── 7. FOOTER ── -->
-<footer>
-  <div class="footer-left">
-    <div class="footer-icon"><img src="imagenes/insignia.png" alt="CEDM"></div>
-    <div class="footer-name">CEDM Santa Teresa de Ávila</div>
+  <!-- ── 7. FOOTER ── -->
+  <footer>
+    <div class="footer-left">
+      <div class="footer-icon"><img src="imagenes/insignia.png" alt="CEDM"></div>
+      <div class="footer-name">CEDM Santa Teresa de Ávila</div>
+    </div>
+    <div class="footer-legal"><a href="privacidad.html">Privacidad</a><a href="guia-de-uso.html">Guía de uso</a></div>
+    <div class="footer-copy">© 2026 — Todos los derechos reservados</div>
+  </footer>
+
+  <!-- ── 8. LIGHTBOX DE IMÁGENES ── -->
+  <div class="lightbox-overlay" id="lightbox" onclick="cerrarLightbox()">
+    <span class="lightbox-close" onclick="cerrarLightbox()">×</span>
+    <img id="lightbox-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
   </div>
-  <div class="footer-legal"><a href="privacidad.html">Privacidad</a><a href="guia-de-uso.html">Guía de uso</a></div>
-  <div class="footer-copy">© 2026 — Todos los derechos reservados</div>
-</footer>
 
-<!-- ── 8. LIGHTBOX DE IMÁGENES ── -->
-<div class="lightbox-overlay" id="lightbox" onclick="cerrarLightbox()">
-  <span class="lightbox-close" onclick="cerrarLightbox()">×</span>
-  <img id="lightbox-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
-</div>
+  <script src="config.js"></script>
+  <script>
+    // ── Variables y Funciones Existentes de Avisos (Preservadas) ──
+    let todosAvisos = [];
 
-<script src="config.js"></script>
-<script>
-// ── Variables y Funciones Existentes de Avisos (Preservadas) ──
-let todosAvisos = [];
+    function normFecha(str) {
+      if (!str) return "";
+      const m = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+      if (m) return `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}`;
+      return str.substring(0, 10);
+    }
 
-function normFecha(str) {
-  if (!str) return "";
-  const m = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-  if (m) return `${m[3]}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`;
-  return str.substring(0, 10);
-}
+    function fmtFecha(str) {
+      if (!str) return "";
+      try {
+        const d = new Date(normFecha(str) + "T00:00:00");
+        return d.toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" });
+      } catch { return str; }
+    }
 
-function fmtFecha(str) {
-  if (!str) return "";
-  try {
-    const d = new Date(normFecha(str) + "T00:00:00");
-    return d.toLocaleDateString("es-ES", { day:"numeric", month:"long", year:"numeric" });
-  } catch { return str; }
-}
+    function urlImagenThumb(url, tam) {
+      if (!url) return "";
+      return url.replace(/\/uc\?export=view&id=([-\w]+)/, `/thumbnail?id=$1&sz=w${tam}`);
+    }
 
-function urlImagenThumb(url, tam) {
-  if (!url) return "";
-  return url.replace(/\/uc\?export=view&id=([-\w]+)/, `/thumbnail?id=$1&sz=w${tam}`);
-}
+    // Escape contextual de cadenas procedentes de Google Sheets.
+    function escHtml(s) {
+      return String(s ?? "").replace(/[&<>"']/g, c => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[c]));
+    }
+    function urlImagenSegura(value) {
+      if (!value) return "";
+      try {
+        const url = new URL(value, window.location.href);
+        return url.protocol === "https:" ? url.href : "";
+      } catch { return ""; }
+    }
 
-// Escape contextual de cadenas procedentes de Google Sheets.
-function escHtml(s) {
-  return String(s ?? "").replace(/[&<>"']/g, c => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-  }[c]));
-}
-function urlImagenSegura(value) {
-  if (!value) return "";
-  try {
-    const url = new URL(value, window.location.href);
-    return url.protocol === "https:" ? url.href : "";
-  } catch { return ""; }
-}
+    // Renderizado de la lista de los 3 avisos recientes de la columna derecha
+    function renderAvisosRecientes(filas) {
+      const container = document.getElementById("recientes-list-wrap");
+      if (!container) return;
 
-// Renderizado de la lista de los 3 avisos recientes de la columna derecha
-function renderAvisosRecientes(filas) {
-  const container = document.getElementById("recientes-list-wrap");
-  if (!container) return;
+      if (!filas.length) {
+        container.innerHTML = '<div class="no-data">No hay avisos recientes para mostrar.</div>';
+        return;
+      }
 
-  if (!filas.length) {
-    container.innerHTML = '<div class="no-data">No hay avisos recientes para mostrar.</div>';
-    return;
-  }
-
-  const top3 = filas.slice(0, 3);
-  container.innerHTML = top3.map((f, i) => {
-    return `
+      const top3 = filas.slice(0, 3);
+      container.innerHTML = top3.map((f, i) => {
+        return `
       <button type="button" class="aviso-item-card" data-aviso-indice="${i}" aria-label="Ver aviso: ${escHtml(f["Titulo"] || "Sin título")}">
         <div class="aviso-item-left">
           <div class="aviso-item-cal-badge">
@@ -1662,26 +1896,26 @@ function renderAvisosRecientes(filas) {
           </svg>
         </div>
       </button>`;
-  }).join("");
-}
+      }).join("");
+    }
 
-// Renderizado de todos los avisos en el modal completo
-function renderAvisos(filas) {
-  const contador = document.getElementById("contador-avisos");
-  if (contador) contador.textContent = `${filas.length} aviso(s)`;
+    // Renderizado de todos los avisos en el modal completo
+    function renderAvisos(filas) {
+      const contador = document.getElementById("contador-avisos");
+      if (contador) contador.textContent = `${filas.length} aviso(s)`;
 
-  if (!filas.length) return '<div class="no-data">No hay avisos para mostrar.</div>';
-  return filas.map((f, i) => {
-    const urlOriginal = urlImagenSegura(f["Imagen"] || "");
-    const urlImg = urlImagenThumb(urlOriginal, 800);
-    const urlImgGrande = urlImagenThumb(urlOriginal, 1600);
-    const img = urlOriginal
-      ? `<img class="aviso-img" src="${escHtml(urlImg)}" alt="Aviso" data-lightbox="${escHtml(urlImgGrande)}" onerror="this.style.display='none'">`
-      : "";
-    const desc = f["Descripcion"]
-      ? `<p class="aviso-desc">${escHtml(f["Descripcion"])}</p>`
-      : "";
-    return `
+      if (!filas.length) return '<div class="no-data">No hay avisos para mostrar.</div>';
+      return filas.map((f, i) => {
+        const urlOriginal = urlImagenSegura(f["Imagen"] || "");
+        const urlImg = urlImagenThumb(urlOriginal, 800);
+        const urlImgGrande = urlImagenThumb(urlOriginal, 1600);
+        const img = urlOriginal
+          ? `<img class="aviso-img" src="${escHtml(urlImg)}" alt="Aviso" data-lightbox="${escHtml(urlImgGrande)}" onerror="this.style.display='none'">`
+          : "";
+        const desc = f["Descripcion"]
+          ? `<p class="aviso-desc">${escHtml(f["Descripcion"])}</p>`
+          : "";
+        return `
       <div class="aviso-card">
         ${img}
         <div class="aviso-body">
@@ -1690,173 +1924,177 @@ function renderAvisos(filas) {
           ${desc}
         </div>
       </div>`;
-  }).join("");
-}
-
-function filtrarAvisos() {
-  const fecha = document.getElementById("filtro-input").value;
-  const grid = document.getElementById("avisos-grid");
-  if (!fecha) { grid.innerHTML = renderAvisos(todosAvisos); return; }
-  const fil = todosAvisos.filter(f =>
-    normFecha(f["Fecha"] || f["Marca temporal"] || "") === fecha
-  );
-  grid.innerHTML = fil.length
-    ? renderAvisos(fil)
-    : '<div class="no-data">No hay avisos para esa fecha.</div>';
-}
-
-function limpiarFiltro() {
-  document.getElementById("filtro-input").value = "";
-  document.getElementById("avisos-grid").innerHTML = renderAvisos(todosAvisos);
-}
-
-async function cargarAvisos() {
-  const grid = document.getElementById("avisos-grid");
-  try {
-    const hoy = new Date().toLocaleDateString("sv-SE");
-    // Repositorio original: avisos con campos en minúsculas y estado/vigencia.
-    const filas = (await cargarHoja(SHEETS_CONFIG.avisos.spreadsheetId, SHEETS_CONFIG.avisos.hoja))
-      .filter(f => f.estado === "activo" && f.curso === "general" &&
-                   (!f.vigente_hasta || f.vigente_hasta >= hoy))
-      .map(f => ({ Titulo: f.titulo, Descripcion: f.descripcion,
-                   Fecha: f.publicado_en, Imagen: f.imagen || "" }));
-    todosAvisos = filas.sort((a, b) => {
-      const fa = normFecha(a["Fecha"] || a["Marca temporal"] || "");
-      const fb = normFecha(b["Fecha"] || b["Marca temporal"] || "");
-      return fb.localeCompare(fa);
-    });
-    // Renderizamos la columna derecha (los 3 recientes) y el modal completo
-    renderAvisosRecientes(todosAvisos);
-    if (grid) grid.innerHTML = renderAvisos(todosAvisos);
-  } catch (e) {
-    const recWrap = document.getElementById("recientes-list-wrap");
-    mostrarErrorLectura(recWrap, "los avisos", cargarAvisos);
-    mostrarErrorLectura(grid, "los avisos", cargarAvisos);
-  }
-}
-
-// Delegación sin JavaScript embebido en atributos construidos desde datos externos.
-document.addEventListener("click", (ev) => {
-  const el = ev.target.closest("[data-lightbox], [data-aviso-indice]");
-  if (!el) return;
-  if (el.dataset.lightbox) abrirLightbox(el.dataset.lightbox);
-  else if (el.dataset.avisoIndice !== undefined) abrirAvisoReciente(Number(el.dataset.avisoIndice));
-}, true);
-
-// ── Control del Modal de Avisos y Lightbox ──
-let focoAntesDeAvisos = null;
-
-function abrirAvisoReciente(indice) {
-  if (!Number.isInteger(indice) || !todosAvisos[indice]) return;
-  const modal = document.getElementById("modal-todos-avisos");
-  modal.classList.add("aviso-unico");
-  document.getElementById("modal-avisos-titulo").textContent = "Aviso";
-  document.getElementById("btn-ver-todos-avisos").hidden = false;
-  document.querySelector(".modal-filter-bar").hidden = true;
-  document.getElementById("avisos-grid").innerHTML = renderAvisos([todosAvisos[indice]]);
-  mostrarModalAvisos();
-}
-
-function abrirModalAvisos() {
-  const modal = document.getElementById("modal-todos-avisos");
-  modal.classList.remove("aviso-unico");
-  document.getElementById("modal-avisos-titulo").textContent = "Tablón de Avisos Generales";
-  document.getElementById("btn-ver-todos-avisos").hidden = true;
-  document.querySelector(".modal-filter-bar").hidden = false;
-  limpiarFiltro();
-  mostrarModalAvisos();
-}
-
-function mostrarModalAvisos() {
-  const modal = document.getElementById("modal-todos-avisos");
-  if (modal) {
-    if (!modal.classList.contains("active")) focoAntesDeAvisos = document.activeElement;
-    modal.classList.add("active");
-    document.body.style.overflow = "hidden";
-    modal.querySelector(".modal-close-btn").focus();
-  }
-}
-
-function cerrarModalAvisos(event) {
-  if (event && event.target && event.target !== document.getElementById("modal-todos-avisos")) {
-    return;
-  }
-  const modal = document.getElementById("modal-todos-avisos");
-  if (modal) {
-    modal.classList.remove("active");
-    document.body.style.overflow = "";
-    if (focoAntesDeAvisos?.isConnected) focoAntesDeAvisos.focus();
-  }
-}
-
-document.addEventListener("keydown", event => {
-  if (event.key !== "Escape") return;
-  if (document.getElementById("lightbox").classList.contains("active")) cerrarLightbox();
-  else if (document.getElementById("modal-todos-avisos").classList.contains("active")) cerrarModalAvisos();
-});
-
-function abrirLightbox(url) {
-  document.getElementById("lightbox-img").src = url;
-  document.getElementById("lightbox").classList.add("active");
-}
-
-function cerrarLightbox() {
-  document.getElementById("lightbox").classList.remove("active");
-  document.getElementById("lightbox-img").src = "";
-}
-
-// ── Control del Menú Hamburguesa Móvil Compacto & Accesible ──
-const hamburgerBtn = document.getElementById("nav-hamburger-btn");
-const mobileMenu = document.getElementById("nav-mobile-menu");
-
-function toggleMenuMovil(forzarEstado) {
-  if (!hamburgerBtn || !mobileMenu) return;
-  const estaAbierto = mobileMenu.classList.contains("is-open");
-  const nuevoEstado = (typeof forzarEstado === "boolean") ? forzarEstado : !estaAbierto;
-
-  hamburgerBtn.classList.toggle("is-open", nuevoEstado);
-  mobileMenu.classList.toggle("is-open", nuevoEstado);
-
-  hamburgerBtn.setAttribute("aria-expanded", String(nuevoEstado));
-  hamburgerBtn.setAttribute("aria-label", nuevoEstado ? "Cerrar menú de cursos" : "Abrir menú de cursos");
-}
-
-if (hamburgerBtn) {
-  hamburgerBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    toggleMenuMovil();
-  });
-}
-
-// Cerrar al tocar fuera del menú flotante sin bloquear la interacción con la página
-document.addEventListener("click", (e) => {
-  if (mobileMenu && mobileMenu.classList.contains("is-open")) {
-    if (!mobileMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
-      toggleMenuMovil(false);
+      }).join("");
     }
-  }
-});
 
-// Cerrar con la tecla Escape para máxima accesibilidad
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && mobileMenu && mobileMenu.classList.contains("is-open")) {
-    toggleMenuMovil(false);
-    if (hamburgerBtn) hamburgerBtn.focus();
-  }
-});
+    function filtrarAvisos() {
+      const fecha = document.getElementById("filtro-input").value;
+      const grid = document.getElementById("avisos-grid");
+      if (!fecha) { grid.innerHTML = renderAvisos(todosAvisos); return; }
+      const fil = todosAvisos.filter(f =>
+        normFecha(f["Fecha"] || f["Marca temporal"] || "") === fecha
+      );
+      grid.innerHTML = fil.length
+        ? renderAvisos(fil)
+        : '<div class="no-data">No hay avisos para esa fecha.</div>';
+    }
 
-// Cerrar al pulsar cualquier enlace del menú móvil
-if (mobileMenu) {
-  mobileMenu.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      toggleMenuMovil(false);
+    function limpiarFiltro() {
+      document.getElementById("filtro-input").value = "";
+      document.getElementById("avisos-grid").innerHTML = renderAvisos(todosAvisos);
+    }
+
+    async function cargarAvisos() {
+      const grid = document.getElementById("avisos-grid");
+      try {
+        const hoy = new Date().toLocaleDateString("sv-SE");
+        // Repositorio original: avisos con campos en minúsculas y estado/vigencia.
+        const filas = (await cargarHoja(SHEETS_CONFIG.avisos.spreadsheetId, SHEETS_CONFIG.avisos.hoja))
+          .filter(f => f.estado === "activo" && f.curso === "general" &&
+            (!f.vigente_hasta || f.vigente_hasta >= hoy))
+          .map(f => ({
+            Titulo: f.titulo, Descripcion: f.descripcion,
+            Fecha: f.publicado_en, Imagen: f.imagen || ""
+          }));
+        todosAvisos = filas.sort((a, b) => {
+          const fa = normFecha(a["Fecha"] || a["Marca temporal"] || "");
+          const fb = normFecha(b["Fecha"] || b["Marca temporal"] || "");
+          return fb.localeCompare(fa);
+        });
+        // Renderizamos la columna derecha (los 3 recientes) y el modal completo
+        renderAvisosRecientes(todosAvisos);
+        if (grid) grid.innerHTML = renderAvisos(todosAvisos);
+      } catch (e) {
+        const recWrap = document.getElementById("recientes-list-wrap");
+        mostrarErrorLectura(recWrap, "los avisos", cargarAvisos);
+        mostrarErrorLectura(grid, "los avisos", cargarAvisos);
+      }
+    }
+
+    // Delegación sin JavaScript embebido en atributos construidos desde datos externos.
+    document.addEventListener("click", (ev) => {
+      const el = ev.target.closest("[data-lightbox], [data-aviso-indice]");
+      if (!el) return;
+      if (el.dataset.lightbox) abrirLightbox(el.dataset.lightbox);
+      else if (el.dataset.avisoIndice !== undefined) abrirAvisoReciente(Number(el.dataset.avisoIndice));
+    }, true);
+
+    // ── Control del Modal de Avisos y Lightbox ──
+    let focoAntesDeAvisos = null;
+
+    function abrirAvisoReciente(indice) {
+      if (!Number.isInteger(indice) || !todosAvisos[indice]) return;
+      const modal = document.getElementById("modal-todos-avisos");
+      modal.classList.add("aviso-unico");
+      document.getElementById("modal-avisos-titulo").textContent = "Aviso";
+      document.getElementById("btn-ver-todos-avisos").hidden = false;
+      document.querySelector(".modal-filter-bar").hidden = true;
+      document.getElementById("avisos-grid").innerHTML = renderAvisos([todosAvisos[indice]]);
+      mostrarModalAvisos();
+    }
+
+    function abrirModalAvisos() {
+      const modal = document.getElementById("modal-todos-avisos");
+      modal.classList.remove("aviso-unico");
+      document.getElementById("modal-avisos-titulo").textContent = "Tablón de Avisos Generales";
+      document.getElementById("btn-ver-todos-avisos").hidden = true;
+      document.querySelector(".modal-filter-bar").hidden = false;
+      limpiarFiltro();
+      mostrarModalAvisos();
+    }
+
+    function mostrarModalAvisos() {
+      const modal = document.getElementById("modal-todos-avisos");
+      if (modal) {
+        if (!modal.classList.contains("active")) focoAntesDeAvisos = document.activeElement;
+        modal.classList.add("active");
+        document.body.style.overflow = "hidden";
+        modal.querySelector(".modal-close-btn").focus();
+      }
+    }
+
+    function cerrarModalAvisos(event) {
+      if (event && event.target && event.target !== document.getElementById("modal-todos-avisos")) {
+        return;
+      }
+      const modal = document.getElementById("modal-todos-avisos");
+      if (modal) {
+        modal.classList.remove("active");
+        document.body.style.overflow = "";
+        if (focoAntesDeAvisos?.isConnected) focoAntesDeAvisos.focus();
+      }
+    }
+
+    document.addEventListener("keydown", event => {
+      if (event.key !== "Escape") return;
+      if (document.getElementById("lightbox").classList.contains("active")) cerrarLightbox();
+      else if (document.getElementById("modal-todos-avisos").classList.contains("active")) cerrarModalAvisos();
     });
-  });
-}
 
-// Carga inicial
-cargarAvisos();
-</script>
+    function abrirLightbox(url) {
+      document.getElementById("lightbox-img").src = url;
+      document.getElementById("lightbox").classList.add("active");
+    }
+
+    function cerrarLightbox() {
+      document.getElementById("lightbox").classList.remove("active");
+      document.getElementById("lightbox-img").src = "";
+    }
+
+    // ── Control del Menú Hamburguesa Móvil Compacto & Accesible ──
+    const hamburgerBtn = document.getElementById("nav-hamburger-btn");
+    const mobileMenu = document.getElementById("nav-mobile-menu");
+
+    function toggleMenuMovil(forzarEstado) {
+      if (!hamburgerBtn || !mobileMenu) return;
+      const estaAbierto = mobileMenu.classList.contains("is-open");
+      const nuevoEstado = (typeof forzarEstado === "boolean") ? forzarEstado : !estaAbierto;
+
+      hamburgerBtn.classList.toggle("is-open", nuevoEstado);
+      mobileMenu.classList.toggle("is-open", nuevoEstado);
+
+      hamburgerBtn.setAttribute("aria-expanded", String(nuevoEstado));
+      hamburgerBtn.setAttribute("aria-label", nuevoEstado ? "Cerrar menú de cursos" : "Abrir menú de cursos");
+    }
+
+    if (hamburgerBtn) {
+      hamburgerBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleMenuMovil();
+      });
+    }
+
+    // Cerrar al tocar fuera del menú flotante sin bloquear la interacción con la página
+    document.addEventListener("click", (e) => {
+      if (mobileMenu && mobileMenu.classList.contains("is-open")) {
+        if (!mobileMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+          toggleMenuMovil(false);
+        }
+      }
+    });
+
+    // Cerrar con la tecla Escape para máxima accesibilidad
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && mobileMenu && mobileMenu.classList.contains("is-open")) {
+        toggleMenuMovil(false);
+        if (hamburgerBtn) hamburgerBtn.focus();
+      }
+    });
+
+    // Cerrar al pulsar cualquier enlace del menú móvil
+    if (mobileMenu) {
+      mobileMenu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+          toggleMenuMovil(false);
+        });
+      });
+    }
+
+    // Carga inicial
+    cargarAvisos();
+  </script>
 
 
-</body></html>
+</body>
+
+</html>
