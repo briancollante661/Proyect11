@@ -803,7 +803,7 @@
       color: #DC2626;
     }
 
-    /* ── 8. LISTA DE AVISOS ACTIVOS ── */
+    /* ── 8. LISTA DE TAREAS Y AVISOS ACTIVOS ── */
     .lista-avisos-container {
       display: flex;
       flex-direction: column;
@@ -813,57 +813,111 @@
       color: var(--morado-secundario);
     }
 
-    #lista-avisos>div {
+    #actualizar-tareas-activas,
+    #roles-actualizar {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 38px;
+      padding: 8px 18px;
+      margin-bottom: 14px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--morado-principal) 0%, #7A359E 100%);
+      border: 1.5px solid rgba(89, 33, 124, 0.25);
+      color: #FFFFFF;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(89, 33, 124, 0.18);
+      transition: all 0.2s ease;
+    }
+
+    #actualizar-tareas-activas:hover:not(:disabled),
+    #roles-actualizar:hover:not(:disabled) {
+      background: linear-gradient(135deg, #6b21a8 0%, #8b3dff 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 5px 14px rgba(89, 33, 124, 0.28);
+    }
+
+    #actualizar-tareas-activas:active:not(:disabled),
+    #roles-actualizar:active:not(:disabled) {
+      transform: translateY(0) scale(0.98);
+    }
+
+    #actualizar-tareas-activas:disabled,
+    #roles-actualizar:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    #lista-avisos>div,
+    #lista-tareas-activas>div {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      padding: 10px 12px;
+      gap: 12px;
+      padding: 10px 14px;
       background: var(--fondo-base);
       border: 1px solid var(--borde);
       border-radius: var(--radio-control);
-      font-size: 0.80rem;
+      font-size: 0.82rem;
       color: var(--azul-texto);
       transition: all 0.2s ease;
     }
 
-    #lista-avisos>div:hover {
+    #lista-avisos>div:hover,
+    #lista-tareas-activas>div:hover {
       background: #FFFFFF;
       border-color: rgba(166, 100, 190, 0.35);
       box-shadow: 0 3px 10px rgba(89, 33, 124, 0.05);
     }
 
-    #lista-avisos span {
+    #lista-avisos span,
+    #lista-tareas-activas span {
       font-weight: 550;
       line-height: 1.35;
       word-break: break-word;
       color: var(--azul-texto);
     }
 
-    /* Botón Retirar Aviso */
-    #lista-avisos button {
-      padding: 5px 12px;
-      border-radius: 7px;
-      border: 1px solid rgba(220, 38, 38, 0.22);
-      background: #FEF2F2;
-      color: #DC2626;
+    /* Botón Retirar (Tareas y Avisos) siguiendo la paleta morada */
+    #lista-avisos button,
+    #lista-tareas-activas button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 14px;
+      min-height: 34px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(89, 33, 124, 0.28);
+      background: var(--lila-suave);
+      color: var(--morado-principal);
       font-family: inherit;
-      font-size: 0.72rem;
+      font-size: 0.76rem;
       font-weight: 700;
       cursor: pointer;
       flex-shrink: 0;
       transition: all 0.2s ease;
     }
 
-    #lista-avisos button:hover {
-      background: #DC2626;
+    #lista-avisos button:hover:not(:disabled),
+    #lista-tareas-activas button:hover:not(:disabled) {
+      background: var(--morado-principal);
       color: #FFFFFF;
-      border-color: #DC2626;
-      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
+      border-color: var(--morado-principal);
+      box-shadow: 0 3px 10px rgba(89, 33, 124, 0.22);
       transform: translateY(-1px);
     }
 
-    #lista-avisos button:disabled {
+    #lista-avisos button:active:not(:disabled),
+    #lista-tareas-activas button:active:not(:disabled) {
+      transform: translateY(0) scale(0.97);
+    }
+
+    #lista-avisos button:disabled,
+    #lista-tareas-activas button:disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
@@ -989,7 +1043,7 @@
     }
   </style>
   <link rel="stylesheet" href="roles.css">
-  <link rel="stylesheet" href="interfaz.css?v=17">
+  <link rel="stylesheet" href="interfaz.css?v=18">
 </head>
 
 <body class="pagina-profesores">
@@ -998,7 +1052,8 @@
   <header class="profesores-header">
     <div class="header-inner">
       <div class="header-left">
-        <button type="button" id="docente-menu" aria-controls="docente-nav" aria-expanded="false" aria-label="Menú" title="Menú">☰</button>
+        <button type="button" id="docente-menu" aria-controls="docente-nav" aria-expanded="false" aria-label="Menú"
+          title="Menú">☰</button>
 
         <!-- Identidad Institucional -->
         <div class="header-institution">
