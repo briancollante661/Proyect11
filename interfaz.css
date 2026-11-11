@@ -1948,8 +1948,12 @@ html[data-theme="dark"] .hero-title .t-purple {
   color: #ffffff !important;
 }
 
+.sie-inicio .hero-left>img,
+html[data-theme="dark"] .sie-inicio .hero-left>img,
 html[data-theme="dark"] .hero-left>img {
-  background: transparent !important;
+  background: none !important;
+  background-color: transparent !important;
+  border: 0 !important;
   padding: 0 !important;
   border-radius: 0 !important;
   box-shadow: none !important;
