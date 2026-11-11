@@ -1610,40 +1610,15 @@ html[data-theme="dark"] .theme-toggle-btn .theme-icon-sun {
   color: #fde047;
 }
 
-/* ── Disposición de Login con barra superior institucional ── */
-body.pagina-login {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  min-height: 100dvh;
-  overflow-x: hidden;
+.btn-logout[hidden],
+body.pagina-login .btn-logout[hidden],
+body.pagina-profesores .btn-logout[hidden] {
+  display: none !important;
 }
 
-body.pagina-login .portal-wrapper {
-  flex: 1;
-  min-height: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 32px 20px 44px;
-}
-
-body.pagina-login .portal-stage {
-  width: 100%;
-  max-width: 450px;
-  margin: 0 auto;
-}
-
-body.pagina-login .auth-card {
-  width: 100%;
-  padding: 32px 28px;
-  border-radius: 16px;
-}
-
-/* ── Adaptación a tabletas y móviles (sin desbordamiento horizontal) ── */
+/* ── Adaptación de la barra superior a tabletas y móviles (sin alterar el formulario de login) ── */
 @media (max-width: 980px) {
+
   nav.sie-navbar,
   body.pagina-login nav.sie-navbar,
   body.pagina-profesores .profesores-header .header-inner {
@@ -1656,6 +1631,7 @@ body.pagina-login .auth-card {
 }
 
 @media (max-width: 720px) {
+
   nav.sie-navbar,
   body.pagina-login nav.sie-navbar,
   body.pagina-profesores .profesores-header .header-inner {
@@ -1717,19 +1693,11 @@ body.pagina-login .auth-card {
     min-height: 38px;
     padding: 0;
   }
-
-  body.pagina-login .portal-wrapper {
-    justify-content: flex-start;
-    padding: 24px 16px 36px;
-  }
-
-  body.pagina-login .auth-card {
-    padding: 26px 20px;
-  }
 }
 
 /* Pantallas estrechas (móviles <= 560px): la barra reorganiza sus elementos sin desbordar */
 @media (max-width: 560px) {
+
   body.pagina-login nav.sie-navbar,
   body.pagina-profesores .profesores-header .header-inner {
     padding: 10px 14px !important;
@@ -1771,6 +1739,7 @@ body.pagina-login .auth-card {
 }
 
 @media (max-width: 420px) {
+
   .sie-inicio nav.sie-navbar,
   .sie-curso nav.sie-navbar {
     height: auto !important;
@@ -1798,18 +1767,6 @@ body.pagina-login .auth-card {
     min-width: 36px;
     min-height: 36px;
     padding: 0;
-  }
-
-  body.pagina-login .portal-wrapper {
-    padding: 18px 12px 28px;
-  }
-
-  body.pagina-login .auth-card {
-    padding: 22px 16px;
-  }
-
-  body.pagina-login .auth-card-header h1 {
-    font-size: 1.4rem;
   }
 }
 
@@ -2315,7 +2272,7 @@ html[data-theme="dark"] body.pagina-profesores .file-upload-box:hover,
 html[data-theme="dark"] .roles-cuenta,
 html[data-theme="dark"] body.pagina-profesores .aviso-activo-card,
 html[data-theme="dark"] body.pagina-profesores .selected-file-chip,
-html[data-theme="dark"] body.pagina-profesores #lista-avisos > div {
+html[data-theme="dark"] body.pagina-profesores #lista-avisos>div {
   background: #231b32 !important;
   border-color: #382b4c !important;
   color: #f3eef8 !important;
