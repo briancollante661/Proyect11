@@ -7,8 +7,8 @@
 <link rel="stylesheet" href="../estilos.css">
 <link rel="stylesheet" href="../horarios.css">
 <link rel="stylesheet" href="../horarios-agenda.css">
-<link rel="stylesheet" href="../interfaz.css?v=10">
-<script>(function(){try{var t=localStorage.getItem('sie-theme');if(t!=='dark'&&t!=='light')t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);document.documentElement.style.colorScheme=t;}catch(e){}})();</script>
+<link rel="stylesheet" href="../interfaz.css?v=11">
+<script>(function(){try{localStorage.removeItem('sie-theme');var t=sessionStorage.getItem('sie-theme')==='dark'?'dark':'light';document.documentElement.setAttribute('data-theme',t);document.documentElement.style.colorScheme=t;}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
 </head>
 <body class="sie-curso">
 
@@ -49,6 +49,7 @@
           <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
           <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
         </svg>
+        <span class="theme-toggle-label" data-theme-label>Modo oscuro</span>
       </button>
     </div>
 
@@ -72,6 +73,7 @@
           <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
           <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
         </svg>
+        <span class="theme-toggle-label" data-theme-label>Modo oscuro</span>
       </button>
       <button type="button" class="nav-hamburger-btn" id="nav-hamburger-btn" aria-label="Abrir menú de cursos" aria-expanded="false" aria-controls="nav-mobile-menu">
         <span class="hamburger-bar bar-1"></span>
@@ -219,7 +221,7 @@
   <img id="lightbox-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
 </div>
 
-<script src="../config.js?v=3"></script>
+<script src="../config.js?v=4"></script>
 <script src="../horarios.js?v=2"></script>
 <script>
 const CURSO = "segundo";

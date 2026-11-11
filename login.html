@@ -968,8 +968,9 @@
   .auth-reset-btn:focus-visible { outline:2px solid #59217C; outline-offset:4px; border-radius:4px; }
   #info { margin-top:10px; color:#573C72; font-size:.82rem; line-height:1.5; }
 </style>
-<link rel="stylesheet" href="interfaz.css?v=10">
-<script>(function(){try{var t=localStorage.getItem('sie-theme');if(t!=='dark'&&t!=='light')t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);document.documentElement.style.colorScheme=t;}catch(e){}})();</script>
+<link rel="stylesheet" href="interfaz.css?v=11">
+<script>(function(){try{localStorage.removeItem('sie-theme');var t=sessionStorage.getItem('sie-theme')==='dark'?'dark':'light';document.documentElement.setAttribute('data-theme',t);document.documentElement.style.colorScheme=t;}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<script src="config.js?v=4"></script>
 </head>
 <body class="pagina-login">
 
@@ -983,14 +984,33 @@
       <!-- Lado Izquierdo: Atrio Institucional -->
       <section class="stage-intro" aria-label="Información Institucional CEDM">
 
-        <!-- Enlace de regreso al Inicio -->
-        <a href="index.html" class="return-nav" id="back-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
-          </svg>
-          <span>Volver al portal institucional</span>
-        </a>
+        <!-- Enlace de regreso al Inicio + Selector de tema -->
+        <div class="login-top-bar">
+          <a href="index.html" class="return-nav" id="back-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Volver al portal institucional</span>
+          </a>
+          <button type="button" class="theme-toggle-btn" data-theme-toggle aria-label="Activar modo oscuro" aria-pressed="false" title="Activar modo oscuro">
+            <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <span class="theme-toggle-label" data-theme-label>Modo oscuro</span>
+          </button>
+        </div>
 
         <!-- Identidad Institucional -->
         <div class="institution-badge">

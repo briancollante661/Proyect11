@@ -5,10 +5,10 @@
 const SHEETS_CONFIG = {
 
   avisos: {
-    spreadsheetId: 
-    "1xt5ep0wThwCWtr9Xz3y5pliaPhboC8bbfiTFrDIyxsc",
+    spreadsheetId:
+      "1xt5ep0wThwCWtr9Xz3y5pliaPhboC8bbfiTFrDIyxsc",
     hoja: "avisos"
-   },
+  },
 
   tareas: {
     spreadsheetId: "18iAw-IVW-9NW3gVJmJzQHw0U8m7UCGEDa1Yi3X4zOHk",
@@ -144,8 +144,8 @@ async function cargarAvisosCurso(curso, contenedorId) {
     const hoy = new Date().toLocaleDateString("sv-SE");
     const filas = (await cargarHoja(SHEETS_CONFIG.avisos.spreadsheetId, SHEETS_CONFIG.avisos.hoja))
       .filter(f => f.estado === "activo" &&
-                   (f.curso === "general" || f.curso === curso) &&
-                   (!f.vigente_hasta || f.vigente_hasta >= hoy))
+        (f.curso === "general" || f.curso === curso) &&
+        (!f.vigente_hasta || f.vigente_hasta >= hoy))
       .sort((a, b) => b.publicado_en.localeCompare(a.publicado_en));
 
     cont.setAttribute('aria-busy', 'false');
@@ -177,58 +177,59 @@ async function cargarAvisosCurso(curso, contenedorId) {
 
 
 // ============================================================
-//  TEMA CLARO / OSCURO — Persistencia y Accesibilidad SIE
+//  TEMA CLARO / OSCURO — Sesión actual (inicia siempre en claro)
 // ============================================================
 (function inicializarTemaSIE() {
-  const STORAGE_KEY = 'sie-theme';
+  const SESSION_KEY = 'sie-theme';
 
-  function leerPreferenciaGuardada() {
+  try {
+    localStorage.removeItem(SESSION_KEY);
+  } catch { }
+
+  function leerTemaSesion() {
     try {
-      const valor = localStorage.getItem(STORAGE_KEY);
-      return valor === 'dark' || valor === 'light' ? valor : null;
+      return sessionStorage.getItem(SESSION_KEY) === 'dark' ? 'dark' : 'light';
     } catch {
-      return null;
+      return 'light';
     }
-  }
-
-  function obtenerTemaActual() {
-    const guardado = leerPreferenciaGuardada();
-    if (guardado) return guardado;
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-    return 'light';
   }
 
   function actualizarBotonesTema(tema) {
     const esOscuro = tema === 'dark';
     const etiqueta = esOscuro ? 'Activar modo claro' : 'Activar modo oscuro';
+    const textoBoton = esOscuro ? 'Modo claro' : 'Modo oscuro';
     document.querySelectorAll('[data-theme-toggle]').forEach(btn => {
       btn.setAttribute('aria-label', etiqueta);
       btn.setAttribute('title', etiqueta);
       btn.setAttribute('aria-pressed', String(esOscuro));
+      const label = btn.querySelector('[data-theme-label]');
+      if (label) label.textContent = textoBoton;
     });
   }
 
-  function aplicarTema(tema, guardar) {
+  function aplicarTema(tema, guardarEnSesion) {
     const modo = tema === 'dark' ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', modo);
     document.documentElement.style.colorScheme = modo;
-    if (guardar) {
+    if (guardarEnSesion) {
       try {
-        localStorage.setItem(STORAGE_KEY, modo);
-      } catch {}
+        sessionStorage.setItem(SESSION_KEY, modo);
+      } catch { }
     }
     actualizarBotonesTema(modo);
   }
 
-  aplicarTema(obtenerTemaActual(), false);
+  aplicarTema(leerTemaSesion(), false);
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => actualizarBotonesTema(obtenerTemaActual()));
+    document.addEventListener('DOMContentLoaded', () => aplicarTema(leerTemaSesion(), false));
   } else {
-    actualizarBotonesTema(obtenerTemaActual());
+    actualizarBotonesTema(leerTemaSesion());
   }
+
+  window.addEventListener('pageshow', () => {
+    aplicarTema(leerTemaSesion(), false);
+  });
 
   document.addEventListener('click', (ev) => {
     const btn = ev.target.closest('[data-theme-toggle]');
@@ -236,14 +237,4 @@ async function cargarAvisosCurso(curso, contenedorId) {
     const actual = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
     aplicarTema(actual === 'dark' ? 'light' : 'dark', true);
   });
-
-  if (window.matchMedia) {
-    const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    const alCambiarSistema = (e) => {
-      if (!leerPreferenciaGuardada()) {
-        aplicarTema(e.matches ? 'dark' : 'light', false);
-      }
-    };
-    if (mq.addEventListener) mq.addEventListener('change', alCambiarSistema);
-  }
 })();

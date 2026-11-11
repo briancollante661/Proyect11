@@ -7,14 +7,21 @@
   <title>Guía de uso — SIE Santa Teresa de Ávila</title>
   <link rel="icon" type="image/png" href="imagenes/logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="informacion.css?v=2">
-  <script>(function(){try{var t=localStorage.getItem('sie-theme');if(t!=='dark'&&t!=='light')t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);document.documentElement.style.colorScheme=t;}catch(e){}})();</script>
+  <link rel="stylesheet" href="informacion.css?v=3">
+  <script>(function(){try{localStorage.removeItem('sie-theme');var t=sessionStorage.getItem('sie-theme')==='dark'?'dark':'light';document.documentElement.setAttribute('data-theme',t);document.documentElement.style.colorScheme=t;}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+  <script src="config.js?v=4"></script>
 </head>
 <body>
   <header class="site-header">
     <div class="header-inner">
       <a class="brand" href="index.html"><img src="imagenes/insignia.png" alt=""><span>Santa Teresa de Ávila<small>SIE · CEDM</small></span></a>
-      <nav class="header-links" aria-label="Navegación de información"><a href="index.html">Inicio</a><a href="privacidad.html">Privacidad</a></nav>
+      <nav class="header-links" aria-label="Navegación de información">
+        <a href="index.html">Inicio</a>
+        <a href="privacidad.html">Privacidad</a>
+        <button type="button" class="theme-toggle-btn" data-theme-toggle aria-label="Activar modo oscuro" aria-pressed="false" title="Activar modo oscuro">
+          <span data-theme-label>Modo oscuro</span>
+        </button>
+      </nav>
     </div>
   </header>
 
