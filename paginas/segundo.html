@@ -7,7 +7,9 @@
 <link rel="stylesheet" href="../estilos.css">
 <link rel="stylesheet" href="../horarios.css">
 <link rel="stylesheet" href="../horarios-agenda.css">
-<link rel="stylesheet" href="../interfaz.css?v=7"></head>
+<link rel="stylesheet" href="../interfaz.css?v=10">
+<script>(function(){try{var t=localStorage.getItem('sie-theme');if(t!=='dark'&&t!=='light')t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);document.documentElement.style.colorScheme=t;}catch(e){}})();</script>
+</head>
 <body class="sie-curso">
 
 <!-- ── NAVBAR MORADA INSTITUCIONAL ── -->
@@ -32,13 +34,45 @@
       <a href="segundo.html" class="active" aria-current="page">2.° Curso</a>
       <a href="tercero.html">3.° Curso</a>
       <a href="../profesores.html">Profesores</a>
+      <button type="button" class="theme-toggle-btn" data-theme-toggle aria-label="Activar modo oscuro" aria-pressed="false" title="Activar modo oscuro">
+        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
     </div>
 
-    <!-- Acciones Móviles (Visibles exclusivamente en celulares: Inicio + Menú Hamburguesa) -->
+    <!-- Acciones Móviles (Visibles exclusivamente en celulares: Inicio + Tema + Menú Hamburguesa) -->
     <div class="nav-mobile-actions">
       <a href="../index.html" class="nav-mobile-home-btn" aria-label="Volver a la página de inicio">
         <span>Inicio</span>
       </a>
+      <button type="button" class="theme-toggle-btn" data-theme-toggle aria-label="Activar modo oscuro" aria-pressed="false" title="Activar modo oscuro">
+        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+      </button>
       <button type="button" class="nav-hamburger-btn" id="nav-hamburger-btn" aria-label="Abrir menú de cursos" aria-expanded="false" aria-controls="nav-mobile-menu">
         <span class="hamburger-bar bar-1"></span>
         <span class="hamburger-bar bar-2"></span>
@@ -185,7 +219,7 @@
   <img id="lightbox-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
 </div>
 
-<script src="../config.js?v=2"></script>
+<script src="../config.js?v=3"></script>
 <script src="../horarios.js?v=2"></script>
 <script>
 const CURSO = "segundo";

@@ -174,3 +174,76 @@ async function cargarAvisosCurso(curso, contenedorId) {
     mostrarErrorLectura(cont, "los avisos", () => cargarAvisosCurso(curso, contenedorId));
   }
 }
+
+
+// ============================================================
+//  TEMA CLARO / OSCURO — Persistencia y Accesibilidad SIE
+// ============================================================
+(function inicializarTemaSIE() {
+  const STORAGE_KEY = 'sie-theme';
+
+  function leerPreferenciaGuardada() {
+    try {
+      const valor = localStorage.getItem(STORAGE_KEY);
+      return valor === 'dark' || valor === 'light' ? valor : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function obtenerTemaActual() {
+    const guardado = leerPreferenciaGuardada();
+    if (guardado) return guardado;
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  }
+
+  function actualizarBotonesTema(tema) {
+    const esOscuro = tema === 'dark';
+    const etiqueta = esOscuro ? 'Activar modo claro' : 'Activar modo oscuro';
+    document.querySelectorAll('[data-theme-toggle]').forEach(btn => {
+      btn.setAttribute('aria-label', etiqueta);
+      btn.setAttribute('title', etiqueta);
+      btn.setAttribute('aria-pressed', String(esOscuro));
+    });
+  }
+
+  function aplicarTema(tema, guardar) {
+    const modo = tema === 'dark' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', modo);
+    document.documentElement.style.colorScheme = modo;
+    if (guardar) {
+      try {
+        localStorage.setItem(STORAGE_KEY, modo);
+      } catch {}
+    }
+    actualizarBotonesTema(modo);
+  }
+
+  aplicarTema(obtenerTemaActual(), false);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => actualizarBotonesTema(obtenerTemaActual()));
+  } else {
+    actualizarBotonesTema(obtenerTemaActual());
+  }
+
+  document.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('[data-theme-toggle]');
+    if (!btn) return;
+    const actual = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    aplicarTema(actual === 'dark' ? 'light' : 'dark', true);
+  });
+
+  if (window.matchMedia) {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const alCambiarSistema = (e) => {
+      if (!leerPreferenciaGuardada()) {
+        aplicarTema(e.matches ? 'dark' : 'light', false);
+      }
+    };
+    if (mq.addEventListener) mq.addEventListener('change', alCambiarSistema);
+  }
+})();

@@ -1145,14 +1145,15 @@ body.pagina-profesores .aviso-activo-card {
 /* Profesores en inicio: mismo blanco transparente que el cuadro de botones */
 .nav-links a.nav-profesor-destacado,
 .nav-mobile-actions a.nav-profesor-destacado {
-  background: rgba(255,255,255,.12) !important;
-  border: 1px solid rgba(255,255,255,.22) !important;
+  background: rgba(255, 255, 255, .12) !important;
+  border: 1px solid rgba(255, 255, 255, .22) !important;
   color: #fff !important;
   box-shadow: none !important;
 }
+
 .nav-links a.nav-profesor-destacado:hover,
 .nav-mobile-actions a.nav-profesor-destacado:hover {
-  background: rgba(255,255,255,.22) !important;
+  background: rgba(255, 255, 255, .22) !important;
 }
 
 /* Diseño de color para "Elegí tu curso" y tarjetas de acceso (PC y móvil) */
@@ -1236,4 +1237,586 @@ body.pagina-profesores .aviso-activo-card {
   .sie-inicio .curso-card-title {
     font-size: 1.15rem;
   }
+}
+
+
+/* ============================================================
+   BOTÓN DE MODO CLARO / OSCURO Y PALETA MODO OSCURO SIE
+   ============================================================ */
+.sie-inicio .nav-links {
+  gap: 8px !important;
+}
+
+.theme-toggle-btn {
+  width: 38px;
+  height: 38px;
+  min-height: 38px;
+  padding: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.theme-toggle-btn:hover,
+.theme-toggle-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.24);
+  border-color: rgba(255, 255, 255, 0.42);
+  transform: translateY(-1px);
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.sie-curso .nav-links .theme-toggle-btn {
+  width: 34px;
+  height: 34px;
+  min-height: 34px;
+  margin-left: 2px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+.theme-toggle-btn .theme-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  pointer-events: none;
+}
+
+.theme-toggle-btn .theme-icon-sun {
+  display: none;
+}
+
+html[data-theme="dark"] .theme-toggle-btn .theme-icon-moon {
+  display: none;
+}
+
+html[data-theme="dark"] .theme-toggle-btn .theme-icon-sun {
+  display: block;
+  color: #fde047;
+}
+
+@media (max-width: 720px) {
+  .nav-mobile-actions .theme-toggle-btn {
+    width: 36px;
+    height: 36px;
+    min-height: 36px;
+  }
+}
+
+@media (max-width: 420px) {
+  .nav-mobile-actions {
+    gap: 6px !important;
+  }
+
+  .nav-mobile-actions .nav-profesor-destacado {
+    padding: 6px 12px !important;
+    font-size: 0.78rem;
+  }
+
+  .nav-mobile-actions .theme-toggle-btn {
+    width: 34px;
+    height: 34px;
+    min-height: 34px;
+  }
+
+  .nav-mobile-actions .theme-toggle-btn .theme-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ── Paleta y superficies en Modo Oscuro ── */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --sie-purple: #c996ff;
+  --sie-ink: #f3eef8;
+  --sie-muted: #b8acc7;
+  --sie-line: #332843;
+  --morado-principal: #c084fc;
+  --lila-principal: #d8b4fe;
+  --morado-secundario: #cbbce0;
+  --malva: #b3a2c7;
+  --azul-texto: #f3eef8;
+  --fondo-base: #120e1a;
+  --blanco: #1c1628;
+  --lila-suave: #2a203b;
+  --lila-tenue: #241b33;
+  --borde: rgba(192, 132, 252, 0.24);
+  --borde-suave: rgba(192, 132, 252, 0.14);
+}
+
+html[data-theme="dark"] body {
+  background: #120e1a !important;
+  color: #f3eef8 !important;
+}
+
+html[data-theme="dark"] nav.sie-navbar,
+html[data-theme="dark"] .profesores-header {
+  background: linear-gradient(135deg, #431660 0%, #2d0e42 100%) !important;
+  border-bottom: 1px solid rgba(216, 180, 254, 0.16);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+html[data-theme="dark"] .nav-mobile-dropdown {
+  background: #1c1628 !important;
+  border-color: #382b4c !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6) !important;
+}
+
+html[data-theme="dark"] .mobile-nav-link {
+  color: #f3eef8 !important;
+}
+
+html[data-theme="dark"] .mobile-nav-link:hover,
+html[data-theme="dark"] .mobile-nav-link.active {
+  background: rgba(192, 132, 252, 0.18) !important;
+  color: #e9d5ff !important;
+}
+
+html[data-theme="dark"] .mobile-nav-icon {
+  color: #c996ff !important;
+}
+
+html[data-theme="dark"] .mobile-nav-docente {
+  border-top-color: #332843 !important;
+  color: #d8b4fe !important;
+}
+
+/* Hero y logo SIE en Modo Oscuro */
+html[data-theme="dark"] .sie-inicio .t-purple,
+html[data-theme="dark"] .hero-title .t-purple {
+  color: #d8b4fe !important;
+}
+
+html[data-theme="dark"] .hero-left>img {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.94) 0%, rgba(243, 232, 255, 0.88) 72%, rgba(243, 232, 255, 0) 100%);
+  padding: 10px 16px;
+  border-radius: 22px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35);
+}
+
+/* Sección "Elegí tu curso" y tarjetas en Modo Oscuro */
+html[data-theme="dark"] .sie-inicio .cursos-main-title {
+  color: #e9d5ff !important;
+}
+
+html[data-theme="dark"] .sie-inicio .curso-horizontal-card {
+  background: linear-gradient(135deg, #1d1629 0%, #261c37 100%) !important;
+  border: 1px solid rgba(192, 132, 252, 0.26) !important;
+  border-left: 5px solid #a855f7 !important;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.38) !important;
+}
+
+html[data-theme="dark"] .sie-inicio .curso-horizontal-card:hover {
+  border-color: rgba(216, 180, 254, 0.48) !important;
+  border-left-color: #c084fc !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5) !important;
+}
+
+html[data-theme="dark"] .sie-inicio .curso-card-title {
+  color: #f5f0ff !important;
+}
+
+html[data-theme="dark"] .sie-inicio .curso-circle-btn {
+  background: linear-gradient(135deg, #9333ea 0%, #6b21a8 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(147, 51, 234, 0.4) !important;
+}
+
+/* Avisos generales y modal en Modo Oscuro */
+html[data-theme="dark"] .sie-inicio .avisos-double-card {
+  background: #1c1628 !important;
+  border-color: #332843 !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35) !important;
+}
+
+html[data-theme="dark"] .sie-inicio .avisos-info-col {
+  background: transparent !important;
+}
+
+html[data-theme="dark"] .sie-inicio .avisos-main-title,
+html[data-theme="dark"] .recientes-title-text {
+  color: #f3eef8 !important;
+}
+
+html[data-theme="dark"] .recientes-clock-icon {
+  color: #c996ff !important;
+}
+
+html[data-theme="dark"] .btn-explorar-avisos {
+  background: linear-gradient(135deg, #8b3dff 0%, #6b21a8 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(139, 61, 255, 0.35) !important;
+}
+
+html[data-theme="dark"] .btn-explorar-avisos:hover {
+  background: linear-gradient(135deg, #9d5cff 0%, #7e22ce 100%) !important;
+}
+
+html[data-theme="dark"] .sie-inicio .aviso-item-card {
+  background: #231b32 !important;
+  border: 1px solid #352947 !important;
+  border-radius: 12px !important;
+  color: #f3eef8 !important;
+}
+
+html[data-theme="dark"] .sie-inicio .aviso-item-card:hover {
+  background: #2b213d !important;
+  border-color: #a855f7 !important;
+}
+
+html[data-theme="dark"] .aviso-item-cal-badge {
+  background: #2f2444 !important;
+  border-color: #43335e !important;
+  color: #d8b4fe !important;
+}
+
+html[data-theme="dark"] .aviso-item-title {
+  color: #f3eef8 !important;
+}
+
+html[data-theme="dark"] .aviso-item-date,
+html[data-theme="dark"] .aviso-item-chevron {
+  color: #b8acc7 !important;
+}
+
+html[data-theme="dark"] .modal-avisos-dialog {
+  background: #1c1628 !important;
+  border-color: #382b4c !important;
+}
+
+html[data-theme="dark"] .modal-avisos-header {
+  background: #161120 !important;
+  border-bottom-color: #332843 !important;
+}
+
+html[data-theme="dark"] .modal-avisos-title {
+  color: #f3eef8 !important;
+}
+
+html[data-theme="dark"] .modal-close-btn {
+  background: #2a203b !important;
+  color: #d8b4fe !important;
+}
+
+html[data-theme="dark"] .modal-close-btn:hover {
+  background: #7e22ce !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .modal-filter-bar {
+  background: #1c1628 !important;
+  border-bottom-color: #332843 !important;
+}
+
+html[data-theme="dark"] .filtro-wrapper {
+  background: #140f1d !important;
+  border-color: #382b4c !important;
+}
+
+html[data-theme="dark"] .filtro-label {
+  color: #b8acc7 !important;
+  border-right-color: #382b4c !important;
+}
+
+html[data-theme="dark"] .filtro-wrapper input[type="date"] {
+  color: #f3eef8 !important;
+  color-scheme: dark !important;
+}
+
+html[data-theme="dark"] .btn-reset {
+  background: #2a203b !important;
+  color: #d8b4fe !important;
+  border-left-color: #382b4c !important;
+}
+
+html[data-theme="dark"] .btn-reset:hover {
+  background: #7e22ce !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .aviso-card {
+  background: #231b32 !important;
+  border-color: #382b4c !important;
+}
+
+html[data-theme="dark"] .aviso-titulo {
+  color: #f3eef8 !important;
+}
+
+html[data-theme="dark"] .aviso-desc {
+  color: #cbbce0 !important;
+}
+
+html[data-theme="dark"] .aviso-fecha {
+  color: #b8acc7 !important;
+}
+
+/* Páginas de cursos (1°, 2°, 3° Curso) en Modo Oscuro */
+html[data-theme="dark"] .course-hero-title,
+html[data-theme="dark"] .panel-header-title {
+  color: #f3eef8 !important;
+}
+
+html[data-theme="dark"] .section-tabs,
+html[data-theme="dark"] nav.section-tabs {
+  border-bottom-color: #332843 !important;
+}
+
+html[data-theme="dark"] .section-tabs button {
+  color: #b8acc7 !important;
+}
+
+html[data-theme="dark"] .section-tabs button[aria-pressed="true"] {
+  background: #281e3a !important;
+  color: #e9d5ff !important;
+  border-bottom-color: #a855f7 !important;
+}
+
+@media (max-width: 767px) {
+  html[data-theme="dark"] .sie-curso nav.section-tabs {
+    background: #171222 !important;
+    border-top-color: #332843 !important;
+    box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.5) !important;
+  }
+}
+
+html[data-theme="dark"] .sie-curso .filtros-bar {
+  background: #1c1628 !important;
+  border-color: #332843 !important;
+}
+
+html[data-theme="dark"] .sie-curso .filtro-group label {
+  color: #b8acc7 !important;
+}
+
+html[data-theme="dark"] .sie-curso .filtro-group input,
+html[data-theme="dark"] .sie-curso .filtro-group select {
+  background: #140f1d !important;
+  color: #f3eef8 !important;
+  border-color: #382b4c !important;
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] .sie-curso .btn-limpiar {
+  background: #2a203b !important;
+  color: #d8b4fe !important;
+  border-color: #43335e !important;
+}
+
+html[data-theme="dark"] .sie-curso .btn-limpiar:hover {
+  background: #7e22ce !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .sie-curso .tarea-card {
+  background: #1c1628 !important;
+  border-color: #332843 !important;
+}
+
+html[data-theme="dark"] .sie-curso .tarea-titulo {
+  color: #f3eef8 !important;
+}
+
+html[data-theme="dark"] .sie-curso .tarea-meta-materia,
+html[data-theme="dark"] .tarea-detalle summary {
+  color: #c996ff !important;
+}
+
+html[data-theme="dark"] .sie-curso .tarea-meta-fecha,
+html[data-theme="dark"] .sie-curso .tarea-desc {
+  color: #cbbce0 !important;
+}
+
+html[data-theme="dark"] .sie-curso .tarea-detalle {
+  border-top-color: #2f2540 !important;
+}
+
+html[data-theme="dark"] .sie-curso .btn-descarga,
+html[data-theme="dark"] .sie-curso .tarea-img-descarga {
+  background: #6b21a8 !important;
+  color: #ffffff !important;
+  border-color: #8b3dff !important;
+}
+
+html[data-theme="dark"] .sie-curso .no-data,
+html[data-theme="dark"] .no-data {
+  background: #1c1628 !important;
+  border-color: #382b4c !important;
+  color: #b8acc7 !important;
+}
+
+html[data-theme="dark"] .sie-curso .estado {
+  background: #1c1628 !important;
+  border-color: #332843 !important;
+}
+
+html[data-theme="dark"] .sie-curso .estado::before {
+  background: linear-gradient(#2c223e 0 0) 0 0/42% 20px, linear-gradient(#2c223e 0 0) 0 42px/68% 14px, linear-gradient(#2c223e 0 0) 0 76px/85% 14px !important;
+  background-repeat: no-repeat !important;
+}
+
+html[data-theme="dark"] .sie-curso #horarios-contenido .estado::before {
+  background: linear-gradient(#2c223e 0 0) 0 0/50% 20px, linear-gradient(#2c223e 0 0) 0 42px/72% 14px, linear-gradient(#2c223e 0 0) 0 86px/36% 18px, linear-gradient(#2c223e 0 0) 0 130px/86% 14px !important;
+  background-repeat: no-repeat !important;
+}
+
+/* Horarios en Modo Oscuro */
+html[data-theme="dark"] .horarios-resumen {
+  background: #211932 !important;
+  border-color: #382b4c !important;
+  color: #f3eef8 !important;
+}
+
+html[data-theme="dark"] .horarios-etiqueta {
+  color: #c996ff !important;
+}
+
+html[data-theme="dark"] .horarios-proximo {
+  border-color: #382b4c !important;
+}
+
+html[data-theme="dark"] .horarios-controles {
+  background: #1a1426 !important;
+  border: 1px solid #332843;
+}
+
+html[data-theme="dark"] .horarios-boton {
+  color: #cbbce0 !important;
+}
+
+html[data-theme="dark"] .horarios-boton:hover {
+  background: #2a203b !important;
+}
+
+html[data-theme="dark"] .horarios-boton[aria-pressed="true"] {
+  background: #7e22ce !important;
+  color: #ffffff !important;
+}
+
+html[data-theme="dark"] .horarios-herramientas .horarios-boton {
+  color: #c996ff !important;
+  background: transparent !important;
+}
+
+html[data-theme="dark"] .horarios-dia {
+  background: #1c1628 !important;
+  border-color: #332843 !important;
+  color: #f3eef8 !important;
+}
+
+html[data-theme="dark"] .horarios-dia.es-hoy {
+  border-color: #8b3dff !important;
+}
+
+html[data-theme="dark"] .horarios-bloque {
+  color: #f3eef8 !important;
+}
+
+html[data-theme="dark"] .horarios-bloque+.horarios-bloque {
+  border-top-color: #2c223b !important;
+}
+
+html[data-theme="dark"] .horarios-detalle {
+  border-left-color: #583b7a !important;
+}
+
+html[data-theme="dark"] .es-actual .horarios-detalle {
+  background: #281e3a !important;
+  border-color: #a855f7 !important;
+}
+
+html[data-theme="dark"] .horarios-en-curso {
+  color: #d8b4fe !important;
+}
+
+html[data-theme="dark"] .horarios-cantidad,
+html[data-theme="dark"] .horarios-turno,
+html[data-theme="dark"] .horarios-fin,
+html[data-theme="dark"] .horarios-profesor,
+html[data-theme="dark"] .horarios-duracion,
+html[data-theme="dark"] .horarios-nota {
+  color: #b8acc7 !important;
+}
+
+html[data-theme="dark"] .tipo-recreo .horarios-detalle strong {
+  color: #6ee7b7 !important;
+}
+
+html[data-theme="dark"] .tipo-libre .horarios-detalle strong {
+  color: #b8acc7 !important;
+}
+
+/* Panel Docente, Login y Pie de página en Modo Oscuro */
+html[data-theme="dark"] body.pagina-profesores .panel-card,
+html[data-theme="dark"] body.pagina-profesores #gestion-roles,
+html[data-theme="dark"] .pagina-login .auth-card {
+  background: #1c1628 !important;
+  border-color: #332843 !important;
+  color: #f3eef8 !important;
+}
+
+html[data-theme="dark"] body.pagina-profesores .campo input,
+html[data-theme="dark"] body.pagina-profesores .campo select,
+html[data-theme="dark"] body.pagina-profesores .campo textarea,
+html[data-theme="dark"] #gestion-roles input,
+html[data-theme="dark"] #gestion-roles select,
+html[data-theme="dark"] .pagina-login .auth-card input {
+  background-color: #140f1d !important;
+  border-color: #382b4c !important;
+  color: #f3eef8 !important;
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] body.pagina-profesores .campo label,
+html[data-theme="dark"] body.pagina-profesores .panel-header h2,
+html[data-theme="dark"] #docente-titulo,
+html[data-theme="dark"] .pagina-login .auth-card-header h1,
+html[data-theme="dark"] .pagina-login .institution-name {
+  color: #f3eef8 !important;
+}
+
+html[data-theme="dark"] body.pagina-profesores .file-upload-box,
+html[data-theme="dark"] .roles-cuenta,
+html[data-theme="dark"] body.pagina-profesores .aviso-activo-card {
+  background: #231b32 !important;
+  border-color: #382b4c !important;
+  color: #f3eef8 !important;
+}
+
+html[data-theme="dark"] #docente-nav.abierto {
+  background: #1c1628 !important;
+  border-color: #382b4c !important;
+}
+
+html[data-theme="dark"] #docente-nav button,
+html[data-theme="dark"] #docente-nav a {
+  color: #cbbce0 !important;
+}
+
+html[data-theme="dark"] #docente-nav [aria-current="page"] {
+  background: #2a203b !important;
+  color: #e9d5ff !important;
+}
+
+html[data-theme="dark"] footer {
+  background: #161120 !important;
+  border-top-color: #2e243d !important;
+}
+
+html[data-theme="dark"] .footer-name {
+  color: #f3eef8 !important;
+}
+
+html[data-theme="dark"] .footer-legal a {
+  color: #c996ff !important;
 }
