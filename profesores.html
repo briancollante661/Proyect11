@@ -989,7 +989,7 @@
     }
   </style>
   <link rel="stylesheet" href="roles.css">
-  <link rel="stylesheet" href="interfaz.css?v=16">
+  <link rel="stylesheet" href="interfaz.css?v=17">
 </head>
 
 <body class="pagina-profesores">
@@ -998,6 +998,8 @@
   <header class="profesores-header">
     <div class="header-inner">
       <div class="header-left">
+        <button type="button" id="docente-menu" aria-controls="docente-nav" aria-expanded="false" aria-label="Menú" title="Menú">☰</button>
+
         <!-- Identidad Institucional -->
         <div class="header-institution">
           <div class="header-crest">
@@ -1012,10 +1014,8 @@
         </div>
       </div>
 
-      <!-- Acciones derechas: Menú (móvil), Inicio, Cerrar sesión (PC) y Selector de tema -->
+      <!-- Acciones derechas: Inicio, Cerrar sesión (PC) y Selector de tema -->
       <div class="header-right">
-        <button type="button" id="docente-menu" aria-controls="docente-nav" aria-expanded="false">☰ Menú</button>
-
         <a href="index.html" class="nav-header-btn" id="link-volver">Inicio</a>
 
         <button type="button" class="btn-logout" onclick="cerrarSesion()" id="btn-logout"
