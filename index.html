@@ -1552,10 +1552,8 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="interfaz.css?v=11">
-  <script>
-    (function () { try { localStorage.removeItem('sie-theme'); var t = sessionStorage.getItem('sie-theme') === 'dark' ? 'dark' : 'light'; document.documentElement.setAttribute('data-theme', t); document.documentElement.style.colorScheme = t; } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); } })();
-  </script>
+  <link rel="stylesheet" href="interfaz.css?v=12">
+  <script src="config.js?v=5"></script>
 </head>
 
 <body class="sie-inicio">
@@ -1598,7 +1596,6 @@
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
-          <span class="theme-toggle-label" data-theme-label>Modo oscuro</span>
         </button>
       </div>
 
@@ -1623,7 +1620,6 @@
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
-          <span class="theme-toggle-label" data-theme-label>Modo oscuro</span>
         </button>
       </div>
     </nav>
@@ -1861,7 +1857,6 @@
     <img id="lightbox-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
   </div>
 
-  <script src="config.js?v=4"></script>
   <script>
     // ── Variables y Funciones Existentes de Avisos (Preservadas) ──
     let todosAvisos = [];

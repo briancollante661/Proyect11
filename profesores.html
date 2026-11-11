@@ -14,7 +14,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
   <script src="firebase-config.js"></script>
-  <script src="config.js?v=4"></script>
+  <script src="config.js?v=5"></script>
   <script src="auth-guard.js"></script>
 
   <style>
@@ -988,8 +988,7 @@
     }
   </style>
   <link rel="stylesheet" href="roles.css">
-  <link rel="stylesheet" href="interfaz.css?v=11">
-  <script>(function () { try { localStorage.removeItem('sie-theme'); var t = sessionStorage.getItem('sie-theme') === 'dark' ? 'dark' : 'light'; document.documentElement.setAttribute('data-theme', t); document.documentElement.style.colorScheme = t; } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); } })();</script>
+  <link rel="stylesheet" href="interfaz.css?v=12">
 </head>
 
 <body class="pagina-profesores">
@@ -1046,7 +1045,6 @@
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
-          <span class="theme-toggle-label" data-theme-label>Modo oscuro</span>
         </button>
 
         <button type="button" class="btn-logout" onclick="cerrarSesion()" id="btn-logout"

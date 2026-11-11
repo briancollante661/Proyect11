@@ -177,13 +177,17 @@ async function cargarAvisosCurso(curso, contenedorId) {
 
 
 // ============================================================
-//  TEMA CLARO / OSCURO — Sesión actual (inicia siempre en claro)
+//  TEMA CLARO / OSCURO — Estado único compartido por sesión
 // ============================================================
 (function inicializarTemaSIE() {
-  const SESSION_KEY = 'sie-theme';
+  const SESSION_KEY = 'sie-session-theme';
+  const LEGACY_KEY = 'sie-theme';
 
+  // Limpiar cualquier preferencia permanente o clave heredada
   try {
+    localStorage.removeItem(LEGACY_KEY);
     localStorage.removeItem(SESSION_KEY);
+    sessionStorage.removeItem(LEGACY_KEY);
   } catch { }
 
   function leerTemaSesion() {
@@ -197,13 +201,10 @@ async function cargarAvisosCurso(curso, contenedorId) {
   function actualizarBotonesTema(tema) {
     const esOscuro = tema === 'dark';
     const etiqueta = esOscuro ? 'Activar modo claro' : 'Activar modo oscuro';
-    const textoBoton = esOscuro ? 'Modo claro' : 'Modo oscuro';
     document.querySelectorAll('[data-theme-toggle]').forEach(btn => {
       btn.setAttribute('aria-label', etiqueta);
       btn.setAttribute('title', etiqueta);
       btn.setAttribute('aria-pressed', String(esOscuro));
-      const label = btn.querySelector('[data-theme-label]');
-      if (label) label.textContent = textoBoton;
     });
   }
 
@@ -219,22 +220,33 @@ async function cargarAvisosCurso(curso, contenedorId) {
     actualizarBotonesTema(modo);
   }
 
-  aplicarTema(leerTemaSesion(), false);
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => aplicarTema(leerTemaSesion(), false));
-  } else {
-    actualizarBotonesTema(leerTemaSesion());
+  function sincronizarTema() {
+    aplicarTema(leerTemaSesion(), false);
   }
 
-  window.addEventListener('pageshow', () => {
-    aplicarTema(leerTemaSesion(), false);
-  });
+  // Exponer API global única para toda la aplicación
+  window.SIETheme = {
+    get: leerTemaSesion,
+    set: (tema) => aplicarTema(tema, true),
+    toggle: () => {
+      const actual = leerTemaSesion();
+      aplicarTema(actual === 'dark' ? 'light' : 'dark', true);
+    },
+    sync: sincronizarTema
+  };
+
+  sincronizarTema();
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', sincronizarTema);
+  }
+
+  window.addEventListener('pageshow', sincronizarTema);
+  window.addEventListener('storage', sincronizarTema);
 
   document.addEventListener('click', (ev) => {
     const btn = ev.target.closest('[data-theme-toggle]');
     if (!btn) return;
-    const actual = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-    aplicarTema(actual === 'dark' ? 'light' : 'dark', true);
+    window.SIETheme.toggle();
   });
 })();

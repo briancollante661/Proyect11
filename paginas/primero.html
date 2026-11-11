@@ -1,294 +1,316 @@
-<!DOCTYPE html><html lang="es"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1° Curso — CEDM Santa Teresa de Ávila</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
-<link rel="icon" type="image/png" href="../imagenes/logo.png">
-<link rel="stylesheet" href="../estilos.css">
-<link rel="stylesheet" href="../horarios.css">
-<link rel="stylesheet" href="../horarios-agenda.css">
-<link rel="stylesheet" href="../interfaz.css?v=11">
-<script>(function(){try{localStorage.removeItem('sie-theme');var t=sessionStorage.getItem('sie-theme')==='dark'?'dark':'light';document.documentElement.setAttribute('data-theme',t);document.documentElement.style.colorScheme=t;}catch(e){document.documentElement.setAttribute('data-theme','light');}})();</script>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1° Curso — CEDM Santa Teresa de Ávila</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap"
+    rel="stylesheet">
+  <link rel="icon" type="image/png" href="../imagenes/logo.png">
+  <link rel="stylesheet" href="../estilos.css">
+  <link rel="stylesheet" href="../horarios.css">
+  <link rel="stylesheet" href="../horarios-agenda.css">
+  <link rel="stylesheet" href="../interfaz.css?v=12">
+  <script src="../config.js?v=5"></script>
 </head>
+
 <body class="sie-curso">
 
-<!-- ── NAVBAR MORADA INSTITUCIONAL ── -->
-<div class="header-nav-wrap">
-  <nav class="sie-navbar" role="navigation" aria-label="Navegación principal institucional">
-    <div class="nav-left">
-      <div class="nav-crest-wrap">
-        <img src="../imagenes/insignia.png" alt="Insignia Institucional CEDM">
+  <!-- ── NAVBAR MORADA INSTITUCIONAL ── -->
+  <div class="header-nav-wrap">
+    <nav class="sie-navbar" role="navigation" aria-label="Navegación principal institucional">
+      <div class="nav-left">
+        <div class="nav-crest-wrap">
+          <img src="../imagenes/insignia.png" alt="Insignia Institucional CEDM">
+        </div>
+        <div class="nav-inst-titles">
+          <span class="nav-inst-sub">CDEM</span>
+          <span class="nav-inst-main">Santa Teresa de Ávila</span>
+        </div>
+        <div class="nav-brand-divider"></div>
+        <span class="nav-sie-acronym">SIE</span>
       </div>
-      <div class="nav-inst-titles">
-        <span class="nav-inst-sub">CDEM</span>
-        <span class="nav-inst-main">Santa Teresa de Ávila</span>
+
+      <!-- Navegación horizontal en escritorio y tablets -->
+      <div class="nav-links">
+        <a href="../index.html">Inicio</a>
+        <a href="primero.html" class="active" aria-current="page">1.° Curso</a>
+        <a href="segundo.html">2.° Curso</a>
+        <a href="tercero.html">3.° Curso</a>
+        <a href="../profesores.html">Profesores</a>
+        <button type="button" class="theme-toggle-btn" data-theme-toggle aria-label="Activar modo oscuro"
+          aria-pressed="false" title="Activar modo oscuro">
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
       </div>
-      <div class="nav-brand-divider"></div>
-      <span class="nav-sie-acronym">SIE</span>
-    </div>
 
-    <!-- Navegación horizontal en escritorio y tablets -->
-    <div class="nav-links">
-      <a href="../index.html">Inicio</a>
-      <a href="primero.html" class="active" aria-current="page">1.° Curso</a>
-      <a href="segundo.html">2.° Curso</a>
-      <a href="tercero.html">3.° Curso</a>
-      <a href="../profesores.html">Profesores</a>
-      <button type="button" class="theme-toggle-btn" data-theme-toggle aria-label="Activar modo oscuro" aria-pressed="false" title="Activar modo oscuro">
-        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="5"></circle>
-          <line x1="12" y1="1" x2="12" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="23"></line>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-          <line x1="1" y1="12" x2="3" y2="12"></line>
-          <line x1="21" y1="12" x2="23" y2="12"></line>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-        <span class="theme-toggle-label" data-theme-label>Modo oscuro</span>
-      </button>
-    </div>
-
-    <!-- Acciones Móviles (Visibles exclusivamente en celulares: Inicio + Tema + Menú Hamburguesa) -->
-    <div class="nav-mobile-actions">
-      <a href="../index.html" class="nav-mobile-home-btn" aria-label="Volver a la página de inicio">
-        <span>Inicio</span>
-      </a>
-      <button type="button" class="theme-toggle-btn" data-theme-toggle aria-label="Activar modo oscuro" aria-pressed="false" title="Activar modo oscuro">
-        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="5"></circle>
-          <line x1="12" y1="1" x2="12" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="23"></line>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-          <line x1="1" y1="12" x2="3" y2="12"></line>
-          <line x1="21" y1="12" x2="23" y2="12"></line>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-        <span class="theme-toggle-label" data-theme-label>Modo oscuro</span>
-      </button>
-      <button type="button" class="nav-hamburger-btn" id="nav-hamburger-btn" aria-label="Abrir menú de cursos" aria-expanded="false" aria-controls="nav-mobile-menu">
-        <span class="hamburger-bar bar-1"></span>
-        <span class="hamburger-bar bar-2"></span>
-        <span class="hamburger-bar bar-3"></span>
-      </button>
-    </div>
-
-    <!-- Menú Desplegable Flotante Compacto (Sin oscurecer la pantalla) -->
-    <div class="nav-mobile-dropdown" id="nav-mobile-menu" role="region" aria-label="Menú de cursos y profesores">
-      <div class="mobile-menu-inner">
-        <a href="primero.html" class="mobile-nav-link active" aria-current="page">
-          <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-          </svg>
-          <span>1.° Curso</span>
+      <!-- Acciones Móviles (Visibles exclusivamente en celulares: Inicio + Tema + Menú Hamburguesa) -->
+      <div class="nav-mobile-actions">
+        <a href="../index.html" class="nav-mobile-home-btn" aria-label="Volver a la página de inicio">
+          <span>Inicio</span>
         </a>
-        <a href="segundo.html" class="mobile-nav-link">
-          <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        <button type="button" class="theme-toggle-btn" data-theme-toggle aria-label="Activar modo oscuro"
+          aria-pressed="false" title="Activar modo oscuro">
+          <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
-          <span>2.° Curso</span>
-        </a>
-        <a href="tercero.html" class="mobile-nav-link">
-          <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
-          <span>3.° Curso</span>
-        </a>
-        <a href="../profesores.html" class="mobile-nav-link mobile-nav-docente">
-          <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-          <span>Profesores</span>
-        </a>
+        </button>
+        <button type="button" class="nav-hamburger-btn" id="nav-hamburger-btn" aria-label="Abrir menú de cursos"
+          aria-expanded="false" aria-controls="nav-mobile-menu">
+          <span class="hamburger-bar bar-1"></span>
+          <span class="hamburger-bar bar-2"></span>
+          <span class="hamburger-bar bar-3"></span>
+        </button>
       </div>
-    </div>
-  </nav>
-</div>
 
-<!-- ── CONTENEDOR PRINCIPAL DEL CURSO ── -->
-<main class="course-page-wrapper">
-
-  <!-- ── 1. HERO ACADÉMICO ── -->
-  <header class="course-hero-card"><h1 class="course-hero-title">1.º curso</h1></header>
-
-  <!-- ── 2. ACCESOS RÁPIDOS DEL CURSO (3 TARJETAS) ── -->
-  <section class="quick-access-section" aria-label="Contenido del curso"><nav class="section-tabs" aria-label="Secciones del curso"><button type="button" id="card-tareas" aria-controls="panel-tareas" aria-pressed="true" onclick="alternarSeccion('tareas')" class="card-activo">Tareas</button><button type="button" id="card-horarios" aria-controls="panel-horarios" aria-pressed="false" onclick="alternarSeccion('horarios')">Horario</button><button type="button" id="card-avisos" aria-controls="panel-avisos" aria-pressed="false" onclick="alternarSeccion('avisos')">Avisos</button></nav>
-
-
-    <div class="quick-access-grid">
-      <!-- Tarjeta 1: Tareas -->
-
-
-      <!-- Panel: Tareas -->
-      <section class="panel-academico panel-abierto" id="panel-tareas" aria-labelledby="title-panel-tareas">
-        <div class="panel-header-bar">
-          <div class="panel-header-left">
-
-            <h3 class="panel-header-title" id="title-panel-tareas">Tareas del curso</h3>
-          </div>
-
+      <!-- Menú Desplegable Flotante Compacto (Sin oscurecer la pantalla) -->
+      <div class="nav-mobile-dropdown" id="nav-mobile-menu" role="region" aria-label="Menú de cursos y profesores">
+        <div class="mobile-menu-inner">
+          <a href="primero.html" class="mobile-nav-link active" aria-current="page">
+            <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span>1.° Curso</span>
+          </a>
+          <a href="segundo.html" class="mobile-nav-link">
+            <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span>2.° Curso</span>
+          </a>
+          <a href="tercero.html" class="mobile-nav-link">
+            <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span>3.° Curso</span>
+          </a>
+          <a href="../profesores.html" class="mobile-nav-link mobile-nav-docente">
+            <svg class="mobile-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span>Profesores</span>
+          </a>
         </div>
-
-        <!-- Barra de Filtros -->
-        <div class="filtros-bar">
-          <div class="filtro-group">
-            <label for="filtro-fecha">Fecha de entrega</label>
-            <input type="date" id="filtro-fecha" onchange="filtrarTareas()">
-          </div>
-          <div class="filtros-sep"></div>
-          <div class="filtro-group">
-            <label for="filtro-materia">Materia</label>
-            <select id="filtro-materia" onchange="filtrarTareas()">
-              <option value="">Todas</option>
-            </select>
-          </div>
-          <button class="btn-limpiar" onclick="limpiarFiltros()">Limpiar filtros</button>
-        </div>
-
-        <div id="tareas-contenido" aria-busy="true">
-          <div class="estado" role="status">Cargando tareas...</div>
-        </div>
-      </section>
-
-      <!-- Tarjeta 2: Horario -->
-
-
-      <!-- Panel: Horario -->
-      <section class="panel-academico" id="panel-horarios" aria-labelledby="title-panel-horarios">
-        <div class="panel-header-bar">
-          <div class="panel-header-left">
-
-            <h3 class="panel-header-title" id="title-panel-horarios">Horario del curso</h3>
-          </div>
-
-        </div>
-
-        <div id="horarios-contenido" aria-busy="true">
-          <div class="estado" role="status">Cargando horario...</div>
-        </div>
-      </section>
-
-      <!-- Tarjeta 3: Avisos -->
-
-
-      <!-- Panel: Avisos -->
-      <section class="panel-academico" id="panel-avisos" aria-labelledby="title-panel-avisos">
-        <div class="panel-header-bar">
-          <div class="panel-header-left">
-
-            <h3 class="panel-header-title" id="title-panel-avisos">Avisos del curso</h3>
-          </div>
-
-        </div>
-
-        <div id="avisos-contenido" aria-busy="true">
-          <div class="estado" role="status">Cargando avisos...</div>
-        </div>
-      </section>
-
-      <!-- Placeholder Inicial (Visible cuando ninguna sección está abierta) -->
-
-    </div>
-  </section>
-
-</main>
-
-<!-- ── FOOTER ── -->
-<footer>
-  <div class="footer-left">
-    <div class="footer-icon"><img src="../imagenes/insignia.png" alt="CEDM"></div>
-    <div class="footer-name">CEDM Santa Teresa de Ávila</div>
+      </div>
+    </nav>
   </div>
-  <div class="footer-legal"><a href="../privacidad.html">Privacidad</a><a href="../guia-de-uso.html">Guía de uso</a></div>
-</footer>
 
-<!-- ── LIGHTBOX PARA IMÁGENES DE TAREAS Y AVISOS ── -->
-<div class="lightbox-overlay" id="lightbox" onclick="cerrarLightbox()">
-  <button type="button" class="lightbox-close" onclick="cerrarLightbox()" aria-label="Cerrar imagen">×</button>
-  <img id="lightbox-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
-</div>
+  <!-- ── CONTENEDOR PRINCIPAL DEL CURSO ── -->
+  <main class="course-page-wrapper">
 
-<script src="../config.js?v=4"></script>
-<script src="../horarios.js?v=2"></script>
-<script>
-const CURSO = "primero";
-let todasTareas = [];
-let seccionActiva = "tareas";
+    <!-- ── 1. HERO ACADÉMICO ── -->
+    <header class="course-hero-card">
+      <h1 class="course-hero-title">1.º curso</h1>
+    </header>
 
-// ── Control de Pestañas e Interactividad (Solamente 1 sección a la vez) ──
-function alternarSeccion(nombre) {
-  if (!["tareas", "horarios", "avisos"].includes(nombre)) return;
-  for (const id of ["tareas", "horarios", "avisos"]) {
-    document.getElementById('card-' + id).classList.toggle('card-activo', id === nombre);
-    document.getElementById('card-' + id).setAttribute('aria-pressed', String(id === nombre));
-    document.getElementById('panel-' + id).classList.toggle('panel-abierto', id === nombre);
-  }
-  seccionActiva = nombre;
-}
+    <!-- ── 2. ACCESOS RÁPIDOS DEL CURSO (3 TARJETAS) ── -->
+    <section class="quick-access-section" aria-label="Contenido del curso">
+      <nav class="section-tabs" aria-label="Secciones del curso"><button type="button" id="card-tareas"
+          aria-controls="panel-tareas" aria-pressed="true" onclick="alternarSeccion('tareas')"
+          class="card-activo">Tareas</button><button type="button" id="card-horarios" aria-controls="panel-horarios"
+          aria-pressed="false" onclick="alternarSeccion('horarios')">Horario</button><button type="button"
+          id="card-avisos" aria-controls="panel-avisos" aria-pressed="false"
+          onclick="alternarSeccion('avisos')">Avisos</button></nav>
 
-// ── Funciones de Datos Existentes ──
-function normFecha(str) {
-  if (!str) return "";
-  const m = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-  if (m) return `${m[3]}-${m[2].padStart(2,"0")}-${m[1].padStart(2,"0")}`;
-  return str.substring(0,10);
-}
 
-function fmtFecha(str) {
-  if (!str) return "";
-  try {
-    const d = new Date(normFecha(str) + "T00:00:00");
-    return d.toLocaleDateString("es-ES", { day:"numeric", month:"long", year:"numeric" });
-  } catch { return str; }
-}
+      <div class="quick-access-grid">
+        <!-- Tarjeta 1: Tareas -->
 
-function urlAdjuntoSeguro(valor) {
-  try {
-    const url = new URL(String(valor));
-    return url.protocol === 'https:' && !url.username && !url.password ? url.href : '';
-  } catch { return ''; }
-}
 
-function renderArchivo(urlRaw) {
-  if (!urlRaw) return "";
-  const links = urlRaw.split(",").map(e => e.trim()).filter(Boolean).map(entry => {
-    const [url, nombre] = entry.split("::");
-    return { url: urlAdjuntoSeguro(url), nombre: nombre || "" };
-  }).filter(item => item.url);
-  if (!links.length) return "";
+        <!-- Panel: Tareas -->
+        <section class="panel-academico panel-abierto" id="panel-tareas" aria-labelledby="title-panel-tareas">
+          <div class="panel-header-bar">
+            <div class="panel-header-left">
 
-  const esImagen = (item) => {
-    if (item.nombre) return /\.(jpg|jpeg|png|gif|webp)$/i.test(item.nombre);
-    return /\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(item.url) || item.url.includes("uc?export=view");
-  };
-  const imagenes = links.filter(esImagen);
-  const otros = links.filter(item => !esImagen(item));
+              <h3 class="panel-header-title" id="title-panel-tareas">Tareas del curso</h3>
+            </div>
 
-  let html = "";
-  if (imagenes.length) {
-    const claseGaleria = imagenes.length > 1 ? " tarea-galeria" : "";
-    html += `<div class="tarea-archivo${claseGaleria}">`;
-    imagenes.forEach(item => {
-      const urlImg = item.url.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1000");
-      const urlImgGrande = item.url.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1600");
-      const urlDescarga = new URL(item.url);
-      if (urlDescarga.origin === "https://drive.google.com" && urlDescarga.pathname === "/uc" && urlDescarga.searchParams.has("id")) {
-        urlDescarga.searchParams.set("export", "download");
+          </div>
+
+          <!-- Barra de Filtros -->
+          <div class="filtros-bar">
+            <div class="filtro-group">
+              <label for="filtro-fecha">Fecha de entrega</label>
+              <input type="date" id="filtro-fecha" onchange="filtrarTareas()">
+            </div>
+            <div class="filtros-sep"></div>
+            <div class="filtro-group">
+              <label for="filtro-materia">Materia</label>
+              <select id="filtro-materia" onchange="filtrarTareas()">
+                <option value="">Todas</option>
+              </select>
+            </div>
+            <button class="btn-limpiar" onclick="limpiarFiltros()">Limpiar filtros</button>
+          </div>
+
+          <div id="tareas-contenido" aria-busy="true">
+            <div class="estado" role="status">Cargando tareas...</div>
+          </div>
+        </section>
+
+        <!-- Tarjeta 2: Horario -->
+
+
+        <!-- Panel: Horario -->
+        <section class="panel-academico" id="panel-horarios" aria-labelledby="title-panel-horarios">
+          <div class="panel-header-bar">
+            <div class="panel-header-left">
+
+              <h3 class="panel-header-title" id="title-panel-horarios">Horario del curso</h3>
+            </div>
+
+          </div>
+
+          <div id="horarios-contenido" aria-busy="true">
+            <div class="estado" role="status">Cargando horario...</div>
+          </div>
+        </section>
+
+        <!-- Tarjeta 3: Avisos -->
+
+
+        <!-- Panel: Avisos -->
+        <section class="panel-academico" id="panel-avisos" aria-labelledby="title-panel-avisos">
+          <div class="panel-header-bar">
+            <div class="panel-header-left">
+
+              <h3 class="panel-header-title" id="title-panel-avisos">Avisos del curso</h3>
+            </div>
+
+          </div>
+
+          <div id="avisos-contenido" aria-busy="true">
+            <div class="estado" role="status">Cargando avisos...</div>
+          </div>
+        </section>
+
+        <!-- Placeholder Inicial (Visible cuando ninguna sección está abierta) -->
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-left">
+      <div class="footer-icon"><img src="../imagenes/insignia.png" alt="CEDM"></div>
+      <div class="footer-name">CEDM Santa Teresa de Ávila</div>
+    </div>
+    <div class="footer-legal"><a href="../privacidad.html">Privacidad</a><a href="../guia-de-uso.html">Guía de uso</a>
+    </div>
+  </footer>
+
+  <!-- ── LIGHTBOX PARA IMÁGENES DE TAREAS Y AVISOS ── -->
+  <div class="lightbox-overlay" id="lightbox" onclick="cerrarLightbox()">
+    <button type="button" class="lightbox-close" onclick="cerrarLightbox()" aria-label="Cerrar imagen">×</button>
+    <img id="lightbox-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
+  </div>
+
+  <script src="../horarios.js?v=2"></script>
+  <script>
+    const CURSO = "primero";
+    let todasTareas = [];
+    let seccionActiva = "tareas";
+
+    // ── Control de Pestañas e Interactividad (Solamente 1 sección a la vez) ──
+    function alternarSeccion(nombre) {
+      if (!["tareas", "horarios", "avisos"].includes(nombre)) return;
+      for (const id of ["tareas", "horarios", "avisos"]) {
+        document.getElementById('card-' + id).classList.toggle('card-activo', id === nombre);
+        document.getElementById('card-' + id).setAttribute('aria-pressed', String(id === nombre));
+        document.getElementById('panel-' + id).classList.toggle('panel-abierto', id === nombre);
       }
-      html += `
+      seccionActiva = nombre;
+    }
+
+    // ── Funciones de Datos Existentes ──
+    function normFecha(str) {
+      if (!str) return "";
+      const m = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+      if (m) return `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}`;
+      return str.substring(0, 10);
+    }
+
+    function fmtFecha(str) {
+      if (!str) return "";
+      try {
+        const d = new Date(normFecha(str) + "T00:00:00");
+        return d.toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" });
+      } catch { return str; }
+    }
+
+    function urlAdjuntoSeguro(valor) {
+      try {
+        const url = new URL(String(valor));
+        return url.protocol === 'https:' && !url.username && !url.password ? url.href : '';
+      } catch { return ''; }
+    }
+
+    function renderArchivo(urlRaw) {
+      if (!urlRaw) return "";
+      const links = urlRaw.split(",").map(e => e.trim()).filter(Boolean).map(entry => {
+        const [url, nombre] = entry.split("::");
+        return { url: urlAdjuntoSeguro(url), nombre: nombre || "" };
+      }).filter(item => item.url);
+      if (!links.length) return "";
+
+      const esImagen = (item) => {
+        if (item.nombre) return /\.(jpg|jpeg|png|gif|webp)$/i.test(item.nombre);
+        return /\.(jpg|jpeg|png|gif|webp)(\?|$)/i.test(item.url) || item.url.includes("uc?export=view");
+      };
+      const imagenes = links.filter(esImagen);
+      const otros = links.filter(item => !esImagen(item));
+
+      let html = "";
+      if (imagenes.length) {
+        const claseGaleria = imagenes.length > 1 ? " tarea-galeria" : "";
+        html += `<div class="tarea-archivo${claseGaleria}">`;
+        imagenes.forEach(item => {
+          const urlImg = item.url.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1000");
+          const urlImgGrande = item.url.replace(/\/uc\?export=view&id=([-\w]+)/, "/thumbnail?id=$1&sz=w1600");
+          const urlDescarga = new URL(item.url);
+          if (urlDescarga.origin === "https://drive.google.com" && urlDescarga.pathname === "/uc" && urlDescarga.searchParams.has("id")) {
+            urlDescarga.searchParams.set("export", "download");
+          }
+          html += `
         <div class="tarea-img-wrap">
           <img class="tarea-img-preview" src="${esc(urlImg)}" alt="Imagen adjunta" data-tarea-imagen="${esc(urlImgGrande)}" tabindex="0" role="button" onerror="this.style.display='none'">
           <a class="tarea-img-descarga" href="${esc(urlDescarga.href)}" target="_blank" rel="noopener noreferrer" download onclick="event.stopPropagation()" title="Descargar imagen">Descargar imagen
@@ -299,12 +321,12 @@ function renderArchivo(urlRaw) {
             </svg>
           </a>
         </div>`;
-    });
-    html += `</div>`;
-  }
+        });
+        html += `</div>`;
+      }
 
-  otros.forEach(item => {
-    html += `
+      otros.forEach(item => {
+        html += `
     <div class="tarea-archivo">
       <a class="btn-descarga" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer" download>
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -315,15 +337,15 @@ function renderArchivo(urlRaw) {
         ${esc(item.nombre ? "Descargar " + item.nombre : "Descargar archivo")}
       </a>
     </div>`;
-  });
+      });
 
-  return html;
-}
+      return html;
+    }
 
-function renderTareas(filas) {
-  if (!filas.length) return '<div class="no-data">No hay tareas para mostrar.</div>';
-  return filas.map((f,i) => `
-    <div class="tarea-card" style="animation-delay:${i*0.06}s">
+    function renderTareas(filas) {
+      if (!filas.length) return '<div class="no-data">No hay tareas para mostrar.</div>';
+      return filas.map((f, i) => `
+    <div class="tarea-card" style="animation-delay:${i * 0.06}s">
       <div class="tarea-acento"></div>
       <div class="tarea-body">
         <div class="tarea-meta">
@@ -336,125 +358,128 @@ function renderTareas(filas) {
         ${renderArchivo(f["Archivo"] || "")}</details>
       </div>
     </div>`).join("");
-}
-
-function poblarMaterias(filas) {
-  const sel = document.getElementById("filtro-materia");
-  if (!sel) return;
-  sel.innerHTML = '<option value="">Todas</option>';
-  [...new Set(filas.map(f=>f["Materia(Primero)"]).filter(Boolean))].sort().forEach(m => {
-    const o = document.createElement("option");
-    o.value = m; o.textContent = m;
-    sel.appendChild(o);
-  });
-}
-
-function filtrarTareas() {
-  const fecha   = document.getElementById("filtro-fecha").value;
-  const materia = document.getElementById("filtro-materia").value;
-  let fil = todasTareas;
-  if (fecha)   fil = fil.filter(f => normFecha(f["Entrega"]) === fecha);
-  if (materia) fil = fil.filter(f => f["Materia(Primero)"] === materia);
-  document.getElementById("tareas-contenido").innerHTML = renderTareas(fil);
-}
-
-function limpiarFiltros() {
-  document.getElementById("filtro-fecha").value = "";
-  document.getElementById("filtro-materia").value = "";
-  document.getElementById("tareas-contenido").innerHTML = renderTareas(todasTareas);
-}
-
-async function cargarTareas() {
-  const cont = document.getElementById("tareas-contenido");
-  mostrarCargando(cont, 'Cargando tareas…');
-  try {
-    const filas = await cargarHoja(SHEETS_CONFIG.tareas.spreadsheetId, SHEETS_CONFIG.tareas.hoja);
-    todasTareas = filas.filter(f=>(f["Curso"]||"").toLowerCase()===CURSO);
-    poblarMaterias(todasTareas);
-    cont.innerHTML = renderTareas(todasTareas);
-    cont.setAttribute('aria-busy', 'false');
-  } catch(e) {
-    mostrarErrorLectura(cont, "las tareas", cargarTareas);
-  }
-}
-
-
-
-// La carga de avisos se delega al helper original en config.js.
-document.addEventListener('click', event => {
-  const imagen = event.target.closest('[data-tarea-imagen]');
-  if (imagen) abrirLightbox(imagen.dataset.tareaImagen);
-});
-document.addEventListener('keydown', event => {
-  if (event.key !== 'Enter' && event.key !== ' ') return;
-  const imagen = event.target.closest('[data-tarea-imagen]');
-  if (imagen) { event.preventDefault(); abrirLightbox(imagen.dataset.tareaImagen); }
-});
-function abrirLightbox(url) {
-  url = urlAdjuntoSeguro(url);
-  if (!url) return;
-  document.getElementById("lightbox-img").src = url;
-  document.getElementById("lightbox").classList.add("active");
-}
-function cerrarLightbox() {
-  document.getElementById("lightbox").classList.remove("active");
-  document.getElementById("lightbox-img").src = "";
-}
-
-// ── Control del Menú Hamburguesa Móvil Compacto & Accesible ──
-const hamburgerBtn = document.getElementById("nav-hamburger-btn");
-const mobileMenu = document.getElementById("nav-mobile-menu");
-
-function toggleMenuMovil(forzarEstado) {
-  if (!hamburgerBtn || !mobileMenu) return;
-  const estaAbierto = mobileMenu.classList.contains("is-open");
-  const nuevoEstado = (typeof forzarEstado === "boolean") ? forzarEstado : !estaAbierto;
-
-  hamburgerBtn.classList.toggle("is-open", nuevoEstado);
-  mobileMenu.classList.toggle("is-open", nuevoEstado);
-
-  hamburgerBtn.setAttribute("aria-expanded", String(nuevoEstado));
-  hamburgerBtn.setAttribute("aria-label", nuevoEstado ? "Cerrar menú de cursos" : "Abrir menú de cursos");
-}
-
-if (hamburgerBtn) {
-  hamburgerBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    toggleMenuMovil();
-  });
-}
-
-// Cerrar al tocar fuera del menú flotante sin bloquear la interacción con la página
-document.addEventListener("click", (e) => {
-  if (mobileMenu && mobileMenu.classList.contains("is-open")) {
-    if (!mobileMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
-      toggleMenuMovil(false);
     }
-  }
-});
 
-// Cerrar con la tecla Escape para máxima accesibilidad
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && mobileMenu && mobileMenu.classList.contains("is-open")) {
-    toggleMenuMovil(false);
-    if (hamburgerBtn) hamburgerBtn.focus();
-  }
-});
+    function poblarMaterias(filas) {
+      const sel = document.getElementById("filtro-materia");
+      if (!sel) return;
+      sel.innerHTML = '<option value="">Todas</option>';
+      [...new Set(filas.map(f => f["Materia(Primero)"]).filter(Boolean))].sort().forEach(m => {
+        const o = document.createElement("option");
+        o.value = m; o.textContent = m;
+        sel.appendChild(o);
+      });
+    }
 
-// Cerrar al pulsar cualquier enlace del menú móvil
-if (mobileMenu) {
-  mobileMenu.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      toggleMenuMovil(false);
+    function filtrarTareas() {
+      const fecha = document.getElementById("filtro-fecha").value;
+      const materia = document.getElementById("filtro-materia").value;
+      let fil = todasTareas;
+      if (fecha) fil = fil.filter(f => normFecha(f["Entrega"]) === fecha);
+      if (materia) fil = fil.filter(f => f["Materia(Primero)"] === materia);
+      document.getElementById("tareas-contenido").innerHTML = renderTareas(fil);
+    }
+
+    function limpiarFiltros() {
+      document.getElementById("filtro-fecha").value = "";
+      document.getElementById("filtro-materia").value = "";
+      document.getElementById("tareas-contenido").innerHTML = renderTareas(todasTareas);
+    }
+
+    async function cargarTareas() {
+      const cont = document.getElementById("tareas-contenido");
+      mostrarCargando(cont, 'Cargando tareas…');
+      try {
+        const filas = await cargarHoja(SHEETS_CONFIG.tareas.spreadsheetId, SHEETS_CONFIG.tareas.hoja);
+        todasTareas = filas.filter(f => (f["Curso"] || "").toLowerCase() === CURSO);
+        poblarMaterias(todasTareas);
+        cont.innerHTML = renderTareas(todasTareas);
+        cont.setAttribute('aria-busy', 'false');
+      } catch (e) {
+        mostrarErrorLectura(cont, "las tareas", cargarTareas);
+      }
+    }
+
+
+
+    // La carga de avisos se delega al helper original en config.js.
+    document.addEventListener('click', event => {
+      const imagen = event.target.closest('[data-tarea-imagen]');
+      if (imagen) abrirLightbox(imagen.dataset.tareaImagen);
     });
-  });
-}
+    document.addEventListener('keydown', event => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      const imagen = event.target.closest('[data-tarea-imagen]');
+      if (imagen) { event.preventDefault(); abrirLightbox(imagen.dataset.tareaImagen); }
+    });
+    function abrirLightbox(url) {
+      url = urlAdjuntoSeguro(url);
+      if (!url) return;
+      document.getElementById("lightbox-img").src = url;
+      document.getElementById("lightbox").classList.add("active");
+    }
+    function cerrarLightbox() {
+      document.getElementById("lightbox").classList.remove("active");
+      document.getElementById("lightbox-img").src = "";
+    }
 
-// Cargas en segundo plano (manteniendo paneles cerrados)
-cargarTareas();
-Horarios.montar(CURSO);
-cargarAvisosCurso(CURSO, "avisos-contenido");
-</script>
+    // ── Control del Menú Hamburguesa Móvil Compacto & Accesible ──
+    const hamburgerBtn = document.getElementById("nav-hamburger-btn");
+    const mobileMenu = document.getElementById("nav-mobile-menu");
+
+    function toggleMenuMovil(forzarEstado) {
+      if (!hamburgerBtn || !mobileMenu) return;
+      const estaAbierto = mobileMenu.classList.contains("is-open");
+      const nuevoEstado = (typeof forzarEstado === "boolean") ? forzarEstado : !estaAbierto;
+
+      hamburgerBtn.classList.toggle("is-open", nuevoEstado);
+      mobileMenu.classList.toggle("is-open", nuevoEstado);
+
+      hamburgerBtn.setAttribute("aria-expanded", String(nuevoEstado));
+      hamburgerBtn.setAttribute("aria-label", nuevoEstado ? "Cerrar menú de cursos" : "Abrir menú de cursos");
+    }
+
+    if (hamburgerBtn) {
+      hamburgerBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleMenuMovil();
+      });
+    }
+
+    // Cerrar al tocar fuera del menú flotante sin bloquear la interacción con la página
+    document.addEventListener("click", (e) => {
+      if (mobileMenu && mobileMenu.classList.contains("is-open")) {
+        if (!mobileMenu.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+          toggleMenuMovil(false);
+        }
+      }
+    });
+
+    // Cerrar con la tecla Escape para máxima accesibilidad
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && mobileMenu && mobileMenu.classList.contains("is-open")) {
+        toggleMenuMovil(false);
+        if (hamburgerBtn) hamburgerBtn.focus();
+      }
+    });
+
+    // Cerrar al pulsar cualquier enlace del menú móvil
+    if (mobileMenu) {
+      mobileMenu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+          toggleMenuMovil(false);
+        });
+      });
+    }
+
+    // Cargas en segundo plano (manteniendo paneles cerrados)
+    cargarTareas();
+    Horarios.montar(CURSO);
+    cargarAvisosCurso(CURSO, "avisos-contenido");
+  </script>
 
 
-<script src="../imagen-dialogo.js"></script></body></html>
+  <script src="../imagen-dialogo.js"></script>
+</body>
+
+</html>
