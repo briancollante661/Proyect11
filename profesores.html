@@ -823,8 +823,8 @@
       padding: 8px 18px;
       margin-bottom: 14px;
       border-radius: 999px;
-      background: linear-gradient(135deg, var(--morado-principal) 0%, #7A359E 100%);
-      border: 1.5px solid rgba(89, 33, 124, 0.25);
+      background: var(--morado-principal);
+      border: 1.5px solid var(--morado-principal);
       color: #FFFFFF;
       font-family: inherit;
       font-size: 0.82rem;
@@ -835,14 +835,20 @@
     }
 
     #actualizar-tareas-activas:hover:not(:disabled),
-    #roles-actualizar:hover:not(:disabled) {
-      background: linear-gradient(135deg, #6b21a8 0%, #8b3dff 100%);
+    #roles-actualizar:hover:not(:disabled),
+    #actualizar-tareas-activas:focus-visible,
+    #roles-actualizar:focus-visible {
+      background: var(--morado-oscuro);
+      border-color: var(--morado-oscuro);
+      color: #FFFFFF;
       transform: translateY(-1px);
-      box-shadow: 0 5px 14px rgba(89, 33, 124, 0.28);
+      box-shadow: 0 5px 14px rgba(89, 33, 124, 0.26);
     }
 
     #actualizar-tareas-activas:active:not(:disabled),
     #roles-actualizar:active:not(:disabled) {
+      background: #3d1259;
+      border-color: #3d1259;
       transform: translateY(0) scale(0.98);
     }
 
@@ -1043,7 +1049,7 @@
     }
   </style>
   <link rel="stylesheet" href="roles.css">
-  <link rel="stylesheet" href="interfaz.css?v=18">
+  <link rel="stylesheet" href="interfaz.css?v=19">
 </head>
 
 <body class="pagina-profesores">
