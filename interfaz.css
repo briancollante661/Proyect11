@@ -1942,16 +1942,17 @@ html[data-theme="dark"] .mobile-nav-docente {
 }
 
 /* Hero y logo SIE en Modo Oscuro */
+html[data-theme="dark"] .sie-inicio .hero-title,
 html[data-theme="dark"] .sie-inicio .t-purple,
 html[data-theme="dark"] .hero-title .t-purple {
-  color: #d8b4fe !important;
+  color: #ffffff !important;
 }
 
 html[data-theme="dark"] .hero-left>img {
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.94) 0%, rgba(243, 232, 255, 0.88) 72%, rgba(243, 232, 255, 0) 100%);
-  padding: 10px 16px;
-  border-radius: 22px;
-  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35);
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }
 
 /* Sección "Elegí tu curso" y tarjetas en Modo Oscuro */
