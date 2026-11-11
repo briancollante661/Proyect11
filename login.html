@@ -968,7 +968,7 @@
   .auth-reset-btn:focus-visible { outline:2px solid #59217C; outline-offset:4px; border-radius:4px; }
   #info { margin-top:10px; color:#573C72; font-size:.82rem; line-height:1.5; }
 </style>
-<link rel="stylesheet" href="interfaz.css?v=14">
+<link rel="stylesheet" href="interfaz.css?v=15">
 <script src="config.js?v=5"></script>
 </head>
 <body class="pagina-login">
@@ -1025,30 +1025,16 @@
   <div class="portal-wrapper">
     <main class="portal-stage">
 
-      <!-- Lado Izquierdo: Atrio Institucional -->
-      <section class="stage-intro" aria-label="Información Institucional CEDM">
-
-        <!-- Identidad Institucional -->
-        <div class="institution-badge">
-          <div class="crest-frame">
-            <img src="imagenes/insignia.png" alt="Insignia Centro Escolar Santa Teresa de Ávila">
-          </div>
-          <div class="institution-meta">
-            <span class="institution-sub">Centro Escolar</span>
-            <span class="institution-name">Santa Teresa de Ávila</span>
-          </div>
-        </div>
-
-      </section>
-
-      <!-- Lado Derecho: Consola de Autenticación (Card) -->
+      <!-- Consola de Autenticación (Card) -->
       <section class="stage-auth" aria-label="Formulario de Acceso de Profesores">
         <div class="auth-card">
 
           <!-- Encabezado de la Tarjeta -->
           <div class="auth-card-header">
-
-            <h1>Acceso docente</h1>
+            <div class="auth-logo-badge">
+              <img src="imagenes/insignia.png" alt="Insignia Santa Teresa de Ávila">
+            </div>
+            <h1>Acceso Profesores</h1>
             <p>Ingresá tus credenciales docentes para ingresar al panel de gestión.</p>
           </div>
 
