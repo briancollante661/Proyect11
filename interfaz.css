@@ -383,42 +383,39 @@ nav.sie-navbar {
 }
 
 body.pagina-profesores .header-inner {
-  padding: 12px 16px;
-  gap: 8px;
-  max-width: 1180px;
+  padding: 10px 24px;
+  gap: 12px;
+  max-width: 100%;
 }
 
 body.pagina-profesores .header-left {
-  gap: 8px;
+  gap: 12px;
   min-width: 0;
 }
 
-body.pagina-profesores .nav-return-btn {
-  display: none;
-}
-
 body.pagina-profesores .header-crest {
-  box-shadow: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  padding: 3px;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+  flex-shrink: 0;
 }
 
 body.pagina-profesores .inst-title {
   font-size: .95rem;
 }
 
-body.pagina-profesores .btn-logout {
-  min-height: 44px;
-  padding: 8px 10px;
-  border-radius: 6px;
-  box-shadow: none;
-  white-space: nowrap;
-}
-
 #docente-menu {
-  background: white;
-  border: 1px solid var(--sie-line);
-  border-radius: 6px;
-  padding: 8px 10px;
-  color: var(--sie-purple);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  min-height: 40px;
+  padding: 8px 14px;
+  color: #ffffff;
+  font-weight: 800;
   white-space: nowrap;
 }
 
@@ -928,22 +925,8 @@ body.pagina-profesores .aviso-activo-card {
     scroll-margin-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
   }
 
-  body.pagina-profesores .inst-subtitle,
-  body.pagina-profesores .header-crest {
-    display: none;
-  }
-
-  body.pagina-profesores .inst-title {
-    font-size: 0;
-  }
-
-  body.pagina-profesores .inst-title::after {
-    content: 'SIE';
-    font-size: 1rem;
-  }
-
   body.pagina-profesores .header-inner {
-    gap: 6px;
+    gap: 10px;
     flex-direction: row;
     align-items: center;
   }
@@ -1241,61 +1224,323 @@ body.pagina-profesores .aviso-activo-card {
 
 
 /* ============================================================
-   BOTÓN DE MODO CLARO / OSCURO (SOLO ICONO) Y PALETA MODO OSCURO SIE
+   BARRA SUPERIOR INSTITUCIONAL UNIFICADA, BOTÓN CERRAR SESIÓN,
+   SELECTOR DE TEMA (SOLO ICONO) Y ADAPTACIÓN MÓVIL / TABLETA
    ============================================================ */
 .sie-inicio .nav-links {
   gap: 8px !important;
 }
 
-/* Encabezado morado institucional unificado en Profesores (ambos temas) */
+/* Estructura compartida de la barra superior (Inicio, Cursos, Login y Profesores) */
+.header-nav-wrap,
 body.pagina-profesores .profesores-header {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+nav.sie-navbar,
+body.pagina-profesores .profesores-header {
+  width: 100%;
   background: linear-gradient(135deg, #59217C 0%, #4D186E 100%) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.16) !important;
   box-shadow: 0 6px 20px rgba(89, 33, 124, 0.22) !important;
 }
 
-body.pagina-profesores .inst-title {
-  color: #ffffff !important;
+body.pagina-login nav.sie-navbar,
+body.pagina-profesores .profesores-header .header-inner {
+  width: 100%;
+  min-height: 74px;
+  padding: 10px 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
 }
 
+.nav-left,
+body.pagina-profesores .header-left,
+body.pagina-profesores .header-institution {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.nav-crest-wrap,
+body.pagina-profesores .header-crest {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  flex-shrink: 0;
+}
+
+.nav-crest-wrap img,
+body.pagina-profesores .header-crest img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.nav-inst-titles,
+body.pagina-profesores .header-titles {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.15;
+  min-width: 0;
+}
+
+.nav-inst-sub,
 body.pagina-profesores .inst-subtitle {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 0.64rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase;
   color: rgba(255, 255, 255, 0.80) !important;
+  margin-bottom: 2px;
 }
 
-body.pagina-profesores #docente-menu,
-body.pagina-profesores .btn-logout {
+.nav-inst-main,
+body.pagina-profesores .inst-title {
+  font-family: 'Segoe UI Black', 'Segoe UI', 'Arial Black', system-ui, sans-serif;
+  font-size: 0.96rem !important;
+  font-weight: 900 !important;
+  color: #ffffff !important;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-brand-divider {
+  width: 1.5px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.25);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+.nav-sie-acronym {
+  font-family: 'Segoe UI Black', 'Segoe UI', 'Arial Black', system-ui, sans-serif;
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.nav-header-actions,
+body.pagina-profesores .header-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Botón "Inicio" en la barra superior (Login y Profesores) */
+.nav-header-btn,
+body.pagina-profesores #docente-menu {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 8px 18px;
+  border-radius: 999px;
   background: rgba(255, 255, 255, 0.14) !important;
-  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.28) !important;
   color: #ffffff !important;
+  font-family: 'Segoe UI Black', 'Segoe UI', 'Arial Black', system-ui, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-body.pagina-profesores .btn-logout svg {
-  color: #ffffff !important;
-}
-
+.nav-header-btn:hover,
 body.pagina-profesores #docente-menu:hover {
   background: rgba(255, 255, 255, 0.24) !important;
+  border-color: rgba(255, 255, 255, 0.50) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
 }
 
-body.pagina-profesores .btn-logout:hover {
-  background: rgba(239, 68, 68, 0.28) !important;
-  border-color: rgba(252, 165, 165, 0.55) !important;
+.nav-header-btn:focus-visible,
+body.pagina-profesores #docente-menu:focus-visible {
+  outline: 3px solid #e9d5ff !important;
+  outline-offset: 2px;
+  background: rgba(255, 255, 255, 0.24) !important;
+  border-color: #ffffff !important;
+}
+
+.nav-header-btn:active,
+body.pagina-profesores #docente-menu:active {
+  background: rgba(255, 255, 255, 0.32) !important;
+  transform: translateY(0) scale(0.97);
+}
+
+/* ── Botón "Cerrar sesión" (.btn-logout) — Modo Claro y Modo Oscuro ── */
+.btn-logout,
+body.pagina-profesores .btn-logout,
+body.pagina-login .btn-logout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 18px !important;
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.92) !important;
+  color: #59217C !important;
+  font-family: 'Segoe UI Black', 'Segoe UI', 'Arial Black', system-ui, sans-serif;
+  font-size: 0.82rem !important;
+  font-weight: 900 !important;
+  line-height: 1.1;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(26, 9, 38, 0.18) !important;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-logout svg,
+body.pagina-profesores .btn-logout svg,
+body.pagina-login .btn-logout svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: currentColor !important;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.btn-logout:hover,
+body.pagina-profesores .btn-logout:hover,
+body.pagina-login .btn-logout:hover {
+  background: #f3e8ff !important;
+  border-color: #ffffff !important;
+  color: #3b0f54 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(26, 9, 38, 0.28) !important;
+}
+
+.btn-logout:hover svg,
+body.pagina-profesores .btn-logout:hover svg,
+body.pagina-login .btn-logout:hover svg {
+  color: currentColor !important;
+  transform: translateX(2px);
+}
+
+.btn-logout:focus-visible,
+body.pagina-profesores .btn-logout:focus-visible,
+body.pagina-login .btn-logout:focus-visible {
+  outline: 3px solid #e9d5ff !important;
+  outline-offset: 2px;
+  background: #f3e8ff !important;
+  border-color: #ffffff !important;
+  color: #3b0f54 !important;
+}
+
+.btn-logout:active,
+body.pagina-profesores .btn-logout:active,
+body.pagina-login .btn-logout:active {
+  background: #e9d5ff !important;
+  border-color: #d8b4fe !important;
+  color: #2e0a42 !important;
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 1px 6px rgba(26, 9, 38, 0.22) !important;
+}
+
+/* Botón "Cerrar sesión" en Modo Oscuro (integrado con la paleta morada del SIE) */
+html[data-theme="dark"] .btn-logout,
+html[data-theme="dark"] body.pagina-profesores .btn-logout,
+html[data-theme="dark"] body.pagina-login .btn-logout {
+  background: linear-gradient(135deg, #7e22ce 0%, #6b21a8 100%) !important;
+  border: 1.5px solid rgba(233, 213, 255, 0.58) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.38) !important;
+}
+
+html[data-theme="dark"] .btn-logout svg,
+html[data-theme="dark"] body.pagina-profesores .btn-logout svg,
+html[data-theme="dark"] body.pagina-login .btn-logout svg {
+  color: #f3e8ff !important;
+}
+
+html[data-theme="dark"] .btn-logout:hover,
+html[data-theme="dark"] body.pagina-profesores .btn-logout:hover,
+html[data-theme="dark"] body.pagina-login .btn-logout:hover {
+  background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%) !important;
+  border-color: #f3e8ff !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(147, 51, 234, 0.48) !important;
+}
+
+html[data-theme="dark"] .btn-logout:hover svg,
+html[data-theme="dark"] body.pagina-profesores .btn-logout:hover svg,
+html[data-theme="dark"] body.pagina-login .btn-logout:hover svg {
   color: #ffffff !important;
 }
 
-body.pagina-profesores .btn-logout:hover svg {
+html[data-theme="dark"] .btn-logout:focus-visible,
+html[data-theme="dark"] body.pagina-profesores .btn-logout:focus-visible,
+html[data-theme="dark"] body.pagina-login .btn-logout:focus-visible {
+  outline: 3px solid #f3e8ff !important;
+  outline-offset: 2px;
+  background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%) !important;
+  border-color: #ffffff !important;
   color: #ffffff !important;
 }
 
+html[data-theme="dark"] .btn-logout:active,
+html[data-theme="dark"] body.pagina-profesores .btn-logout:active,
+html[data-theme="dark"] body.pagina-login .btn-logout:active {
+  background: linear-gradient(135deg, #6b21a8 0%, #581c87 100%) !important;
+  border-color: #d8b4fe !important;
+  color: #f3e8ff !important;
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.45) !important;
+}
+
+html[data-theme="dark"] .nav-header-btn {
+  background: rgba(216, 180, 254, 0.16) !important;
+  border-color: rgba(233, 213, 255, 0.38) !important;
+  color: #f5f0ff !important;
+}
+
+html[data-theme="dark"] .nav-header-btn:hover,
+html[data-theme="dark"] .nav-header-btn:focus-visible {
+  background: rgba(216, 180, 254, 0.28) !important;
+  border-color: #f3e8ff !important;
+  color: #ffffff !important;
+}
+
+/* ── Selector de Tema (solo icono sol/luna) ── */
 .theme-toggle-btn {
-  width: 38px;
-  height: 38px;
-  min-width: 38px;
-  min-height: 38px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
   padding: 0;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.26);
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
   color: #ffffff;
   line-height: 1;
   display: inline-flex;
@@ -1309,8 +1554,13 @@ body.pagina-profesores .btn-logout:hover svg {
 .theme-toggle-btn:hover,
 .theme-toggle-btn:focus-visible {
   background: rgba(255, 255, 255, 0.24);
-  border-color: rgba(255, 255, 255, 0.45);
+  border-color: rgba(255, 255, 255, 0.50);
   transform: translateY(-1px);
+}
+
+.theme-toggle-btn:focus-visible {
+  outline: 3px solid #e9d5ff !important;
+  outline-offset: 2px;
 }
 
 .theme-toggle-btn:active {
@@ -1331,10 +1581,10 @@ html[data-theme="dark"] .theme-toggle-btn:focus-visible {
 }
 
 .sie-curso .nav-links .theme-toggle-btn {
-  width: 34px;
-  height: 34px;
-  min-width: 34px;
-  min-height: 34px;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
   padding: 0;
   margin-left: 2px;
 }
@@ -1360,38 +1610,188 @@ html[data-theme="dark"] .theme-toggle-btn .theme-icon-sun {
   color: #fde047;
 }
 
-/* Botón de tema en la pantalla de login (sobre fondo de página) */
-.pagina-login .theme-toggle-btn {
-  background: #f0e8f6;
-  border: 1px solid rgba(89, 33, 124, 0.22);
-  color: #59217c;
-  width: 38px;
-  height: 38px;
-  min-width: 38px;
-  min-height: 38px;
-}
-
-.pagina-login .theme-toggle-btn:hover {
-  background: #e5d4f0;
-  border-color: rgba(89, 33, 124, 0.38);
-}
-
-html[data-theme="dark"] .pagina-login .theme-toggle-btn {
-  background: rgba(216, 180, 254, 0.20);
-  border-color: rgba(233, 213, 255, 0.45);
-  color: #f5f0ff;
-}
-
-.login-top-bar {
+/* ── Disposición de Login con barra superior institucional ── */
+body.pagina-login {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+body.pagina-login .portal-wrapper {
+  flex: 1;
+  min-height: 0;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 20px 44px;
+}
+
+body.pagina-login .portal-stage {
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+body.pagina-login .auth-card {
+  width: 100%;
+  padding: 32px 28px;
+  border-radius: 16px;
+}
+
+/* ── Adaptación a tabletas y móviles (sin desbordamiento horizontal) ── */
+@media (max-width: 980px) {
+  nav.sie-navbar,
+  body.pagina-login nav.sie-navbar,
+  body.pagina-profesores .profesores-header .header-inner {
+    height: auto !important;
+    min-height: 64px;
+    padding: 10px 20px !important;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
 }
 
 @media (max-width: 720px) {
+  nav.sie-navbar,
+  body.pagina-login nav.sie-navbar,
+  body.pagina-profesores .profesores-header .header-inner {
+    padding: 10px 16px !important;
+    gap: 10px;
+  }
+
+  .nav-left,
+  body.pagina-profesores .header-left,
+  body.pagina-profesores .header-institution {
+    gap: 10px;
+  }
+
+  .nav-crest-wrap,
+  body.pagina-profesores .header-crest {
+    width: 38px;
+    height: 38px;
+  }
+
+  .nav-inst-sub,
+  body.pagina-profesores .inst-subtitle {
+    font-size: 0.58rem !important;
+  }
+
+  .nav-inst-main,
+  body.pagina-profesores .inst-title {
+    font-size: 0.86rem !important;
+  }
+
+  .nav-brand-divider {
+    height: 24px;
+    margin: 0 2px;
+  }
+
+  .nav-sie-acronym {
+    font-size: 1.2rem;
+  }
+
+  .nav-header-actions,
+  body.pagina-profesores .header-right {
+    gap: 8px;
+  }
+
+  .nav-header-btn,
+  .btn-logout,
+  body.pagina-profesores .btn-logout,
+  body.pagina-login .btn-logout,
+  body.pagina-profesores #docente-menu {
+    min-height: 40px;
+    padding: 7px 14px !important;
+    font-size: 0.78rem !important;
+  }
+
+  .theme-toggle-btn,
+  .nav-mobile-actions .theme-toggle-btn {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+    padding: 0;
+  }
+
+  body.pagina-login .portal-wrapper {
+    justify-content: flex-start;
+    padding: 24px 16px 36px;
+  }
+
+  body.pagina-login .auth-card {
+    padding: 26px 20px;
+  }
+}
+
+/* Pantallas estrechas (móviles <= 560px): la barra reorganiza sus elementos sin desbordar */
+@media (max-width: 560px) {
+  body.pagina-login nav.sie-navbar,
+  body.pagina-profesores .profesores-header .header-inner {
+    padding: 10px 14px !important;
+    gap: 10px;
+  }
+
+  body.pagina-login .nav-left,
+  body.pagina-profesores .header-left {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  body.pagina-profesores .header-institution {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  body.pagina-login .nav-inst-titles,
+  body.pagina-profesores .header-titles {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  body.pagina-login .nav-header-actions,
+  body.pagina-profesores .header-right {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  body.pagina-login .nav-header-actions .nav-header-btn,
+  body.pagina-login .nav-header-actions .btn-logout,
+  body.pagina-profesores .header-right .nav-header-btn,
+  body.pagina-profesores .header-right .btn-logout {
+    flex: 1 1 auto;
+    min-height: 40px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .sie-inicio nav.sie-navbar,
+  .sie-curso nav.sie-navbar {
+    height: auto !important;
+    min-height: 58px;
+    padding: 8px 12px !important;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .nav-mobile-actions {
+    gap: 6px !important;
+  }
+
+  .nav-mobile-actions .nav-profesor-destacado {
+    min-height: 36px;
+    padding: 6px 12px !important;
+    font-size: 0.76rem;
+    display: inline-flex;
+    align-items: center;
+  }
+
   .nav-mobile-actions .theme-toggle-btn {
     width: 36px;
     height: 36px;
@@ -1399,29 +1799,17 @@ html[data-theme="dark"] .pagina-login .theme-toggle-btn {
     min-height: 36px;
     padding: 0;
   }
-}
 
-@media (max-width: 420px) {
-  .nav-mobile-actions {
-    gap: 5px !important;
+  body.pagina-login .portal-wrapper {
+    padding: 18px 12px 28px;
   }
 
-  .nav-mobile-actions .nav-profesor-destacado {
-    padding: 6px 11px !important;
-    font-size: 0.75rem;
+  body.pagina-login .auth-card {
+    padding: 22px 16px;
   }
 
-  .nav-mobile-actions .theme-toggle-btn {
-    width: 34px;
-    height: 34px;
-    min-width: 34px;
-    min-height: 34px;
-    padding: 0;
-  }
-
-  .nav-mobile-actions .theme-toggle-btn .theme-icon {
-    width: 16px;
-    height: 16px;
+  body.pagina-login .auth-card-header h1 {
+    font-size: 1.4rem;
   }
 }
 
@@ -1858,25 +2246,9 @@ html[data-theme="dark"] body.pagina-profesores .inst-subtitle {
 }
 
 html[data-theme="dark"] #docente-menu {
-  background: rgba(255, 255, 255, 0.14) !important;
-  border-color: rgba(255, 255, 255, 0.28) !important;
+  background: rgba(216, 180, 254, 0.16) !important;
+  border-color: rgba(233, 213, 255, 0.38) !important;
   color: #ffffff !important;
-}
-
-html[data-theme="dark"] body.pagina-profesores .btn-logout {
-  background: rgba(255, 255, 255, 0.12) !important;
-  border-color: rgba(255, 255, 255, 0.26) !important;
-  color: #ffffff !important;
-}
-
-html[data-theme="dark"] body.pagina-profesores .btn-logout svg {
-  color: #ffffff !important;
-}
-
-html[data-theme="dark"] body.pagina-profesores .btn-logout:hover {
-  background: rgba(239, 68, 68, 0.25) !important;
-  border-color: rgba(252, 165, 165, 0.5) !important;
-  color: #fecaca !important;
 }
 
 html[data-theme="dark"] body.pagina-profesores .panel-card,

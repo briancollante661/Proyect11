@@ -244,41 +244,42 @@
       animation: beaconPulse 2s infinite;
     }
 
-    /* Botón Cerrar Sesión */
+    /* Botón Cerrar Sesión (estilos base; tema claro/oscuro unificado en interfaz.css) */
     .btn-logout {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 7px;
-      padding: 6px 14px;
+      padding: 8px 16px;
       border-radius: var(--radio-pill);
       background: #FFFFFF;
-      border: 1.5px solid rgba(87, 60, 114, 0.18);
-      color: var(--morado-secundario);
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+      color: var(--morado-principal);
       font-family: inherit;
-      font-size: 0.78rem;
-      font-weight: 700;
+      font-size: 0.82rem;
+      font-weight: 800;
       cursor: pointer;
-      transition: all 0.22s ease;
-      box-shadow: 0 2px 6px rgba(89, 33, 124, 0.03);
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 10px rgba(26, 9, 38, 0.18);
     }
 
     .btn-logout svg {
-      width: 14px;
-      height: 14px;
-      color: var(--morado-secundario);
+      width: 15px;
+      height: 15px;
+      color: currentColor;
       transition: color 0.2s ease, transform 0.2s ease;
     }
 
     .btn-logout:hover {
-      background: #FEF2F2;
-      border-color: #FECACA;
-      color: #DC2626;
+      background: #f3e8ff;
+      border-color: #ffffff;
+      color: #3b0f54;
       transform: translateY(-1px);
-      box-shadow: 0 3px 12px rgba(220, 38, 38, 0.12);
+      box-shadow: 0 4px 14px rgba(26, 9, 38, 0.28);
     }
 
     .btn-logout:hover svg {
-      color: #DC2626;
+      color: currentColor;
       transform: translateX(2px);
     }
 
@@ -988,30 +989,16 @@
     }
   </style>
   <link rel="stylesheet" href="roles.css">
-  <link rel="stylesheet" href="interfaz.css?v=12">
+  <link rel="stylesheet" href="interfaz.css?v=13">
 </head>
 
 <body class="pagina-profesores">
 
-  <!-- Lienzo ambiental con destellos SIE -->
-
-
   <!-- ── 1. BARRA SUPERIOR INSTITUCIONAL ── -->
   <header class="profesores-header">
-    <div class="header-inner"><button type="button" id="docente-menu" aria-controls="docente-nav"
-        aria-expanded="false">☰ Menú</button>
+    <div class="header-inner">
       <div class="header-left">
-        <!-- Retorno al Inicio -->
-        <a href="index.html" class="nav-return-btn" id="link-volver">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
-            stroke-linejoin="round" aria-hidden="true">
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
-          </svg>
-          <span>Volver al inicio</span>
-        </a>
-
-
+        <button type="button" id="docente-menu" aria-controls="docente-nav" aria-expanded="false">☰ Menú</button>
 
         <!-- Identidad Institucional -->
         <div class="header-institution">
@@ -1019,14 +1006,29 @@
             <img src="imagenes/insignia.png" alt="Insignia Santa Teresa de Ávila">
           </div>
           <div class="header-titles">
-            <span class="inst-subtitle">Centro Escolar Santa Teresa de Ávila</span>
-            <span class="inst-title">SIE · Panel docente</span>
+            <span class="inst-subtitle">CDEM</span>
+            <span class="inst-title">Santa Teresa de Ávila</span>
           </div>
+          <div class="nav-brand-divider" aria-hidden="true"></div>
+          <span class="nav-sie-acronym">SIE</span>
         </div>
       </div>
 
-      <!-- Estado y Logout -->
+      <!-- Acciones derechas: Inicio, Cerrar sesión y Selector de tema -->
       <div class="header-right">
+        <a href="index.html" class="nav-header-btn" id="link-volver">Inicio</a>
+
+        <button type="button" class="btn-logout" onclick="cerrarSesion()" id="btn-logout"
+          aria-label="Cerrar sesión activa">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Cerrar sesión</span>
+        </button>
+
         <button type="button" class="theme-toggle-btn" data-theme-toggle aria-label="Activar modo oscuro"
           aria-pressed="false" title="Activar modo oscuro">
           <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -1045,17 +1047,6 @@
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
           </svg>
-        </button>
-
-        <button type="button" class="btn-logout" onclick="cerrarSesion()" id="btn-logout"
-          aria-label="Cerrar sesión activa">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round" aria-hidden="true">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-            <polyline points="16 17 21 12 16 7"></polyline>
-            <line x1="21" y1="12" x2="9" y2="12"></line>
-          </svg>
-          <span>Cerrar sesión</span>
         </button>
       </div>
     </div>
