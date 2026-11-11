@@ -25,7 +25,7 @@
           <img src="../imagenes/insignia.png" alt="Insignia Institucional CEDM">
         </div>
         <div class="nav-inst-titles">
-          <span class="nav-inst-sub">CDEM</span>
+          <span class="nav-inst-sub">CEDM</span>
           <span class="nav-inst-main">Santa Teresa de Ávila</span>
         </div>
         <div class="nav-brand-divider"></div>
@@ -302,18 +302,21 @@
     <img id="lightbox-img" src="" alt="Vista ampliada" onclick="event.stopPropagation()">
   </div>
 
-  <script src="../config.js?v=4"></script>
   <script src="../horarios.js?v=2"></script>
-  <script>
-    const CURSO = "tercero";
-    let todasTareas = [];
-    let seccionActiva = "tareas";
-
-    <script src="../horarios.js?v=2"></script>
   <script>
   const CURSO = "tercero";
   let todasTareas = [];
   let seccionActiva = "tareas";
+
+  function alternarSeccion(nombre) {
+    if (!["tareas", "horarios", "avisos"].includes(nombre)) return;
+    for (const id of ["tareas", "horarios", "avisos"]) {
+      document.getElementById("card-" + id).classList.toggle("card-activo", id === nombre);
+      document.getElementById("card-" + id).setAttribute("aria-pressed", String(id === nombre));
+      document.getElementById("panel-" + id).classList.toggle("panel-abierto", id === nombre);
+    }
+    seccionActiva = nombre;
+  }
 
   // ── Funciones de Datos Existentes ──
   function normFecha(str) {
