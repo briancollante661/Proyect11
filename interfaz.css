@@ -1588,6 +1588,19 @@ body.pagina-profesores .btn-logout[hidden] {
   display: none !important;
 }
 
+/* En PC el contenedor inferior de cerrar sesión y el botón Menú móvil permanecen ocultos */
+.mobile-logout-bottom {
+  display: none;
+}
+
+@media (min-width: 768px) {
+
+  body.pagina-profesores #docente-menu,
+  body.pagina-profesores .mobile-logout-bottom {
+    display: none !important;
+  }
+}
+
 /* ── Adaptación de la barra superior a tabletas y móviles (sin alterar el formulario de login) ── */
 @media (max-width: 980px) {
 
@@ -1602,11 +1615,101 @@ body.pagina-profesores .btn-logout[hidden] {
   }
 }
 
+/* En dispositivos móviles (<= 767px):
+   - En Profesores, la fila superior muestra la insignia + CDEM Santa Teresa de Ávila | SIE
+   - La segunda fila muestra "☰ Menú", "Inicio" y el botón de tema (en el lugar donde estaba Cerrar sesión)
+   - El botón "Cerrar sesión" pasa al final de toda la página abajo */
+@media (max-width: 767px) {
+  body.pagina-profesores .profesores-header .header-inner {
+    padding: 10px 14px !important;
+    gap: 10px;
+  }
+
+  body.pagina-profesores .header-left {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  body.pagina-profesores .header-institution {
+    width: 100%;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  body.pagina-profesores .header-titles {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  body.pagina-profesores .header-right {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  body.pagina-profesores .header-right #btn-logout {
+    display: none !important;
+  }
+
+  body.pagina-profesores .header-right #docente-menu,
+  body.pagina-profesores .header-right .nav-header-btn {
+    flex: 1 1 0;
+    min-height: 40px;
+    justify-content: center;
+  }
+
+  body.pagina-profesores #docente-nav.abierto {
+    top: 118px;
+  }
+
+  body.pagina-profesores .mobile-logout-bottom {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--sie-line);
+  }
+
+  body.pagina-profesores .btn-logout-mobile-bottom {
+    width: 100%;
+    min-height: 46px;
+    padding: 12px 20px !important;
+    font-size: 0.9rem !important;
+    background: #ffffff !important;
+    border: 1.5px solid rgba(89, 33, 124, 0.28) !important;
+    color: #59217C !important;
+    box-shadow: 0 4px 14px rgba(89, 33, 124, 0.10) !important;
+  }
+
+  body.pagina-profesores .btn-logout-mobile-bottom:hover,
+  body.pagina-profesores .btn-logout-mobile-bottom:focus-visible {
+    background: #f3e8ff !important;
+    border-color: #7e22ce !important;
+    color: #3b0f54 !important;
+  }
+
+  html[data-theme="dark"] body.pagina-profesores .btn-logout-mobile-bottom {
+    background: linear-gradient(135deg, #7e22ce 0%, #6b21a8 100%) !important;
+    border: 1.5px solid rgba(233, 213, 255, 0.58) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.38) !important;
+  }
+
+  html[data-theme="dark"] body.pagina-profesores .btn-logout-mobile-bottom:hover,
+  html[data-theme="dark"] body.pagina-profesores .btn-logout-mobile-bottom:focus-visible {
+    background: linear-gradient(135deg, #9333ea 0%, #7e22ce 100%) !important;
+    border-color: #f3e8ff !important;
+    color: #ffffff !important;
+  }
+}
+
 @media (max-width: 720px) {
 
   nav.sie-navbar,
-  body.pagina-login nav.sie-navbar,
-  body.pagina-profesores .profesores-header .header-inner {
+  body.pagina-login nav.sie-navbar {
     padding: 10px 16px !important;
     gap: 10px;
   }
@@ -1667,43 +1770,32 @@ body.pagina-profesores .btn-logout[hidden] {
   }
 }
 
-/* Pantallas estrechas (móviles <= 560px): la barra reorganiza sus elementos sin desbordar */
+/* Pantallas estrechas en login (móviles <= 560px) */
 @media (max-width: 560px) {
 
-  body.pagina-login nav.sie-navbar,
-  body.pagina-profesores .profesores-header .header-inner {
+  body.pagina-login nav.sie-navbar {
     padding: 10px 14px !important;
     gap: 10px;
   }
 
-  body.pagina-login .nav-left,
-  body.pagina-profesores .header-left {
+  body.pagina-login .nav-left {
     width: 100%;
     justify-content: flex-start;
   }
 
-  body.pagina-profesores .header-institution {
+  body.pagina-login .nav-inst-titles {
     flex: 1 1 auto;
     min-width: 0;
   }
 
-  body.pagina-login .nav-inst-titles,
-  body.pagina-profesores .header-titles {
-    flex: 1 1 auto;
-    min-width: 0;
-  }
-
-  body.pagina-login .nav-header-actions,
-  body.pagina-profesores .header-right {
+  body.pagina-login .nav-header-actions {
     width: 100%;
     justify-content: space-between;
     gap: 8px;
   }
 
   body.pagina-login .nav-header-actions .nav-header-btn,
-  body.pagina-login .nav-header-actions .btn-logout,
-  body.pagina-profesores .header-right .nav-header-btn,
-  body.pagina-profesores .header-right .btn-logout {
+  body.pagina-login .nav-header-actions .btn-logout {
     flex: 1 1 auto;
     min-height: 40px;
     justify-content: center;

@@ -989,7 +989,7 @@
     }
   </style>
   <link rel="stylesheet" href="roles.css">
-  <link rel="stylesheet" href="interfaz.css?v=15">
+  <link rel="stylesheet" href="interfaz.css?v=16">
 </head>
 
 <body class="pagina-profesores">
@@ -998,8 +998,6 @@
   <header class="profesores-header">
     <div class="header-inner">
       <div class="header-left">
-        <button type="button" id="docente-menu" aria-controls="docente-nav" aria-expanded="false">☰ Menú</button>
-
         <!-- Identidad Institucional -->
         <div class="header-institution">
           <div class="header-crest">
@@ -1014,8 +1012,10 @@
         </div>
       </div>
 
-      <!-- Acciones derechas: Inicio, Cerrar sesión y Selector de tema -->
+      <!-- Acciones derechas: Menú (móvil), Inicio, Cerrar sesión (PC) y Selector de tema -->
       <div class="header-right">
+        <button type="button" id="docente-menu" aria-controls="docente-nav" aria-expanded="false">☰ Menú</button>
+
         <a href="index.html" class="nav-header-btn" id="link-volver">Inicio</a>
 
         <button type="button" class="btn-logout" onclick="cerrarSesion()" id="btn-logout"
@@ -1261,6 +1261,20 @@
           <div id="roles-lista"></div>
         </section>
       </section>
+
+      <!-- Botón Cerrar sesión al final de la página (solo dispositivos móviles) -->
+      <div class="mobile-logout-bottom">
+        <button type="button" class="btn-logout btn-logout-mobile-bottom" onclick="cerrarSesion()"
+          aria-label="Cerrar sesión activa">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          <span>Cerrar sesión</span>
+        </button>
+      </div>
     </div>
   </main>
 
